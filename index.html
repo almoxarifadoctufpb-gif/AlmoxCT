@@ -25,7 +25,7 @@
       overflow-x: hidden;
     }
 
-    /* ---------- SPLASH SCREEN ---------- */
+    /* ---------- SPLASH SCREEN COM IMAGEM ---------- */
     .splash-screen {
       position: fixed;
       top: 0;
@@ -44,12 +44,15 @@
       opacity: 1;
     }
     .splash-content {
-      animation: fadeInUp 0.8s ease-out;
+      animation: fadeInUpScale 0.8s ease-out;
     }
-    .splash-icon {
-      font-size: 72px;
-      margin-bottom: 20px;
-      animation: bounceSoft 1.2s infinite;
+    .splash-icon-img {
+      width: min(30vw, 140px);
+      max-width: 140px;
+      min-width: 80px;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+      animation: gentleFloat 2s infinite ease-in-out;
     }
     .splash-title {
       font-size: 2.5rem;
@@ -66,26 +69,43 @@
       opacity: 0.9;
       margin-top: 8px;
     }
-    .loader {
-      margin-top: 30px;
-      width: 48px;
-      height: 48px;
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top: 4px solid white;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+    .modern-loader {
+      margin-top: 32px;
+      width: 200px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .modern-loader-bar {
+      width: 0%;
+      height: 100%;
+      background: white;
+      border-radius: 4px;
+      animation: loadingProgress 2s ease-out forwards;
     }
     .progress-message {
-      margin-top: 20px;
+      margin-top: 16px;
       font-size: 0.8rem;
       font-weight: 500;
       background: rgba(0,0,0,0.2);
       padding: 6px 16px;
       border-radius: 40px;
     }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes fadeInUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
-    @keyframes bounceSoft { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-10px); } }
+    @keyframes fadeInUpScale {
+      from { opacity:0; transform: translateY(20px) scale(0.95); }
+      to { opacity:1; transform: translateY(0) scale(1); }
+    }
+    @keyframes gentleFloat {
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-6px); }
+    }
+    @keyframes loadingProgress {
+      0% { width: 0%; }
+      30% { width: 40%; }
+      70% { width: 75%; }
+      100% { width: 100%; }
+    }
 
     /* skeleton loading */
     .skeleton-card { background: #eef2f5; border-radius: 20px; height: 260px; animation: pulse 1.2s infinite ease-in-out; }
@@ -152,7 +172,7 @@
     .btn-add-cart:active { transform: scale(0.96); }
     .btn-add-cart:disabled { background: #B9CFDF; cursor: not-allowed; transform: none; }
 
-    /* cart section - melhorias visuais */
+    /* cart section */
     .cart-card {
       background: white;
       border-radius: 28px;
@@ -180,7 +200,6 @@
       border-radius: 20px;
       padding: 12px;
       margin-bottom: 10px;
-      transition: 0.1s;
     }
     .cart-qty-control {
       display: flex;
@@ -226,7 +245,6 @@
       font-size: 1rem;
     }
 
-    /* NOVOS BOTÕES PROFISSIONAIS DO CARRINHO */
     .cart-actions {
       display: flex;
       flex-direction: column;
@@ -285,7 +303,6 @@
       transform: scale(0.95);
     }
 
-    /* floating buttons */
     .floating-cart { position: fixed; bottom: 90px; right: 20px; background: #005BBB; width: 58px; height: 58px; border-radius: 40px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0, 91, 187, 0.4); cursor: pointer; z-index: 200; transition: all 0.2s; }
     .floating-cart:hover { transform: scale(1.08); background: #004499; }
     .whatsapp-float { position: fixed; bottom: 150px; left: 20px; background: #25D366; border-radius: 40px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; transition: 0.2s; z-index: 200; }
@@ -297,8 +314,150 @@
 
     .two-col-layout { max-width: 1400px; margin: 0 auto; padding: 0 16px; gap: 24px; }
     @media (min-width: 1024px) { .two-col-layout { display: flex; align-items: flex-start; } .products-container { flex: 2; } .cart-section { flex: 1.2; margin-top: 0; } }
-    .modal-modern { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 1000; }
-    .modal-container { background: white; width: 90%; max-width: 480px; border-radius: 32px; padding: 24px; max-height: 85vh; overflow-y: auto; }
+
+    /* MODAL PROFISSIONAL DE REQUISIÇÃO */
+    .modal-modern {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeInModal 0.2s ease-out;
+    }
+    @keyframes fadeInModal {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-container {
+      background: white;
+      width: 90%;
+      max-width: 680px;
+      border-radius: 32px;
+      padding: 28px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      animation: slideUpModal 0.3s ease-out;
+    }
+    @keyframes slideUpModal {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-container h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1E2A3E;
+    }
+    .modal-sub {
+      color: #5A6874;
+      margin-bottom: 24px;
+      font-size: 0.85rem;
+      border-left: 3px solid #005BBB;
+      padding-left: 12px;
+    }
+    .order-summary-modal {
+      background: #F8FAFE;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 24px;
+      border: 1px solid #edf2f7;
+    }
+    .order-summary-modal h3 {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #005BBB;
+    }
+    .modal-items-list {
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .modal-item-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e9eef3;
+      font-size: 0.85rem;
+    }
+    .modal-item-name {
+      font-weight: 500;
+    }
+    .modal-item-qty {
+      background: #EFF3F8;
+      padding: 2px 10px;
+      border-radius: 40px;
+      font-weight: 600;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .input-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .input-group label i {
+      font-size: 16px;
+      color: #005BBB;
+    }
+    .input-group input, .input-group select {
+      background: #F8FAFE;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: #005BBB;
+      box-shadow: 0 0 0 3px rgba(0,91,187,0.2);
+      background: white;
+    }
+    .full-width {
+      grid-column: span 2;
+    }
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      .modal-container {
+        padding: 20px;
+      }
+    }
+    .btn-primary-modal {
+      width: 100%;
+      margin-top: 8px;
+    }
 
     /* bottom navigation */
     .bottom-nav {
@@ -317,7 +476,6 @@
       border-radius: 48px;
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
       z-index: 105;
-      transition: all 0.2s;
       border: 1px solid rgba(0, 91, 187, 0.1);
     }
     .nav-item {
@@ -367,7 +525,6 @@
       height: 3px;
       background: #005BBB;
       border-radius: 4px;
-      transition: all 0.2s ease;
       animation: slideIn 0.2s ease-out;
     }
     @keyframes slideIn {
@@ -376,15 +533,7 @@
     }
     .nav-item:active {
       transform: scale(0.92);
-      transition: 0.05s;
     }
-    @media (max-width: 480px) {
-      .bottom-nav { padding: 6px 12px 10px; width: calc(100% - 16px); }
-      .nav-item { padding: 4px 8px; }
-      .nav-item .material-icons { font-size: 22px; }
-      .nav-item span { font-size: 0.65rem; }
-    }
-
     .screen-subtitle {
       max-width: 1400px;
       margin: 8px auto 0;
@@ -392,7 +541,6 @@
       font-size: 0.85rem;
       font-weight: 500;
       color: #5A6874;
-      letter-spacing: -0.2px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -407,10 +555,16 @@
 
 <div class="splash-screen" id="splashScreen">
   <div class="splash-content">
-    <div class="splash-icon">📦</div>
+    <!-- ⚠️ ATENÇÃO: Substitua o URL abaixo pelo link real da sua imagem no GitHub -->
+    <img 
+      src="https://raw.githubusercontent.com/SEU-USUARIO/SEU-REPOSITORIO/main/Inicializa%C3%A7%C3%A3o%20CT%20ALMOX.png" 
+      alt="Logo Smart Almox" 
+      class="splash-icon-img"
+      onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23005BBB%22/%3E%3Ctext x=%2250%22 y=%2267%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22%3E📦%3C/text%3E%3C/svg%3E'"
+    >
     <div class="splash-title">Smart Almox</div>
     <div class="splash-sub">Almoxarifado CT UFPB</div>
-    <div class="loader"></div>
+    <div class="modern-loader"><div class="modern-loader-bar"></div></div>
     <div class="progress-message" id="splashMsg">Carregando sistema...</div>
   </div>
 </div>
@@ -464,7 +618,6 @@
         <span>Total unidades:</span>
         <span id="totalItensReq">0</span>
       </div>
-      <!-- NOVOS BOTÕES COM HIERARQUIA PROFISSIONAL -->
       <div class="cart-actions">
         <button id="finalizarRequisicaoBtn" class="btn-primary">
           <i class="material-icons">check_circle</i>
@@ -490,7 +643,70 @@
   <button class="nav-item" data-nav="orders"><i class="material-icons">receipt</i><span>Requisições</span></button>
 </div>
 
-<div id="solicitanteModal" class="modal-modern"><div class="modal-container"><h2 style="margin-bottom:1rem;">📋 Dados da requisição</h2><div class="form-modern"><select id="modalSectorSelect"><option disabled selected>Setor/Unidade *</option><optgroup label="Setores"><option>Almoxarifado</option><option>Secretaria do CT</option></optgroup><optgroup label="Departamentos"><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></optgroup></select><input type="text" id="nomeSolicitante" placeholder="Nome completo"><input type="email" id="email" placeholder="E-mail institucional"><input type="text" id="contato" placeholder="Whatsapp"><select id="perfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select><input type="text" id="lotacao" placeholder="Lotação"><input type="text" id="assunto" value="Solicitação de materiais"><button id="confirmarSolicitacao" class="btn-primary" style="margin-top:1rem;">Confirmar requisição</button></div></div></div>
+<!-- MODAL MODERNO E PROFISSIONAL DE REQUISIÇÃO -->
+<div id="solicitanteModal" class="modal-modern">
+  <div class="modal-container">
+    <h2><i class="material-icons" style="font-size:28px;">assignment</i> Dados da requisição</h2>
+    <div class="modal-sub">Preencha as informações abaixo para finalizar seu pedido</div>
+
+    <!-- Resumo dos itens do carrinho -->
+    <div class="order-summary-modal" id="modalOrderSummary">
+      <h3><i class="material-icons">shopping_cart</i> Itens solicitados</h3>
+      <div id="modalItemsList" class="modal-items-list"></div>
+    </div>
+
+    <!-- Formulário em grid -->
+    <div class="form-grid">
+      <div class="input-group full-width">
+        <label><i class="material-icons">business</i> Setor/Unidade *</label>
+        <select id="modalSectorSelect">
+          <option disabled selected>Selecione o setor</option>
+          <optgroup label="Setores">
+            <option>Almoxarifado</option>
+            <option>Secretaria do CT</option>
+          </optgroup>
+          <optgroup label="Departamentos">
+            <option>DEM - Mecânica</option>
+            <option>DEA - Alimentos</option>
+            <option>DECA - Civil</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="material-icons">person</i> Nome completo *</label>
+        <input type="text" id="nomeSolicitante" placeholder="Ex: João da Silva">
+      </div>
+      <div class="input-group">
+        <label><i class="material-icons">email</i> E-mail institucional *</label>
+        <input type="email" id="email" placeholder="joao@ufpb.br">
+      </div>
+      <div class="input-group">
+        <label><i class="material-icons">phone</i> WhatsApp *</label>
+        <input type="text" id="contato" placeholder="(83) 99999-9999">
+      </div>
+      <div class="input-group">
+        <label><i class="material-icons">badge</i> Perfil</label>
+        <select id="perfil">
+          <option>Discente</option>
+          <option>Docente</option>
+          <option>Técnico-Administrativo</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="material-icons">work</i> Lotaçao *</label>
+        <input type="text" id="lotacao" placeholder="Ex: CT - Coordenação">
+      </div>
+      <div class="input-group full-width">
+        <label><i class="material-icons">description</i> Assunto</label>
+        <input type="text" id="assunto" value="Solicitação de materiais">
+      </div>
+    </div>
+
+    <button id="confirmarSolicitacao" class="btn-primary btn-primary-modal">
+      <i class="material-icons">check_circle</i> Confirmar e gerar PDF
+    </button>
+  </div>
+</div>
 
 <script>
   // ---------- DADOS (mesmo do original) ----------
@@ -527,15 +743,67 @@
   function gerarTexto(dados, setor, itens) { let lista = itens.map(i=>`- ${i.nome}: ${i.quantidade}`).join('\n'); return `**REQUISIÇÃO SMART ALMOX**\nSetor: ${setor}\nSolicitante: ${dados.nome}\nE-mail: ${dados.email}\nContato: ${dados.contato}\nPerfil: ${dados.perfil}\nLotação: ${dados.lotacao}\n\nItens:\n${lista}\nData: ${new Date().toLocaleString()}`; }
 
   const modalEl = document.getElementById('solicitanteModal');
-  function abrirModalSolicitacao() { if(!listaRequisicao.length) { Swal.fire('Carrinho vazio','Adicione materiais antes de finalizar.','error'); return; } modalEl.style.display = 'flex'; }
+  
+  // Função para atualizar o resumo dos itens dentro do modal
+  function atualizarResumoModal() {
+    const container = document.getElementById('modalItemsList');
+    if(!listaRequisicao.length) {
+      container.innerHTML = '<div class="modal-item-row" style="justify-content:center;">Nenhum item no carrinho</div>';
+      return;
+    }
+    let html = '';
+    listaRequisicao.forEach(item => {
+      html += `
+        <div class="modal-item-row">
+          <span class="modal-item-name">${item.nome}</span>
+          <span class="modal-item-qty">${item.quantidade} un.</span>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+  
+  function abrirModalSolicitacao() { 
+    if(!listaRequisicao.length) { 
+      Swal.fire('Carrinho vazio','Adicione materiais antes de finalizar.','error'); 
+      return; 
+    }
+    atualizarResumoModal(); // mostra os itens atuais
+    modalEl.style.display = 'flex'; 
+  }
+  
   document.getElementById('finalizarRequisicaoBtn').addEventListener('click', abrirModalSolicitacao);
   document.getElementById('limparRequisicaoBtn').addEventListener('click', () => { if(listaRequisicao.length) Swal.fire({title:'Limpar carrinho?', icon:'warning', showCancelButton:true}).then(res=>{if(res.isConfirmed){listaRequisicao=[]; salvarLista();}}); });
-  document.getElementById('confirmarSolicitacao').addEventListener('click', async () => { const setor = document.getElementById('modalSectorSelect').value; if(!setor) return Swal.fire('Setor obrigatório','','error'); const nome = document.getElementById('nomeSolicitante').value.trim(); const email = document.getElementById('email').value.trim(); const contato = document.getElementById('contato').value.trim(); const lotacao = document.getElementById('lotacao').value.trim(); if(!nome || !email || !contato || !lotacao) return Swal.fire('Preencha todos os campos','','error'); const dados = { nome, email, contato, perfil: document.getElementById('perfil').value, lotacao, assunto: document.getElementById('assunto').value }; const itens = [...listaRequisicao]; await gerarPDF(dados, setor, itens); const texto = gerarTexto(dados, setor, itens); await navigator.clipboard.writeText(texto); solicitacoesRegistradas.push({ id: Date.now(), data: new Date().toLocaleString(), itens: itens.map(i=>({nome:i.nome, quantidade:i.quantidade})), status: 'Em análise' }); salvarStatusSolicitacoes(); await Swal.fire({ title:'✅ Requisição gerada!', html:'PDF criado e texto copiado.', icon:'success', confirmButtonText:'Ok' }); listaRequisicao = []; salvarLista(); modalEl.style.display = 'none'; document.getElementById('nomeSolicitante').value = ''; document.getElementById('email').value = ''; document.getElementById('contato').value = ''; document.getElementById('lotacao').value = ''; document.getElementById('modalSectorSelect').value = ''; });
+  
+  document.getElementById('confirmarSolicitacao').addEventListener('click', async () => { 
+    const setor = document.getElementById('modalSectorSelect').value; 
+    if(!setor || setor === 'Selecione o setor') return Swal.fire('Setor obrigatório','','error'); 
+    const nome = document.getElementById('nomeSolicitante').value.trim(); 
+    const email = document.getElementById('email').value.trim(); 
+    const contato = document.getElementById('contato').value.trim(); 
+    const lotacao = document.getElementById('lotacao').value.trim(); 
+    if(!nome || !email || !contato || !lotacao) return Swal.fire('Preencha todos os campos','','error'); 
+    const dados = { nome, email, contato, perfil: document.getElementById('perfil').value, lotacao, assunto: document.getElementById('assunto').value }; 
+    const itens = [...listaRequisicao]; 
+    await gerarPDF(dados, setor, itens); 
+    const texto = gerarTexto(dados, setor, itens); 
+    await navigator.clipboard.writeText(texto); 
+    solicitacoesRegistradas.push({ id: Date.now(), data: new Date().toLocaleString(), itens: itens.map(i=>({nome:i.nome, quantidade:i.quantidade})), status: 'Em análise' }); 
+    salvarStatusSolicitacoes(); 
+    await Swal.fire({ title:'✅ Requisição gerada!', html:'PDF criado e texto copiado.', icon:'success', confirmButtonText:'Ok' }); 
+    listaRequisicao = []; 
+    salvarLista(); 
+    modalEl.style.display = 'none'; 
+    document.getElementById('nomeSolicitante').value = ''; 
+    document.getElementById('email').value = ''; 
+    document.getElementById('contato').value = ''; 
+    document.getElementById('lotacao').value = ''; 
+    document.getElementById('modalSectorSelect').value = ''; 
+  });
 
   function buildCategoryChips() { let cats = [...new Set(materiaisDB.map(m => m.categoria))]; const chipContainer = document.getElementById('categoryChips'); chipContainer.innerHTML = `<div class="chip-cat ${currentFilter === '' ? 'active' : ''}" data-cat="">Todos</div>` + cats.map(cat => `<div class="chip-cat ${currentFilter === cat ? 'active' : ''}" data-cat="${cat}">${cat}</div>`).join(''); document.querySelectorAll('.chip-cat').forEach(chip => chip.addEventListener('click', () => { currentFilter = chip.getAttribute('data-cat'); buildCategoryChips(); renderCatalogo(); })); }
   document.getElementById('searchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderCatalogo(); });
 
-  // LOGISTICS & LAST UPDATE
   function atualizarPainelLogistico() { let low = materiaisDB.filter(m => m.estoque > 0 && m.estoque <= 5).length; let out = materiaisDB.filter(m => m.estoque === 0).length; if(out>0) { document.querySelector('.led-red').style.boxShadow = '0 0 8px #B91C1C'; } else if(low>0) { document.querySelector('.led-yellow').style.boxShadow = '0 0 8px #F4B942'; } else { document.querySelector('.led-green').style.boxShadow = '0 0 8px #1E7E34'; } document.getElementById('lastUpdateTime').innerHTML = `Atualizado há menos de 1 minuto`; }
   setInterval(() => { atualizarPainelLogistico(); }, 30000); atualizarPainelLogistico();
 
@@ -546,7 +814,8 @@
   function nextSlide() { slideIndex = (slideIndex + 1) % slides.length; updateCarousel(); resetAutoPlay(); }
   function prevSlide() { slideIndex = (slideIndex - 1 + slides.length) % slides.length; updateCarousel(); resetAutoPlay(); }
   function resetAutoPlay() { if(autoInterval) clearInterval(autoInterval); autoInterval = setInterval(() => { nextSlide(); }, 5000); }
-  document.getElementById('nextSlideBtn').addEventListener('click', nextSlide); document.getElementById('prevSlideBtn').addEventListener('click', prevSlide); createDots(); resetAutoPlay(); let startX; track.parentElement.addEventListener('touchstart', e => startX = e.touches[0].clientX); track.parentElement.addEventListener('touchend', e => { let endX = e.changedTouches[0].clientX; if(startX - endX > 50) nextSlide(); if(endX - startX > 50) prevSlide(); });
+  document.getElementById('nextSlideBtn').addEventListener('click', nextSlide); document.getElementById('prevSlideBtn').addEventListener('click', prevSlide); createDots(); resetAutoPlay(); 
+  let startX; track.parentElement.addEventListener('touchstart', e => startX = e.touches[0].clientX); track.parentElement.addEventListener('touchend', e => { let endX = e.changedTouches[0].clientX; if(startX - endX > 50) nextSlide(); if(endX - startX > 50) prevSlide(); });
   track.parentElement.addEventListener('mouseenter', () => { if(autoInterval) clearInterval(autoInterval); }); track.parentElement.addEventListener('mouseleave', resetAutoPlay);
 
   // RIPPLE
@@ -567,12 +836,12 @@
   const defaultNav = document.querySelector('.nav-item[data-nav="home"]');
   if(defaultNav) { setActiveNav(defaultNav); updateSubtitle('home'); }
 
-  // SPLASH SCREEN
-  window.addEventListener('load', () => { setTimeout(() => { let splash = document.getElementById('splashScreen'); splash.style.opacity = '0'; setTimeout(() => splash.remove(), 500); }, 1500); });
+  // SPLASH SCREEN - tempo aumentado para 3 segundos
+  window.addEventListener('load', () => { setTimeout(() => { let splash = document.getElementById('splashScreen'); splash.style.opacity = '0'; setTimeout(() => splash.remove(), 500); }, 3000); });
   let msgs = ["Verificando estoque...", "Atualizando dados...", "Conectando ao almoxarifado..."]; let idxMsg=0; setInterval(() => { let msgDiv = document.getElementById('splashMsg'); if(msgDiv) msgDiv.innerText = msgs[idxMsg % msgs.length]; idxMsg++; }, 800);
 
   renderCatalogo(); buildCategoryChips(); renderizarListaRequisicao(); renderizarStatus(); atualizarBadges();
-  Swal.fire({ title: 'Smart Almox', text: 'Consulte o status antes de se deslocar!', icon: 'info', toast: false, confirmButtonColor: '#005BBB' });
+  // NÃO exibir mais o alerta inicial removido
 </script>
 </body>
 </html>
