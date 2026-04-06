@@ -9,6 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
+    /* Seu CSS original permanece intacto */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background-color: #F5F7FA; font-family: 'Inter', system-ui, sans-serif; color: #1E2A3E; padding-bottom: 80px; scroll-behavior: smooth; overflow-x: hidden; }
     .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; transition: opacity 0.5s ease-out; opacity: 1; }
@@ -261,7 +262,7 @@
   <button class="nav-item" data-nav="orders"><i class="material-icons">receipt</i><span>Requisições</span></button>
 </div>
 
-<!-- MODAL ORIGINAL DE SOLICITAÇÃO (restaurado) -->
+<!-- MODAL ORIGINAL DE SOLICITAÇÃO -->
 <div id="solicitanteModal" class="modal-modern">
   <div class="modal-container">
     <h2><i class="material-icons" style="font-size:28px;">assignment</i> Dados da requisição</h2>
@@ -309,6 +310,25 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  // ---------- CONFIGURAÇÃO DO GOOGLE SHEETS ----------
+  const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbynotzi-Mu68mNg3ZWbCgC2KTQp7xwaUxWYJEfLvX3i4M1G8J8qFCj_y8L67Jzj6KtWjg/exec";
+
+  // Função para enviar dados para o Google Sheets (sem bloquear o usuário)
+  async function enviarParaGoogleSheets(dados) {
+    try {
+      const response = await fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Evita erro de CORS, mas não conseguimos ler a resposta
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      });
+      console.log('✅ Dados enviados para o Google Sheets:', dados.tipo);
+    } catch (error) {
+      console.error('❌ Falha ao enviar para o Google Sheets:', error);
+      // Não exibimos alerta para não incomodar o usuário
+    }
+  }
+
   // ---------- FUNÇÕES AUXILIARES SEGURAS ----------
   function getLocalStorageItem(key, defaultValue = []) {
     try {
@@ -397,7 +417,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const texto = gerarTexto(dados, setor, itens); 
     await navigator.clipboard.writeText(texto); 
     solicitacoesRegistradas.push({ id: Date.now(), data: new Date().toLocaleString(), itens: itens.map(i=>({nome:i.nome, quantidade:i.quantidade})), status: 'Em análise' }); 
-    salvarStatusSolicitacoes(); 
+    salvarStatusSolicitacoes();
+
+    // ---- ENVIA OS DADOS DA REQUISIÇÃO PARA O GOOGLE SHEETS ----
+    const dadosPlanilha = {
+      tipo: "requisicao",
+      id: Date.now(),
+      data: new Date().toISOString(),
+      solicitante: nome,
+      setor: setor,
+      email: email,
+      contato: contato,
+      perfil: dados.perfil,
+      lotacao: lotacao,
+      itens: itens.map(i => `${i.nome} (${i.quantidade})`).join(', '),
+      status: "Em análise"
+    };
+    enviarParaGoogleSheets(dadosPlanilha);
+    // ---------------------------------------------------------
+
     await Swal.fire({ title:'✅ Requisição gerada!', html:'PDF criado e texto copiado.', icon:'success', confirmButtonText:'Ok' }); 
     listaRequisicao = []; 
     salvarLista(); 
@@ -438,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function() {
   navItems.forEach(btn => btn.addEventListener('click', () => handleNavClick(btn)));
   const defaultNav = document.querySelector('.nav-item[data-nav="home"]'); if(defaultNav) { setActiveNav(defaultNav); updateSubtitle('home'); }
 
-  // ---------- MÓDULO FILA DE ÁGUA (ISOLADO) ----------
+  // ---------- MÓDULO FILA DE ÁGUA (COM ENVIO PARA PLANILHA) ----------
   const QUEUE_KEY = "fila_agua";
   function getQueue() { return getLocalStorageItem(QUEUE_KEY, []); }
   function saveQueue(queue) { setLocalStorageItem(QUEUE_KEY, queue); renderQueue(); }
@@ -447,6 +485,23 @@ document.addEventListener("DOMContentLoaded", function() {
     const newEntry = { id: Date.now(), setor: solicitante.setor, nome: solicitante.nome, email: solicitante.email, contato: solicitante.contato, perfil: solicitante.perfil, lotacao: solicitante.lotacao, data: new Date().toISOString(), status: "aguardando" };
     queue.push(newEntry);
     saveQueue(queue);
+
+    // ---- ENVIA OS DADOS DA FILA DE ÁGUA PARA O GOOGLE SHEETS ----
+    const dadosAgua = {
+      tipo: "filaAgua",
+      id: newEntry.id,
+      data: newEntry.data,
+      nome: solicitante.nome,
+      setor: solicitante.setor,
+      email: solicitante.email,
+      contato: solicitante.contato,
+      perfil: solicitante.perfil,
+      lotacao: solicitante.lotacao,
+      status: "aguardando"
+    };
+    enviarParaGoogleSheets(dadosAgua);
+    // -----------------------------------------------------------
+
     return queue.length;
   }
   function calculatePosition(currentId) { const queue = getQueue(); const index = queue.findIndex(item => item.id === currentId); return index === -1 ? null : index + 1; }
