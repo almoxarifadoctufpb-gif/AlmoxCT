@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>InovaCompras | Almoxarifado CT UFPB</title>
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- SweetAlert2 + jsPDF (funcionalidades existentes) -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #F5F7FA;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #1E2A3E;
+      padding-bottom: 72px;
+      scroll-behavior: smooth;
+    }
+
+    /* skeleton loading */
+    .skeleton-card {
+      background: #eef2f5;
+      border-radius: 20px;
+      height: 260px;
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    /* sticky header modern */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 110;
+      background: white;
+      backdrop-filter: blur(0px);
+      padding: 12px 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 1px 0 rgba(0, 0, 0, 0.02);
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .brand span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #5A6874;
+    }
+    .search-bar {
+      flex: 1;
+      background: #F0F2F5;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .search-bar input {
+      background: transparent;
+      border: none;
+      font-size: 0.9rem;
+      width: 100%;
+      outline: none;
+      font-weight: 500;
+    }
+    .cart-icon-header {
+      position: relative;
+      cursor: pointer;
+      background: #F0F2F5;
+      border-radius: 30px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-count-badge {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background: #005BBB;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 30px;
+      padding: 2px 7px;
+      min-width: 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* category chips */
+    .categories-scroll {
+      overflow-x: auto;
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+      scrollbar-width: thin;
+      white-space: nowrap;
+      background: white;
+      border-bottom: 1px solid #EDF2F7;
+    }
+    .chip-cat {
+      background: #F0F2F5;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1E2A3E;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .chip-cat.active, .chip-cat:active {
+      background: #005BBB;
+      color: white;
+    }
+
+    /* product grid (cards estilo e-commerce) */
+    .products-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      padding: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      transition: transform 0.15s, box-shadow 0.2s;
+      cursor: pointer;
+      border: 1px solid #edf2f7;
+    }
+    .product-card:active { transform: scale(0.98); }
+    .product-img {
+      background: #F8FAFE;
+      border-radius: 16px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .product-img img {
+      max-width: 100px;
+      max-height: 100px;
+      object-fit: contain;
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin: 6px 0 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .product-code {
+      font-size: 0.7rem;
+      color: #6B7A8A;
+      margin: 2px 0;
+    }
+    .stock-info {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .stock-available { color: #1E7E34; }
+    .stock-unavailable { color: #B91C1C; }
+    .btn-add-cart {
+      background: #005BBB;
+      width: 100%;
+      border: none;
+      padding: 10px 0;
+      border-radius: 40px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+    .btn-add-cart:active { transform: scale(0.96); background: #004499; }
+    .btn-add-cart:disabled { background: #B9CFDF; cursor: not-allowed; transform: none; }
+
+    /* cart section (requisição) estilo card moderno */
+    .cart-section {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    .cart-card {
+      background: white;
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      border: 1px solid #EFF3F8;
+    }
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .cart-items-list {
+      max-height: 280px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #F9FBFD;
+      border-radius: 20px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .cart-item-img {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-item-img img { width: 36px; height: 36px; object-fit: contain; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 700; font-size: 0.85rem; }
+    .cart-qty-control { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+    .cart-qty-control button {
+      background: #EFF3F8;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 30px;
+      font-weight: bold;
+    }
+    .cart-remove { background: none; border: none; color: #B91C1C; }
+    .cart-total { font-weight: 800; display: flex; justify-content: space-between; border-top: 2px dashed #E2E8F0; padding-top: 12px; margin: 8px 0; }
+    .btn-finalize-cart { background: #1E7E34; width: 100%; border: none; padding: 14px; border-radius: 44px; font-weight: 700; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-clear-cart { background: #F1F3F5; width: 100%; margin-top: 8px; border: none; padding: 12px; border-radius: 44px; font-weight: 600; }
+
+    /* status area */
+    .status-area {
+      max-width: 1400px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+    .status-modern-card {
+      background: white;
+      border-radius: 28px;
+      padding: 20px;
+    }
+
+    /* floating cart button */
+    .floating-cart {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #005BBB;
+      width: 58px;
+      height: 58px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0, 91, 187, 0.4);
+      cursor: pointer;
+      z-index: 200;
+      transition: 0.2s;
+    }
+    .floating-cart span {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #FF5A5F;
+      color: white;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 8px;
+    }
+    /* bottom nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 16px 14px;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+      border-top: 1px solid #edf2f7;
+      z-index: 105;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: #6C7A8A;
+      gap: 4px;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+    .nav-item .material-icons { font-size: 24px; }
+    .nav-item.active { color: #005BBB; }
+
+    /* modal modern */
+    .modal-modern {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-container {
+      background: white;
+      width: 90%;
+      max-width: 480px;
+      border-radius: 32px;
+      padding: 24px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    .form-modern input, .form-modern select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 30px;
+      border: 1px solid #e2e8f0;
+      margin-top: 6px;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 140px;
+      left: 20px;
+      background: #25D366;
+      border-radius: 40px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 200;
+      cursor: pointer;
+    }
+
+    @media (min-width: 1024px) {
+      .two-col-layout {
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+      }
+      .products-container { flex: 2; }
+      .cart-section { flex: 1.2; margin-top: 0; }
+    }
+    .two-col-layout { max-width: 1400px; margin: 0 auto; padding: 0 16px; gap: 24px; }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-row">
+    <div class="brand">
+      <h2>InovaCompras</h2>
+      <span>Almoxarifado CT UFPB</span>
+    </div>
+    <div class="search-bar">
+      <i class="material-icons" style="color:#6B7A8A;">search</i>
+      <input type="text" id="searchInput" placeholder="Buscar material...">
+    </div>
+    <div class="cart-icon-header" id="headerCartBtn">
+      <i class="material-icons">shopping_cart</i>
+      <span id="headerCartBadge" class="cart-count-badge">0</span>
+    </div>
+  </div>
+</header>
+
+<div class="categories-scroll" id="categoryChips"></div>
+
+<div class="two-col-layout" id="mainLayout">
+  <div class="products-container">
+    <div class="product-grid" id="catalogoContainer"></div>
+  </div>
+  <div class="cart-section">
+    <div class="cart-card">
+      <div class="cart-header">
+        <h3><i class="material-icons">shopping_bag</i> Meu Carrinho</h3>
+        <span id="cartCountBadge" style="background:#EFF3F8; padding:4px 12px; border-radius:40px;">0 itens</span>
+      </div>
+      <div id="requisicaoList" class="cart-items-list">Nenhum material adicionado.</div>
+      <div class="cart-total"><span>Total unidades:</span><span id="totalItensReq">0</span></div>
+      <button id="finalizarRequisicaoBtn" class="btn-finalize-cart"><i class="material-icons">assignment_turned_in</i> Finalizar pedido</button>
+      <button id="limparRequisicaoBtn" class="btn-clear-cart"><i class="material-icons">delete_outline</i> Limpar carrinho</button>
+    </div>
+  </div>
+</div>
+
+<div class="status-area" id="statusSection">
+  <div class="status-modern-card">
+    <h3><i class="material-icons">receipt_long</i> Meus pedidos</h3>
+    <div id="statusList" class="status-lista" style="margin-top:12px;">Nenhuma solicitação registrada.</div>
+  </div>
+</div>
+
+<div class="floating-cart" id="floatingCartBtn">
+  <i class="material-icons" style="color:white;">shopping_cart</i>
+  <span id="floatingCartQty">0</span>
+</div>
+
+<div class="whatsapp-float" id="whatsappFloatBtn">
+  <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" width="28" alt="WhatsApp">
+</div>
+
+<div class="bottom-nav">
+  <button class="nav-item" data-nav="home"><i class="material-icons">home</i><span>Início</span></button>
+  <button class="nav-item" data-nav="categories"><i class="material-icons">category</i><span>Categorias</span></button>
+  <button class="nav-item" data-nav="orders"><i class="material-icons">receipt</i><span>Pedidos</span></button>
+  <button class="nav-item" data-nav="profile"><i class="material-icons">person</i><span>Perfil</span></button>
+</div>
+
+<div id="solicitanteModal" class="modal-modern">
+  <div class="modal-container">
+    <h2 style="margin-bottom:1rem;">📋 Dados da requisição</h2>
+    <div class="form-modern">
+      <label>Setor / Unidade Requisitante *</label>
+      <select id="modalSectorSelect">
+        <option value="" disabled selected>Selecione</option>
+        <optgroup label="Setores"><option>Almoxarifado</option><option>Secretaria do CT</option></optgroup>
+        <optgroup label="Departamentos"><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></optgroup>
+        <optgroup label="Laboratórios"><option>Lab. Ensaios</option><option>Lab. Informática</option></optgroup>
+      </select>
+      <label>Nome completo *</label><input type="text" id="nomeSolicitante" placeholder="Seu nome">
+      <label>E-mail institucional *</label><input type="email" id="email" placeholder="servidor@ct.ufpb.br">
+      <label>Whatsapp/Telefone *</label><input type="text" id="contato" placeholder="(83) 99999-9999">
+      <label>Perfil</label><select id="perfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select>
+      <label>Lotação *</label><input type="text" id="lotacao" placeholder="Departamento/Laboratório">
+      <label>Assunto</label><input type="text" id="assunto" value="Solicitação de materiais">
+      <button id="confirmarSolicitacao" class="btn-finalize-cart" style="margin-top:1.5rem;">✓ Confirmar requisição</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ----------------------------- BASE DE MATERIAIS (com estoque numérico) ---------------------------------
+  let materiaisDB = [];
+
+  function addItem(categoria, nome, imagem = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232C5F7A'%3E%3Cpath d='M4 6h16v2H4V6zm2-4h12v2H6V2zm16 8H2v12h20V10zm-2 10H4v-8h16v8z'/%3E%3C/svg%3E", estoque = 45) {
+    materiaisDB.push({ categoria, nome, imagem, estoque, id: Math.random() });
+  }
+
+  const categoriasMap = {
+    "Expediente": ["Alfinete para mapas","Apagador quadro negro","Apagador quadro branco","Borracha","Caderno 96fl","Caneta azul","Caneta preta","Clipes","Cola branca","Envelope kraft","Fita adesiva","Lápis","Marcador branco","Papel A4 (resma)","Pasta com aba","Régua","Copo descartável"],
+    "Informática": ["Cartucho toner preto","Teclado USB","Mouse óptico","Cabo HDMI 2m","Pendrive 32GB"],
+    "Limpeza": ["Desinfetante eucalipto","Papel toalha","Sabão líquido","Álcool gel"],
+    "Elétrico": ["Pilha AAA","Fita isolante","Extensão 3 tomadas"]
+  };
+  for(let nome of categoriasMap["Expediente"]) addItem("Expediente", nome, "https://img.kalunga.com.br/fotosdeprodutos/606061z_1.jpg", Math.floor(Math.random() * 80) + 20);
+  for(let nome of categoriasMap["Informática"]) addItem("Informática", nome, "https://m.media-amazon.com/images/I/61lPN616-hL._AC_UF1000,1000_QL80_.jpg", Math.floor(Math.random() * 50) + 5);
+  for(let nome of categoriasMap["Limpeza"]) addItem("Limpeza", nome, "https://images.tcdn.com.br/img/img_prod/675659/copo_plastico_500ml_caixa_c_1000_linha_economica_551_1_e9d43941586305abcd04283474c58cbd_20220728165256.jpg", Math.floor(Math.random() * 60) + 10);
+  for(let nome of categoriasMap["Elétrico"]) addItem("Elétrico", nome, "https://images.tcdn.com.br/img/img_prod/675659/copo_plastico_500ml_caixa_c_1000_linha_economica_551_1_e9d43941586305abcd04283474c58cbd_20220728165256.jpg", Math.floor(Math.random() * 30) + 2);
+  addItem("Expediente", "Papel A4 (resma premium)", "https://img.kalunga.com.br/fotosdeprodutos/606061z_1.jpg", 0); // esgotado
+  addItem("Informática", "Mousepad Gamer", "https://m.media-amazon.com/images/I/61lPN616-hL._AC_UF1000,1000_QL80_.jpg", 0);
+
+  let listaRequisicao = [];
+  let solicitacoesRegistradas = JSON.parse(localStorage.getItem('solicitacoesStatus') || '[]');
+
+  function salvarLista() { localStorage.setItem('requisicaoAlmox', JSON.stringify(listaRequisicao)); renderizarListaRequisicao(); atualizarBadges(); }
+  function atualizarBadges() {
+    let total = listaRequisicao.reduce((a,i)=>a+i.quantidade,0);
+    document.getElementById('reqBadgeCount') && (document.getElementById('reqBadgeCount').innerText = `${total} item${total!==1?'s':''}`);
+    document.getElementById('headerCartBadge').innerText = total;
+    document.getElementById('floatingCartQty').innerText = total;
+    document.getElementById('cartCountBadge').innerText = `${total} itens`;
+  }
+  function adicionarMaterial(nome) {
+    const itemDB = materiaisDB.find(m => m.nome === nome);
+    if (!itemDB || itemDB.estoque <= 0) {
+      Swal.fire({ icon: 'error', title: 'Indisponível', text: 'Este material está esgotado.', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500 });
+      return;
+    }
+    let existente = listaRequisicao.find(i => i.nome === nome);
+    if(existente) existente.quantidade++;
+    else listaRequisicao.push({ nome, quantidade: 1, imagem: itemDB.imagem, estoqueAtual: itemDB.estoque });
+    salvarLista();
+    Swal.fire({ icon: 'success', title: 'Adicionado ao carrinho', text: nome, toast: true, position: 'top-end', showConfirmButton: false, timer: 1000 });
+  }
+  function removerMaterial(idx) { listaRequisicao.splice(idx,1); salvarLista(); }
+  function alterarQuantidade(idx, delta) {
+    let nova = listaRequisicao[idx].quantidade + delta;
+    if(nova <= 0) removerMaterial(idx);
+    else { listaRequisicao[idx].quantidade = nova; salvarLista(); }
+  }
+  function renderizarListaRequisicao() {
+    const container = document.getElementById('requisicaoList');
+    const totalSpan = document.getElementById('totalItensReq');
+    if(!listaRequisicao.length) { container.innerHTML = '<div style="text-align:center; padding:1rem;">Nenhum material adicionado.</div>'; totalSpan.innerText = '0'; return; }
+    let totalQtd = 0;
+    let html = '';
+    listaRequisicao.forEach((item, idx) => {
+      totalQtd += item.quantidade;
+      html += `<div class="cart-item">
+        <div class="cart-item-img"><img src="${item.imagem}" alt="${item.nome}"></div>
+        <div class="cart-item-info"><div class="cart-item-name">${item.nome}</div>
+        <div class="cart-qty-control"><button class="qty-down" data-idx="${idx}">-</button><span>${item.quantidade}</span><button class="qty-up" data-idx="${idx}">+</button></div></div>
+        <button class="cart-remove remover-item" data-idx="${idx}"><i class="material-icons">delete_outline</i></button>
+      </div>`;
+    });
+    container.innerHTML = html;
+    totalSpan.innerText = totalQtd;
+    document.querySelectorAll('.qty-down').forEach(btn => btn.addEventListener('click', (e) => alterarQuantidade(parseInt(btn.dataset.idx), -1)));
+    document.querySelectorAll('.qty-up').forEach(btn => btn.addEventListener('click', (e) => alterarQuantidade(parseInt(btn.dataset.idx), 1)));
+    document.querySelectorAll('.remover-item').forEach(btn => btn.addEventListener('click', (e) => removerMaterial(parseInt(btn.dataset.idx))));
+    atualizarBadges();
+  }
+  // CATÁLOGO com skeleton e filtro
+  let currentFilter = "";
+  let currentSearch = "";
+  function renderCatalogo() {
+    let filtered = materiaisDB.filter(m => (currentFilter === "" || m.categoria === currentFilter) && (currentSearch === "" || m.nome.toLowerCase().includes(currentSearch.toLowerCase())));
+    const container = document.getElementById('catalogoContainer');
+    container.innerHTML = filtered.map(item => `
+      <div class="product-card">
+        <div class="product-img"><img src="${item.imagem}" alt="${item.nome}"></div>
+        <div class="product-title">${item.nome}</div>
+        <div class="product-code">MAT-${item.id.toString().slice(-5)}</div>
+        <div class="stock-info"><i class="material-icons" style="font-size:16px;">${item.estoque > 0 ? 'check_circle' : 'dangerous'}</i><span class="${item.estoque > 0 ? 'stock-available' : 'stock-unavailable'}">${item.estoque > 0 ? `Disponível: ${item.estoque}` : 'Esgotado'}</span></div>
+        <button class="btn-add-cart" data-nome="${item.nome.replace(/"/g, '&quot;')}" ${item.estoque <= 0 ? 'disabled' : ''}><i class="material-icons">add_shopping_cart</i> Adicionar</button>
+      </div>
+    `).join('');
+    document.querySelectorAll('.btn-add-cart').forEach(btn => btn.addEventListener('click', (e) => adicionarMaterial(btn.getAttribute('data-nome'))));
+  }
+  // status
+  function salvarStatusSolicitacoes() { localStorage.setItem('solicitacoesStatus', JSON.stringify(solicitacoesRegistradas)); renderizarStatus(); }
+  function renderizarStatus() {
+    const container = document.getElementById('statusList');
+    if(!solicitacoesRegistradas.length) { container.innerHTML = '<div style="padding:12px; text-align:center;">Nenhum pedido registrado.</div>'; return; }
+    let html = '';
+    solicitacoesRegistradas.slice().reverse().forEach(sol => {
+      let badgeClass = sol.status === 'Em análise' ? 'status-analise' : (sol.status === 'Aprovado' ? 'status-aprovado' : 'status-entregue');
+      html += `<div style="background:#F9FBFD; border-radius:20px; padding:12px; margin-bottom:12px; display:flex; justify-content:space-between;"><div><strong>${sol.data}</strong><br><small>${sol.itens.map(i=>`${i.nome} (${i.quantidade})`).join(', ')}</small></div><span style="background:#EFF3F8; padding:4px 12px; border-radius:40px; font-size:0.7rem; font-weight:600;">${sol.status}</span></div>`;
+    });
+    container.innerHTML = html;
+  }
+  // PDF + modal
+  async function gerarPDF(dados, setor, itens) {
+    const { jsPDF } = window.jspdf; const doc = new jsPDF();
+    doc.text("REQUISIÇÃO DE MATERIAIS - CT UFPB / InovaCompras", 15, 20);
+    doc.text(`Setor: ${setor}`,15,35); doc.text(`Solicitante: ${dados.nome}`,15,45);
+    doc.text(`E-mail: ${dados.email} | Contato: ${dados.contato}`,15,55);
+    doc.text(`Perfil: ${dados.perfil} | Lotação: ${dados.lotacao}`,15,65);
+    doc.text("Itens solicitados:",15,80); let y=90;
+    itens.forEach(i=>{ doc.text(`• ${i.nome} - ${i.quantidade} un.`,20,y); y+=8; });
+    doc.save(`requisicao_${dados.nome.replace(/\s/g,'')}.pdf`);
+  }
+  function gerarTexto(dados, setor, itens) { let lista = itens.map(i=>`- ${i.nome}: ${i.quantidade}`).join('\n'); return `**REQUISIÇÃO CT UFPB**\nSetor: ${setor}\nSolicitante: ${dados.nome}\nE-mail: ${dados.email}\nContato: ${dados.contato}\nPerfil: ${dados.perfil}\nLotação: ${dados.lotacao}\n\nItens:\n${lista}\nData: ${new Date().toLocaleString()}`; }
+
+  const modalEl = document.getElementById('solicitanteModal');
+  function abrirModalSolicitacao() { if(!listaRequisicao.length) { Swal.fire('Carrinho vazio','Adicione materiais antes de finalizar.','error'); return; } modalEl.style.display = 'flex'; }
+  document.getElementById('finalizarRequisicaoBtn').addEventListener('click', abrirModalSolicitacao);
+  document.getElementById('headerCartBtn').addEventListener('click', () => { document.querySelector('.cart-section').scrollIntoView({behavior:'smooth'}); });
+  document.getElementById('floatingCartBtn').addEventListener('click', () => { document.querySelector('.cart-section').scrollIntoView({behavior:'smooth'}); });
+  document.getElementById('limparRequisicaoBtn').addEventListener('click', () => { if(listaRequisicao.length) Swal.fire({title:'Limpar carrinho?', icon:'warning', showCancelButton:true, confirmButtonText:'Sim'}).then(res=>{if(res.isConfirmed){listaRequisicao=[]; salvarLista();}}); });
+
+  document.getElementById('confirmarSolicitacao').addEventListener('click', async () => {
+    const setor = document.getElementById('modalSectorSelect').value; if(!setor) return Swal.fire('Setor obrigatório','','error');
+    const nome = document.getElementById('nomeSolicitante').value.trim(); const email = document.getElementById('email').value.trim();
+    const contato = document.getElementById('contato').value.trim(); const lotacao = document.getElementById('lotacao').value.trim();
+    if(!nome || !email || !contato || !lotacao) return Swal.fire('Preencha todos os campos','','error');
+    const dados = { nome, email, contato, perfil: document.getElementById('perfil').value, lotacao, assunto: document.getElementById('assunto').value };
+    const itens = [...listaRequisicao];
+    await gerarPDF(dados, setor, itens);
+    const texto = gerarTexto(dados, setor, itens); await navigator.clipboard.writeText(texto);
+    solicitacoesRegistradas.push({ id: Date.now(), data: new Date().toLocaleString(), itens: itens.map(i=>({nome:i.nome, quantidade:i.quantidade})), status: 'Em análise' });
+    salvarStatusSolicitacoes();
+    await Swal.fire({ title:'✅ Requisição gerada!', html:'<div>PDF criado e texto copiado. Encaminhe no sistema oficial.</div>', icon:'success', confirmButtonText:'Ok' });
+    listaRequisicao = []; salvarLista(); modalEl.style.display = 'none';
+    document.getElementById('nomeSolicitante').value = ''; document.getElementById('email').value = ''; document.getElementById('contato').value = ''; document.getElementById('lotacao').value = ''; document.getElementById('modalSectorSelect').value = '';
+  });
+  window.onclick = (e) => { if(e.target === modalEl) modalEl.style.display = 'none'; };
+
+  // filtros, busca, categorias
+  function buildCategoryChips() {
+    let cats = [...new Set(materiaisDB.map(m => m.categoria))];
+    const chipContainer = document.getElementById('categoryChips');
+    chipContainer.innerHTML = `<div class="chip-cat ${currentFilter === '' ? 'active' : ''}" data-cat="">Todos</div>` + cats.map(cat => `<div class="chip-cat ${currentFilter === cat ? 'active' : ''}" data-cat="${cat}">${cat}</div>`).join('');
+    document.querySelectorAll('.chip-cat').forEach(chip => chip.addEventListener('click', () => { currentFilter = chip.getAttribute('data-cat'); buildCategoryChips(); renderCatalogo(); }));
+  }
+  document.getElementById('searchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderCatalogo(); });
+  // skeleton loading simulado
+  function showSkeleton() { let container = document.getElementById('catalogoContainer'); container.innerHTML = Array(6).fill('<div class="skeleton-card"></div>').join(''); }
+  function loadData() { showSkeleton(); setTimeout(() => { renderCatalogo(); buildCategoryChips(); }, 400); }
+
+  // bottom nav + scroll
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nav = btn.getAttribute('data-nav');
+      if (nav === 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (nav === 'categories') document.querySelector('.categories-scroll').scrollIntoView({ behavior: 'smooth' });
+      if (nav === 'orders') document.getElementById('statusSection').scrollIntoView({ behavior: 'smooth' });
+      if (nav === 'profile') Swal.fire('Perfil Institucional', 'Solicitações vinculadas ao seu CPF/SIAPE.', 'info');
+    });
+  });
+  document.getElementById('whatsappFloatBtn').addEventListener('click', () => window.open('https://wa.me/558332167082?text=Olá%2C%20preciso%20de%20informações%20sobre%20solicitação%20de%20materiais.', '_blank'));
+
+  let saved = localStorage.getItem('requisicaoAlmox'); if(saved) { listaRequisicao = JSON.parse(saved); listaRequisicao.forEach(i => { let db = materiaisDB.find(m=>m.nome===i.nome); if(db) i.imagem = db.imagem; }); }
+  loadData(); renderizarListaRequisicao(); renderizarStatus(); atualizarBadges();
+  Swal.fire({ title: 'InovaCompras', text: 'Selecione materiais e finalize seu pedido.', icon: 'info', confirmButtonText: 'Explorar', confirmButtonColor: '#005BBB', toast: false });
+</script>
+</body>
+</html>
