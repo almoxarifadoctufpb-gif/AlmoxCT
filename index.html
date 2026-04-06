@@ -3,131 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-  <title>Smart Almox | Almoxarifado CT UFPB</title>
-  <!-- Google Fonts & Material Icons -->
+  <title>Smart Almox | Almoxarifado CT UFPB + Fila Água Mineral</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: #F5F7FA;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      color: #1E2A3E;
-      padding-bottom: 80px;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
-
-    /* ---------- SPLASH SCREEN COM IMAGEM CORRIGIDA ---------- */
-    .splash-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%);
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      transition: opacity 0.5s ease-out;
-      opacity: 1;
-    }
-    .splash-content {
-      animation: fadeInUpScale 0.8s ease-out;
-    }
-    .splash-icon-img {
-      width: min(30vw, 140px);
-      max-width: 140px;
-      min-width: 80px;
-      margin-bottom: 24px;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
-      animation: gentleFloat 2s infinite ease-in-out;
-    }
-    .splash-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      background: white;
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .splash-sub {
-      font-size: 0.9rem;
-      opacity: 0.9;
-      margin-top: 8px;
-    }
-    .modern-loader {
-      margin-top: 32px;
-      width: 200px;
-      height: 4px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .modern-loader-bar {
-      width: 0%;
-      height: 100%;
-      background: white;
-      border-radius: 4px;
-      animation: loadingProgress 2s ease-out forwards;
-    }
-    .progress-message {
-      margin-top: 16px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      background: rgba(0,0,0,0.2);
-      padding: 6px 16px;
-      border-radius: 40px;
-    }
-    @keyframes fadeInUpScale {
-      from { opacity:0; transform: translateY(20px) scale(0.95); }
-      to { opacity:1; transform: translateY(0) scale(1); }
-    }
-    @keyframes gentleFloat {
-      0%,100%{ transform: translateY(0); }
-      50%{ transform: translateY(-6px); }
-    }
-    @keyframes loadingProgress {
-      0% { width: 0%; }
-      30% { width: 40%; }
-      70% { width: 75%; }
-      100% { width: 100%; }
-    }
-
-    /* skeleton loading */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: #F5F7FA; font-family: 'Inter', system-ui, sans-serif; color: #1E2A3E; padding-bottom: 80px; scroll-behavior: smooth; overflow-x: hidden; }
+    .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; transition: opacity 0.5s ease-out; opacity: 1; }
+    .splash-content { animation: fadeInUpScale 0.8s ease-out; }
+    .splash-icon-img { width: min(30vw, 140px); max-width: 140px; min-width: 80px; margin-bottom: 24px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); animation: gentleFloat 2s infinite ease-in-out; }
+    .splash-title { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.5px; background: white; background-clip: text; -webkit-background-clip: text; color: transparent; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .splash-sub { font-size: 0.9rem; opacity: 0.9; margin-top: 8px; }
+    .modern-loader { margin-top: 32px; width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
+    .modern-loader-bar { width: 0%; height: 100%; background: white; border-radius: 4px; animation: loadingProgress 2s ease-out forwards; }
+    .progress-message { margin-top: 16px; font-size: 0.8rem; font-weight: 500; background: rgba(0,0,0,0.2); padding: 6px 16px; border-radius: 40px; }
+    @keyframes fadeInUpScale { from { opacity:0; transform: translateY(20px) scale(0.95); } to { opacity:1; transform: translateY(0) scale(1); } }
+    @keyframes gentleFloat { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
+    @keyframes loadingProgress { 0% { width: 0%; } 30% { width: 40%; } 70% { width: 75%; } 100% { width: 100%; } }
     .skeleton-card { background: #eef2f5; border-radius: 20px; height: 260px; animation: pulse 1.2s infinite ease-in-out; }
     @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-
-    /* header */
-    .app-header { position: sticky; top: 0; z-index: 110; background: white; backdrop-filter: blur(0px); padding: 12px 16px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 1px 0 rgba(0, 0, 0, 0.02); }
+    .app-header { position: sticky; top: 0; z-index: 110; background: white; padding: 12px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
     .header-row { display: flex; align-items: center; gap: 12px; }
-    .brand h2 { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: -0.3px; }
+    .brand h2 { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%); background-clip: text; -webkit-background-clip: text; color: transparent; }
     .brand span { font-size: 0.7rem; font-weight: 500; color: #5A6874; }
-    .search-bar { flex: 1; background: #F0F2F5; border-radius: 32px; display: flex; align-items: center; padding: 8px 16px; gap: 8px; transition: all 0.2s; }
+    .search-bar { flex: 1; background: #F0F2F5; border-radius: 32px; display: flex; align-items: center; padding: 8px 16px; gap: 8px; }
     .search-bar input { background: transparent; border: none; font-size: 0.9rem; width: 100%; outline: none; font-weight: 500; }
-    .cart-icon-header { position: relative; cursor: pointer; background: #F0F2F5; border-radius: 30px; padding: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .cart-icon-header { position: relative; cursor: pointer; background: #F0F2F5; border-radius: 30px; padding: 8px; display: flex; align-items: center; justify-content: center; }
     .cart-count-badge { position: absolute; top: -4px; right: -6px; background: #005BBB; color: white; font-size: 0.7rem; font-weight: 700; border-radius: 30px; padding: 2px 7px; min-width: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-
-    /* category chips */
     .categories-scroll { overflow-x: auto; display: flex; gap: 12px; padding: 12px 16px; scrollbar-width: thin; white-space: nowrap; background: white; border-bottom: 1px solid #EDF2F7; }
     .chip-cat { background: #F0F2F5; padding: 8px 18px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; color: #1E2A3E; transition: all 0.2s ease; cursor: pointer; }
     .chip-cat.active, .chip-cat:active { background: #005BBB; color: white; transform: scale(0.97); }
     .chip-cat:hover { transform: translateY(-2px); background: #e0e4ea; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-
-    /* Carrossel moderno */
     .carousel-section { max-width: 1400px; margin: 16px auto 0; padding: 0 16px; }
     .carousel-container { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); background: #fff; }
     .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
@@ -136,30 +44,26 @@
     .slide-text h3 { font-size: 1.3rem; font-weight: 800; color: #005BBB; margin-bottom: 8px; }
     .slide-text p { color: #2c3e50; font-weight: 500; }
     .slide-icon { font-size: 48px; background: #005BBB10; border-radius: 60px; padding: 12px; }
-    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: none; width: 40px; height: 40px; border-radius: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; z-index: 10; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: none; width: 40px; height: 40px; border-radius: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
     .carousel-btn:hover { transform: translateY(-50%) scale(1.05); background: #005BBB; color: white; }
     .carousel-btn.prev { left: 12px; }
     .carousel-btn.next { right: 12px; }
     .carousel-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: white; }
     .dot { width: 8px; height: 8px; background: #ccc; border-radius: 10px; transition: all 0.2s; cursor: pointer; }
     .dot.active { width: 24px; background: #005BBB; }
-
-    /* logistics panel */
     .logistics-status { background: white; border-radius: 24px; padding: 12px 20px; margin: 16px auto; max-width: 1400px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid #edf2f7; }
     .indicator-group { display: flex; gap: 20px; flex-wrap: wrap; }
     .indicator { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; }
     .led { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 4px currentColor; }
-    .led-green { background: #1E7E34; box-shadow: 0 0 6px #1E7E34; }
-    .led-yellow { background: #F4B942; box-shadow: 0 0 6px #F4B942; }
-    .led-red { background: #B91C1C; box-shadow: 0 0 6px #B91C1C; }
+    .led-green { background: #1E7E34; }
+    .led-yellow { background: #F4B942; }
+    .led-red { background: #B91C1C; }
     .update-time { font-size: 0.75rem; color: #6B7A8A; display: flex; align-items: center; gap: 6px; }
-
-    /* product grid */
     .products-container { max-width: 1400px; margin: 0 auto; padding: 16px; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 18px; }
-    .product-card { background: white; border-radius: 24px; padding: 14px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); transition: all 0.25s cubic-bezier(0.2, 0, 0, 1); cursor: pointer; border: 1px solid #edf2f7; animation: fadeSlideUp 0.4s ease-out; }
+    .product-card { background: white; border-radius: 24px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: all 0.25s cubic-bezier(0.2,0,0,1); cursor: pointer; border: 1px solid #edf2f7; animation: fadeSlideUp 0.4s ease-out; }
     @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15); border-color: #cbd5e1; }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15); border-color: #cbd5e1; }
     .product-img { background: #F8FAFE; border-radius: 20px; height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
     .product-img img { max-width: 100px; max-height: 100px; object-fit: contain; }
     .product-title { font-weight: 700; font-size: 0.9rem; margin: 8px 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -171,401 +75,92 @@
     .btn-add-cart:hover { transform: scale(1.02); background: #004499; box-shadow: 0 6px 14px rgba(0,91,187,0.3); }
     .btn-add-cart:active { transform: scale(0.96); }
     .btn-add-cart:disabled { background: #B9CFDF; cursor: not-allowed; transform: none; }
-
-    /* cart section */
-    .cart-card {
-      background: white;
-      border-radius: 28px;
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
-    }
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .cart-items-list {
-      max-height: 280px;
-      overflow-y: auto;
-      margin-bottom: 16px;
-    }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #F9FBFD;
-      border-radius: 20px;
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-    .cart-qty-control {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .cart-qty-control button {
-      background: #EFF3F8;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 30px;
-      font-weight: bold;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .cart-qty-control button:hover {
-      background: #e2e8f0;
-      transform: scale(1.05);
-    }
-    .cart-qty-control button:active {
-      transform: scale(0.92);
-    }
-    .cart-remove {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      margin-left: auto;
-      color: #94a3b8;
-      transition: all 0.2s;
-    }
-    .cart-remove:hover {
-      color: #ef4444;
-      transform: scale(1.1);
-    }
-    .cart-total {
-      margin-top: 12px;
-      font-weight: 700;
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-top: 1px solid #edf2f7;
-      font-size: 1rem;
-    }
-
-    .cart-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: auto;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #005BBB, #003D7A);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 16px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 8px 18px rgba(0, 91, 187, 0.25);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(0, 91, 187, 0.35);
-    }
-
-    .btn-primary:active {
-      transform: scale(0.96);
-    }
-
-    .btn-secondary {
-      background: #F1F5F9;
-      color: #334155;
-      border: 1px solid #E2E8F0;
-      padding: 12px;
-      border-radius: 14px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-secondary:hover {
-      background: #E2E8F0;
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary:active {
-      transform: scale(0.95);
-    }
-
-    .floating-cart { position: fixed; bottom: 90px; right: 20px; background: #005BBB; width: 58px; height: 58px; border-radius: 40px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0, 91, 187, 0.4); cursor: pointer; z-index: 200; transition: all 0.2s; }
+    .cart-card { background: white; border-radius: 28px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .cart-items-list { max-height: 280px; overflow-y: auto; margin-bottom: 16px; }
+    .cart-item { display: flex; align-items: center; gap: 12px; background: #F9FBFD; border-radius: 20px; padding: 12px; margin-bottom: 10px; }
+    .cart-qty-control { display: flex; align-items: center; gap: 8px; }
+    .cart-qty-control button { background: #EFF3F8; border: none; width: 32px; height: 32px; border-radius: 30px; font-weight: bold; transition: all 0.2s ease; cursor: pointer; }
+    .cart-qty-control button:hover { background: #e2e8f0; transform: scale(1.05); }
+    .cart-qty-control button:active { transform: scale(0.92); }
+    .cart-remove { background: transparent; border: none; cursor: pointer; margin-left: auto; color: #94a3b8; transition: all 0.2s; }
+    .cart-remove:hover { color: #ef4444; transform: scale(1.1); }
+    .cart-total { margin-top: 12px; font-weight: 700; display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid #edf2f7; font-size: 1rem; }
+    .cart-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+    .btn-primary { background: linear-gradient(135deg, #005BBB, #003D7A); color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 8px 18px rgba(0,91,187,0.25); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,91,187,0.35); }
+    .btn-primary:active { transform: scale(0.96); }
+    .btn-secondary { background: #F1F5F9; color: #334155; border: 1px solid #E2E8F0; padding: 12px; border-radius: 14px; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.2s ease; }
+    .btn-secondary:hover { background: #E2E8F0; transform: translateY(-1px); }
+    .btn-secondary:active { transform: scale(0.95); }
+    .floating-cart { position: fixed; bottom: 90px; right: 20px; background: #005BBB; width: 58px; height: 58px; border-radius: 40px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,91,187,0.4); cursor: pointer; z-index: 200; transition: all 0.2s; }
     .floating-cart:hover { transform: scale(1.08); background: #004499; }
     .whatsapp-float { position: fixed; bottom: 150px; left: 20px; background: #25D366; border-radius: 40px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; transition: 0.2s; z-index: 200; }
     .whatsapp-float:hover { transform: scale(1.1); }
-
-    /* ripple effect */
     .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.6); transform: scale(0); animation: rippleAnim 0.5s linear; pointer-events: none; }
     @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
-
     .two-col-layout { max-width: 1400px; margin: 0 auto; padding: 0 16px; gap: 24px; }
     @media (min-width: 1024px) { .two-col-layout { display: flex; align-items: flex-start; } .products-container { flex: 2; } .cart-section { flex: 1.2; margin-top: 0; } }
-
-    /* MODAL PROFISSIONAL DE REQUISIÇÃO */
-    .modal-modern {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(10px);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      animation: fadeInModal 0.2s ease-out;
-    }
-    @keyframes fadeInModal {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .modal-container {
-      background: white;
-      width: 90%;
-      max-width: 680px;
-      border-radius: 32px;
-      padding: 28px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-      animation: slideUpModal 0.3s ease-out;
-    }
-    @keyframes slideUpModal {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    .modal-container h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #1E2A3E;
-    }
-    .modal-sub {
-      color: #5A6874;
-      margin-bottom: 24px;
-      font-size: 0.85rem;
-      border-left: 3px solid #005BBB;
-      padding-left: 12px;
-    }
-    .order-summary-modal {
-      background: #F8FAFE;
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 24px;
-      border: 1px solid #edf2f7;
-    }
-    .order-summary-modal h3 {
-      font-size: 1rem;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #005BBB;
-    }
-    .modal-items-list {
-      max-height: 180px;
-      overflow-y: auto;
-    }
-    .modal-item-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #e9eef3;
-      font-size: 0.85rem;
-    }
-    .modal-item-name {
-      font-weight: 500;
-    }
-    .modal-item-qty {
-      background: #EFF3F8;
-      padding: 2px 10px;
-      border-radius: 40px;
-      font-weight: 600;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .input-group label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #334155;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .input-group label i {
-      font-size: 16px;
-      color: #005BBB;
-    }
-    .input-group input, .input-group select {
-      background: #F8FAFE;
-      border: 1px solid #E2E8F0;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 0.9rem;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.2s;
-    }
-    .input-group input:focus, .input-group select:focus {
-      outline: none;
-      border-color: #005BBB;
-      box-shadow: 0 0 0 3px rgba(0,91,187,0.2);
-      background: white;
-    }
-    .full-width {
-      grid-column: span 2;
-    }
-    @media (max-width: 640px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-      .full-width {
-        grid-column: span 1;
-      }
-      .modal-container {
-        padding: 20px;
-      }
-    }
-    .btn-primary-modal {
-      width: 100%;
-      margin-top: 8px;
-    }
-
-    /* bottom navigation */
-    .bottom-nav {
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 24px);
-      max-width: 500px;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(20px);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 8px 16px 12px;
-      border-radius: 48px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
-      z-index: 105;
-      border: 1px solid rgba(0, 91, 187, 0.1);
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: transparent;
-      border: none;
-      font-weight: 600;
-      font-size: 0.7rem;
-      color: #6C7A8A;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      border-radius: 40px;
-      padding: 6px 12px;
-      position: relative;
-    }
-    .nav-item .material-icons {
-      font-size: 24px;
-      transition: transform 0.2s ease, color 0.2s;
-    }
-    .nav-item:hover {
-      background: rgba(0, 91, 187, 0.08);
-      transform: translateY(-3px);
-    }
-    .nav-item:hover .material-icons {
-      transform: scale(1.08);
-      color: #005BBB;
-    }
-    .nav-item.active {
-      background: rgba(0, 91, 187, 0.12);
-      color: #005BBB;
-      transform: translateY(-4px);
-    }
-    .nav-item.active .material-icons {
-      transform: scale(1.2);
-      color: #005BBB;
-    }
-    .nav-item.active::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 24px;
-      height: 3px;
-      background: #005BBB;
-      border-radius: 4px;
-      animation: slideIn 0.2s ease-out;
-    }
-    @keyframes slideIn {
-      from { width: 0; opacity: 0; }
-      to { width: 24px; opacity: 1; }
-    }
-    .nav-item:active {
-      transform: scale(0.92);
-    }
-    .screen-subtitle {
-      max-width: 1400px;
-      margin: 8px auto 0;
-      padding: 0 16px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #5A6874;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .screen-subtitle i {
-      font-size: 18px;
-      color: #005BBB;
-    }
+    .modal-modern { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 1000; animation: fadeInModal 0.2s ease-out; }
+    @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
+    .modal-container { background: white; width: 90%; max-width: 680px; border-radius: 32px; padding: 28px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: slideUpModal 0.3s ease-out; }
+    @keyframes slideUpModal { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-container h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; color: #1E2A3E; }
+    .modal-sub { color: #5A6874; margin-bottom: 24px; font-size: 0.85rem; border-left: 3px solid #005BBB; padding-left: 12px; }
+    .order-summary-modal { background: #F8FAFE; border-radius: 20px; padding: 16px; margin-bottom: 24px; border: 1px solid #edf2f7; }
+    .order-summary-modal h3 { font-size: 1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #005BBB; }
+    .modal-items-list { max-height: 180px; overflow-y: auto; }
+    .modal-item-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e9eef3; font-size: 0.85rem; }
+    .modal-item-name { font-weight: 500; }
+    .modal-item-qty { background: #EFF3F8; padding: 2px 10px; border-radius: 40px; font-weight: 600; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-group label { font-size: 0.75rem; font-weight: 600; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; }
+    .input-group label i { font-size: 16px; color: #005BBB; }
+    .input-group input, .input-group select { background: #F8FAFE; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; font-size: 0.9rem; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+    .input-group input:focus, .input-group select:focus { outline: none; border-color: #005BBB; box-shadow: 0 0 0 3px rgba(0,91,187,0.2); background: white; }
+    .full-width { grid-column: span 2; }
+    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .modal-container { padding: 20px; } }
+    .btn-primary-modal { width: 100%; margin-top: 8px; }
+    .bottom-nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); max-width: 500px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 8px 16px 12px; border-radius: 48px; box-shadow: 0 8px 28px rgba(0,0,0,0.12); z-index: 105; border: 1px solid rgba(0,91,187,0.1); }
+    .nav-item { display: flex; flex-direction: column; align-items: center; background: transparent; border: none; font-weight: 600; font-size: 0.7rem; color: #6C7A8A; gap: 4px; cursor: pointer; transition: all 0.2s cubic-bezier(0.2,0.9,0.4,1.1); border-radius: 40px; padding: 6px 12px; position: relative; }
+    .nav-item .material-icons { font-size: 24px; transition: transform 0.2s ease, color 0.2s; }
+    .nav-item:hover { background: rgba(0,91,187,0.08); transform: translateY(-3px); }
+    .nav-item:hover .material-icons { transform: scale(1.08); color: #005BBB; }
+    .nav-item.active { background: rgba(0,91,187,0.12); color: #005BBB; transform: translateY(-4px); }
+    .nav-item.active .material-icons { transform: scale(1.2); color: #005BBB; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: #005BBB; border-radius: 4px; animation: slideIn 0.2s ease-out; }
+    @keyframes slideIn { from { width: 0; opacity: 0; } to { width: 24px; opacity: 1; } }
+    .nav-item:active { transform: scale(0.92); }
+    .screen-subtitle { max-width: 1400px; margin: 8px auto 0; padding: 0 16px; font-size: 0.85rem; font-weight: 500; color: #5A6874; display: flex; align-items: center; gap: 6px; }
+    .screen-subtitle i { font-size: 18px; color: #005BBB; }
+    .water-card { background: linear-gradient(135deg, #E8F4FF 0%, #D9ECFF 100%); border-radius: 28px; margin: 16px auto; max-width: 1400px; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; box-shadow: 0 8px 20px rgba(0,91,187,0.15); cursor: pointer; transition: all 0.2s; }
+    .water-card:hover { transform: scale(1.01); box-shadow: 0 12px 28px rgba(0,91,187,0.25); }
+    .water-card-left { display: flex; align-items: center; gap: 20px; }
+    .water-card-left img { width: 70px; height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+    .water-card-text h3 { font-size: 1.3rem; font-weight: 800; color: #003D7A; }
+    .water-card-text p { color: #1E2A3E; font-weight: 500; }
+    .btn-water { background: #005BBB; border: none; padding: 12px 28px; border-radius: 40px; color: white; font-weight: 700; display: flex; align-items: center; gap: 8px; font-size: 1rem; transition: all 0.2s; cursor: pointer; }
+    .btn-water:hover { transform: translateY(-2px); background: #004499; }
+    .queue-section { background: white; border-radius: 28px; padding: 20px; margin: 16px auto; max-width: 1400px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .queue-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .queue-list { display: flex; flex-direction: column; gap: 12px; }
+    .queue-item { background: #F9FBFD; border-radius: 20px; padding: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-left: 6px solid #005BBB; transition: 0.2s; }
+    .queue-item.current-user { background: #E3F2FD; border-left-color: #FF9800; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .queue-pos { font-weight: 800; font-size: 1.2rem; background: #EFF3F8; padding: 4px 12px; border-radius: 40px; min-width: 60px; text-align: center; }
+    .queue-info { flex: 2; }
+    .queue-status { padding: 4px 12px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; }
+    .status-aguardando { background: #FFF3E0; color: #E65100; }
+    .status-atendimento { background: #E3F2FD; color: #0D47A1; }
+    .status-finalizado { background: #E8F5E9; color: #1B5E20; }
+    .admin-btn { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 8px 16px; border-radius: 30px; font-weight: 600; cursor: pointer; }
   </style>
 </head>
 <body>
 
 <div class="splash-screen" id="splashScreen">
   <div class="splash-content">
-    <!-- 
-      ⚠️ INSTRUÇÕES PARA A IMAGEM:
-      Opção 1 (local): coloque o arquivo "Inicialização CT ALMOX.png" na MESMA PASTA do HTML
-      Opção 2 (GitHub): substitua o link abaixo pelo link RAW verdadeiro da sua imagem no GitHub
-    -->
-    <img 
-      src="Inicialização CT ALMOX.png" 
-      alt="Logo Smart Almox" 
-      class="splash-icon-img"
-      onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23005BBB%22/%3E%3Ctext x=%2250%22 y=%2267%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22%3E📦%3C/text%3E%3C/svg%3E'"
-    >
+    <img src="Inicialização CT ALMOX.png" alt="Logo Smart Almox" class="splash-icon-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23005BBB%22/%3E%3Ctext x=%2250%22 y=%2267%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22%3E📦%3C/text%3E%3C/svg%3E'">
     <div class="splash-title">Smart Almox</div>
     <div class="splash-sub">Almoxarifado CT UFPB</div>
     <div class="modern-loader"><div class="modern-loader-bar"></div></div>
@@ -598,6 +193,17 @@
     <button class="carousel-btn next" id="nextSlideBtn"><i class="material-icons">chevron_right</i></button>
     <div class="carousel-dots" id="carouselDots"></div>
   </div>
+</div>
+
+<div class="water-card" id="waterRequestBtn">
+  <div class="water-card-left">
+    <img src="agua-mineral.png" alt="Água Mineral" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E💧%3C/text%3E%3C/svg%3E'">
+    <div class="water-card-text">
+      <h3>Solicitar Água Mineral</h3>
+      <p>Garrafões de 20L · Entrega no setor</p>
+    </div>
+  </div>
+  <button class="btn-water"><i class="material-icons">local_drink</i> Solicitar agora</button>
 </div>
 
 <div class="logistics-status" id="logisticsPanel">
@@ -638,6 +244,14 @@
 
 <div class="status-area" id="statusSection"><div class="status-modern-card"><h3><i class="material-icons">receipt_long</i> Meus pedidos</h3><div id="statusList" class="status-lista" style="margin-top:12px;">Nenhuma solicitação registrada.</div></div></div>
 
+<div class="queue-section" id="queueSection">
+  <div class="queue-header">
+    <h3><i class="material-icons">queue</i> Fila de Atendimento - Água Mineral</h3>
+    <button id="advanceQueueBtn" class="admin-btn"><i class="material-icons">skip_next</i> Avançar fila (admin)</button>
+  </div>
+  <div id="queueListContainer" class="queue-list">Carregando fila...</div>
+</div>
+
 <div class="floating-cart" id="floatingCartBtn"><i class="material-icons" style="color:white;">shopping_cart</i><span id="floatingCartQty">0</span></div>
 <div class="whatsapp-float" id="whatsappFloatBtn"><img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" width="28" alt="WhatsApp"></div>
 
@@ -647,72 +261,72 @@
   <button class="nav-item" data-nav="orders"><i class="material-icons">receipt</i><span>Requisições</span></button>
 </div>
 
-<!-- MODAL MODERNO E PROFISSIONAL DE REQUISIÇÃO -->
+<!-- MODAL ORIGINAL DE SOLICITAÇÃO (restaurado) -->
 <div id="solicitanteModal" class="modal-modern">
   <div class="modal-container">
     <h2><i class="material-icons" style="font-size:28px;">assignment</i> Dados da requisição</h2>
     <div class="modal-sub">Preencha as informações abaixo para finalizar seu pedido</div>
-
-    <!-- Resumo dos itens do carrinho -->
     <div class="order-summary-modal" id="modalOrderSummary">
       <h3><i class="material-icons">shopping_cart</i> Itens solicitados</h3>
       <div id="modalItemsList" class="modal-items-list"></div>
     </div>
-
-    <!-- Formulário em grid -->
     <div class="form-grid">
       <div class="input-group full-width">
         <label><i class="material-icons">business</i> Setor/Unidade *</label>
         <select id="modalSectorSelect">
           <option disabled selected>Selecione o setor</option>
-          <optgroup label="Setores">
-            <option>Almoxarifado</option>
-            <option>Secretaria do CT</option>
-          </optgroup>
-          <optgroup label="Departamentos">
-            <option>DEM - Mecânica</option>
-            <option>DEA - Alimentos</option>
-            <option>DECA - Civil</option>
-          </optgroup>
+          <optgroup label="Setores"><option>Almoxarifado</option><option>Secretaria do CT</option></optgroup>
+          <optgroup label="Departamentos"><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></optgroup>
         </select>
       </div>
-      <div class="input-group">
-        <label><i class="material-icons">person</i> Nome completo *</label>
-        <input type="text" id="nomeSolicitante" placeholder="Ex: João da Silva">
-      </div>
-      <div class="input-group">
-        <label><i class="material-icons">email</i> E-mail institucional *</label>
-        <input type="email" id="email" placeholder="joao@ufpb.br">
-      </div>
-      <div class="input-group">
-        <label><i class="material-icons">phone</i> WhatsApp *</label>
-        <input type="text" id="contato" placeholder="(83) 99999-9999">
-      </div>
-      <div class="input-group">
-        <label><i class="material-icons">badge</i> Perfil</label>
-        <select id="perfil">
-          <option>Discente</option>
-          <option>Docente</option>
-          <option>Técnico-Administrativo</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <label><i class="material-icons">work</i> Lotaçao *</label>
-        <input type="text" id="lotacao" placeholder="Ex: CT - Coordenação">
-      </div>
-      <div class="input-group full-width">
-        <label><i class="material-icons">description</i> Assunto</label>
-        <input type="text" id="assunto" value="Solicitação de materiais">
-      </div>
+      <div class="input-group"><label><i class="material-icons">person</i> Nome completo *</label><input type="text" id="nomeSolicitante" placeholder="Ex: João da Silva"></div>
+      <div class="input-group"><label><i class="material-icons">email</i> E-mail institucional *</label><input type="email" id="email" placeholder="joao@ufpb.br"></div>
+      <div class="input-group"><label><i class="material-icons">phone</i> WhatsApp *</label><input type="text" id="contato" placeholder="(83) 99999-9999"></div>
+      <div class="input-group"><label><i class="material-icons">badge</i> Perfil</label><select id="perfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div>
+      <div class="input-group"><label><i class="material-icons">work</i> Lotação *</label><input type="text" id="lotacao" placeholder="Ex: CT - Coordenação"></div>
+      <div class="input-group full-width"><label><i class="material-icons">description</i> Assunto</label><input type="text" id="assunto" value="Solicitação de materiais"></div>
     </div>
+    <button id="confirmarSolicitacao" class="btn-primary btn-primary-modal"><i class="material-icons">check_circle</i> Confirmar e gerar PDF</button>
+  </div>
+</div>
 
-    <button id="confirmarSolicitacao" class="btn-primary btn-primary-modal">
-      <i class="material-icons">check_circle</i> Confirmar e gerar PDF
-    </button>
+<!-- MODAL PARA SOLICITAÇÃO DE ÁGUA MINERAL -->
+<div id="modalAgua" class="modal-modern">
+  <div class="modal-container">
+    <h2><i class="material-icons" style="font-size:28px;">local_drink</i> Solicitar Água Mineral</h2>
+    <div class="modal-sub">Preencha seus dados para entrar na fila de atendimento</div>
+    <div class="form-grid">
+      <div class="input-group full-width"><label><i class="material-icons">business</i> Setor/Unidade *</label><select id="aguaSetor"><option disabled selected>Selecione o setor</option><optgroup label="Setores"><option>Almoxarifado</option><option>Secretaria do CT</option></optgroup><optgroup label="Departamentos"><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></optgroup></select></div>
+      <div class="input-group"><label><i class="material-icons">person</i> Nome completo *</label><input type="text" id="aguaNome" placeholder="Ex: João da Silva"></div>
+      <div class="input-group"><label><i class="material-icons">email</i> E-mail institucional *</label><input type="email" id="aguaEmail" placeholder="joao@ufpb.br"></div>
+      <div class="input-group"><label><i class="material-icons">phone</i> WhatsApp *</label><input type="text" id="aguaContato" placeholder="(83) 99999-9999"></div>
+      <div class="input-group"><label><i class="material-icons">badge</i> Perfil</label><select id="aguaPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div>
+      <div class="input-group"><label><i class="material-icons">work</i> Lotação *</label><input type="text" id="aguaLotacao" placeholder="Ex: CT - Coordenação"></div>
+    </div>
+    <button id="confirmarAguaBtn" class="btn-primary btn-primary-modal"><i class="material-icons">check_circle</i> Entrar na fila</button>
   </div>
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+  // ---------- FUNÇÕES AUXILIARES SEGURAS ----------
+  function getLocalStorageItem(key, defaultValue = []) {
+    try {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : defaultValue;
+    } catch (e) {
+      console.error(`Erro ao ler ${key}:`, e);
+      return defaultValue;
+    }
+  }
+  function setLocalStorageItem(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.error(`Erro ao salvar ${key}:`, e);
+    }
+  }
+
   // ---------- DADOS (mesmo do original) ----------
   let materiaisDB = [];
   function addItem(categoria, nome, imagem = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232C5F7A'%3E%3Cpath d='M4 6h16v2H4V6zm2-4h12v2H6V2zm16 8H2v12h20V10zm-2 10H4v-8h16v8z'/%3E%3C/svg%3E", estoque = 45) { materiaisDB.push({ categoria, nome, imagem, estoque, id: Math.random() }); }
@@ -727,67 +341,57 @@
   addItem("Expediente", "Papel A4 (resma premium)", "https://img.kalunga.com.br/fotosdeprodutos/606061z_1.jpg", 0);
   addItem("Informática", "Mousepad Gamer", "https://m.media-amazon.com/images/I/61lPN616-hL._AC_UF1000,1000_QL80_.jpg", 2);
 
-  let listaRequisicao = JSON.parse(localStorage.getItem('requisicaoAlmox') || '[]');
-  let solicitacoesRegistradas = JSON.parse(localStorage.getItem('solicitacoesStatus') || '[]');
+  let listaRequisicao = getLocalStorageItem('requisicaoAlmox', []);
+  let solicitacoesRegistradas = getLocalStorageItem('solicitacoesStatus', []);
 
-  function salvarLista() { localStorage.setItem('requisicaoAlmox', JSON.stringify(listaRequisicao)); renderizarListaRequisicao(); atualizarBadges(); }
-  function atualizarBadges() { let total = listaRequisicao.reduce((a,i)=>a+i.quantidade,0); document.getElementById('headerCartBadge').innerText = total; document.getElementById('floatingCartQty').innerText = total; document.getElementById('cartCountBadge').innerHTML = `${total} itens`; }
+  function salvarLista() { setLocalStorageItem('requisicaoAlmox', listaRequisicao); renderizarListaRequisicao(); atualizarBadges(); }
+  function atualizarBadges() { let total = listaRequisicao.reduce((a,i)=>a+i.quantidade,0); const headerBadge = document.getElementById('headerCartBadge'); if(headerBadge) headerBadge.innerText = total; const floatingQty = document.getElementById('floatingCartQty'); if(floatingQty) floatingQty.innerText = total; const cartCount = document.getElementById('cartCountBadge'); if(cartCount) cartCount.innerHTML = `${total} itens`; }
   function adicionarMaterial(nome) { let itemDB = materiaisDB.find(m => m.nome === nome); if (!itemDB || itemDB.estoque <= 0) { Swal.fire({ icon: 'error', title: 'Indisponível', text: 'Material esgotado.', toast: true, timer: 1500, position: 'top-end', showConfirmButton: false }); return; } let existente = listaRequisicao.find(i => i.nome === nome); if(existente) existente.quantidade++; else listaRequisicao.push({ nome, quantidade: 1, imagem: itemDB.imagem, estoqueAtual: itemDB.estoque }); salvarLista(); Swal.fire({ icon: 'success', title: 'Adicionado', text: nome, toast: true, timer: 1200, position: 'top-end', showConfirmButton: false }); }
   function removerMaterial(idx) { listaRequisicao.splice(idx,1); salvarLista(); }
   function alterarQuantidade(idx, delta) { let nova = listaRequisicao[idx].quantidade + delta; if(nova <= 0) removerMaterial(idx); else { listaRequisicao[idx].quantidade = nova; salvarLista(); } }
-  function renderizarListaRequisicao() { const container = document.getElementById('requisicaoList'); const totalSpan = document.getElementById('totalItensReq'); if(!listaRequisicao.length) { container.innerHTML = '<div style="text-align:center; padding:1rem;">Nenhum material adicionado.</div>'; totalSpan.innerText = '0'; return; } let totalQtd = 0; let html = ''; listaRequisicao.forEach((item, idx) => { totalQtd += item.quantidade; html += `<div class="cart-item"><div class="cart-item-img"><img src="${item.imagem}" style="width:36px;"></div><div class="cart-item-info"><div class="cart-item-name">${item.nome}</div><div class="cart-qty-control"><button class="qty-down" data-idx="${idx}">-</button><span>${item.quantidade}</span><button class="qty-up" data-idx="${idx}">+</button></div></div><button class="cart-remove remover-item" data-idx="${idx}"><i class="material-icons">delete_outline</i></button></div>`; }); container.innerHTML = html; totalSpan.innerText = totalQtd; document.querySelectorAll('.qty-down').forEach(btn => btn.addEventListener('click', (e) => alterarQuantidade(parseInt(btn.dataset.idx), -1))); document.querySelectorAll('.qty-up').forEach(btn => btn.addEventListener('click', (e) => alterarQuantidade(parseInt(btn.dataset.idx), 1))); document.querySelectorAll('.remover-item').forEach(btn => btn.addEventListener('click', (e) => removerMaterial(parseInt(btn.dataset.idx)))); atualizarBadges(); }
+  function renderizarListaRequisicao() { const container = document.getElementById('requisicaoList'); const totalSpan = document.getElementById('totalItensReq'); if(!container) return; if(!listaRequisicao.length) { container.innerHTML = '<div style="text-align:center; padding:1rem;">Nenhum material adicionado.</div>'; if(totalSpan) totalSpan.innerText = '0'; return; } let totalQtd = 0; let html = ''; listaRequisicao.forEach((item, idx) => { totalQtd += item.quantidade; html += `<div class="cart-item"><div class="cart-item-img"><img src="${item.imagem}" style="width:36px;"></div><div class="cart-item-info"><div class="cart-item-name">${item.nome}</div><div class="cart-qty-control"><button class="qty-down" data-idx="${idx}">-</button><span>${item.quantidade}</span><button class="qty-up" data-idx="${idx}">+</button></div></div><button class="cart-remove remover-item" data-idx="${idx}"><i class="material-icons">delete_outline</i></button></div>`; }); container.innerHTML = html; if(totalSpan) totalSpan.innerText = totalQtd; document.querySelectorAll('.qty-down').forEach(btn => btn.addEventListener('click', (e) => alterarQuantidade(parseInt(btn.dataset.idx), -1))); document.querySelectorAll('.qty-up').forEach(btn => btn.addEventListener('click', (e) => alterarQuantidade(parseInt(btn.dataset.idx), 1))); document.querySelectorAll('.remover-item').forEach(btn => btn.addEventListener('click', (e) => removerMaterial(parseInt(btn.dataset.idx)))); atualizarBadges(); }
   
   let currentFilter = "", currentSearch = "";
-  function renderCatalogo() { let filtered = materiaisDB.filter(m => (currentFilter === "" || m.categoria === currentFilter) && (currentSearch === "" || m.nome.toLowerCase().includes(currentSearch.toLowerCase()))); const container = document.getElementById('catalogoContainer'); container.innerHTML = filtered.map(item => { let badgeClass = item.estoque <= 0 ? 'badge-out' : (item.estoque <= 5 ? 'badge-low' : 'badge-available'); let badgeText = item.estoque <= 0 ? '❌ Indisponível' : (item.estoque <= 5 ? `⚠️ Baixo estoque (${item.estoque})` : `✅ Disponível (${item.estoque})`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}" alt="${item.nome}"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" data-nome="${item.nome.replace(/"/g, '&quot;')}" ${item.estoque <= 0 ? 'disabled' : ''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join(''); document.querySelectorAll('.btn-add-cart').forEach(btn => btn.addEventListener('click', (e) => { adicionarMaterial(btn.getAttribute('data-nome')); })); }
+  function renderCatalogo() { let filtered = materiaisDB.filter(m => (currentFilter === "" || m.categoria === currentFilter) && (currentSearch === "" || m.nome.toLowerCase().includes(currentSearch.toLowerCase()))); const container = document.getElementById('catalogoContainer'); if(!container) return; container.innerHTML = filtered.map(item => { let badgeClass = item.estoque <= 0 ? 'badge-out' : (item.estoque <= 5 ? 'badge-low' : 'badge-available'); let badgeText = item.estoque <= 0 ? '❌ Indisponível' : (item.estoque <= 5 ? `⚠️ Baixo estoque (${item.estoque})` : `✅ Disponível (${item.estoque})`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}" alt="${item.nome}"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" data-nome="${item.nome.replace(/"/g, '&quot;')}" ${item.estoque <= 0 ? 'disabled' : ''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join(''); document.querySelectorAll('.btn-add-cart').forEach(btn => btn.addEventListener('click', (e) => { adicionarMaterial(btn.getAttribute('data-nome')); })); }
   
-  function salvarStatusSolicitacoes() { localStorage.setItem('solicitacoesStatus', JSON.stringify(solicitacoesRegistradas)); renderizarStatus(); }
-  function renderizarStatus() { const container = document.getElementById('statusList'); if(!solicitacoesRegistradas.length) { container.innerHTML = '<div style="padding:12px; text-align:center;">Nenhum pedido registrado.</div>'; return; } let html = ''; solicitacoesRegistradas.slice().reverse().forEach(sol => { html += `<div style="background:#F9FBFD; border-radius:20px; padding:12px; margin-bottom:12px; display:flex; justify-content:space-between;"><div><strong>${sol.data}</strong><br><small>${sol.itens.map(i=>`${i.nome} (${i.quantidade})`).join(', ')}</small></div><span style="background:#EFF3F8; padding:4px 12px; border-radius:40px;">${sol.status}</span></div>`; }); container.innerHTML = html; }
+  function salvarStatusSolicitacoes() { setLocalStorageItem('solicitacoesStatus', solicitacoesRegistradas); renderizarStatus(); }
+  function renderizarStatus() { const container = document.getElementById('statusList'); if(!container) return; if(!solicitacoesRegistradas.length) { container.innerHTML = '<div style="padding:12px; text-align:center;">Nenhum pedido registrado.</div>'; return; } let html = ''; solicitacoesRegistradas.slice().reverse().forEach(sol => { html += `<div style="background:#F9FBFD; border-radius:20px; padding:12px; margin-bottom:12px; display:flex; justify-content:space-between;"><div><strong>${sol.data}</strong><br><small>${sol.itens.map(i=>`${i.nome} (${i.quantidade})`).join(', ')}</small></div><span style="background:#EFF3F8; padding:4px 12px; border-radius:40px;">${sol.status}</span></div>`; }); container.innerHTML = html; }
 
   async function gerarPDF(dados, setor, itens) { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text("REQUISIÇÃO SMART ALMOX - CT UFPB", 15, 20); doc.text(`Setor: ${setor}`,15,35); doc.text(`Solicitante: ${dados.nome}`,15,45); doc.text(`E-mail: ${dados.email} | Contato: ${dados.contato}`,15,55); doc.text(`Perfil: ${dados.perfil} | Lotação: ${dados.lotacao}`,15,65); doc.text("Itens solicitados:",15,80); let y=90; itens.forEach(i=>{ doc.text(`• ${i.nome} - ${i.quantidade} un.`,20,y); y+=8; }); doc.save(`requisicao_${dados.nome.replace(/\s/g,'')}.pdf`); }
   function gerarTexto(dados, setor, itens) { let lista = itens.map(i=>`- ${i.nome}: ${i.quantidade}`).join('\n'); return `**REQUISIÇÃO SMART ALMOX**\nSetor: ${setor}\nSolicitante: ${dados.nome}\nE-mail: ${dados.email}\nContato: ${dados.contato}\nPerfil: ${dados.perfil}\nLotação: ${dados.lotacao}\n\nItens:\n${lista}\nData: ${new Date().toLocaleString()}`; }
 
-  const modalEl = document.getElementById('solicitanteModal');
-  
-  // Função para atualizar o resumo dos itens dentro do modal
+  // Funções do modal original
   function atualizarResumoModal() {
     const container = document.getElementById('modalItemsList');
-    if(!listaRequisicao.length) {
-      container.innerHTML = '<div class="modal-item-row" style="justify-content:center;">Nenhum item no carrinho</div>';
-      return;
-    }
+    if(!container) return;
+    if(!listaRequisicao.length) { container.innerHTML = '<div class="modal-item-row" style="justify-content:center;">Nenhum item no carrinho</div>'; return; }
     let html = '';
-    listaRequisicao.forEach(item => {
-      html += `
-        <div class="modal-item-row">
-          <span class="modal-item-name">${item.nome}</span>
-          <span class="modal-item-qty">${item.quantidade} un.</span>
-        </div>
-      `;
-    });
+    listaRequisicao.forEach(item => { html += `<div class="modal-item-row"><span class="modal-item-name">${item.nome}</span><span class="modal-item-qty">${item.quantidade} un.</span></div>`; });
     container.innerHTML = html;
   }
-  
   function abrirModalSolicitacao() { 
-    if(!listaRequisicao.length) { 
-      Swal.fire('Carrinho vazio','Adicione materiais antes de finalizar.','error'); 
-      return; 
-    }
-    atualizarResumoModal(); // mostra os itens atuais
-    modalEl.style.display = 'flex'; 
+    if(!listaRequisicao.length) { Swal.fire('Carrinho vazio','Adicione materiais antes de finalizar.','error'); return; }
+    atualizarResumoModal();
+    const modal = document.getElementById('solicitanteModal');
+    if(modal) modal.style.display = 'flex';
   }
-  
-  document.getElementById('finalizarRequisicaoBtn').addEventListener('click', abrirModalSolicitacao);
-  document.getElementById('limparRequisicaoBtn').addEventListener('click', () => { if(listaRequisicao.length) Swal.fire({title:'Limpar carrinho?', icon:'warning', showCancelButton:true}).then(res=>{if(res.isConfirmed){listaRequisicao=[]; salvarLista();}}); });
-  
-  document.getElementById('confirmarSolicitacao').addEventListener('click', async () => { 
-    const setor = document.getElementById('modalSectorSelect').value; 
+  function fecharModalSolicitacao() { const modal = document.getElementById('solicitanteModal'); if(modal) modal.style.display = 'none'; }
+
+  // Eventos do modal original
+  const finalizarBtn = document.getElementById('finalizarRequisicaoBtn');
+  if(finalizarBtn) finalizarBtn.addEventListener('click', abrirModalSolicitacao);
+  const limparBtn = document.getElementById('limparRequisicaoBtn');
+  if(limparBtn) limparBtn.addEventListener('click', () => { if(listaRequisicao.length) Swal.fire({title:'Limpar carrinho?', icon:'warning', showCancelButton:true}).then(res=>{if(res.isConfirmed){listaRequisicao=[]; salvarLista();}}); });
+  const confirmarBtn = document.getElementById('confirmarSolicitacao');
+  if(confirmarBtn) confirmarBtn.addEventListener('click', async () => { 
+    const setor = document.getElementById('modalSectorSelect')?.value; 
     if(!setor || setor === 'Selecione o setor') return Swal.fire('Setor obrigatório','','error'); 
-    const nome = document.getElementById('nomeSolicitante').value.trim(); 
-    const email = document.getElementById('email').value.trim(); 
-    const contato = document.getElementById('contato').value.trim(); 
-    const lotacao = document.getElementById('lotacao').value.trim(); 
+    const nome = document.getElementById('nomeSolicitante')?.value.trim(); 
+    const email = document.getElementById('email')?.value.trim(); 
+    const contato = document.getElementById('contato')?.value.trim(); 
+    const lotacao = document.getElementById('lotacao')?.value.trim(); 
     if(!nome || !email || !contato || !lotacao) return Swal.fire('Preencha todos os campos','','error'); 
-    const dados = { nome, email, contato, perfil: document.getElementById('perfil').value, lotacao, assunto: document.getElementById('assunto').value }; 
+    const dados = { nome, email, contato, perfil: document.getElementById('perfil')?.value, lotacao, assunto: document.getElementById('assunto')?.value }; 
     const itens = [...listaRequisicao]; 
     await gerarPDF(dados, setor, itens); 
     const texto = gerarTexto(dados, setor, itens); 
@@ -797,74 +401,114 @@
     await Swal.fire({ title:'✅ Requisição gerada!', html:'PDF criado e texto copiado.', icon:'success', confirmButtonText:'Ok' }); 
     listaRequisicao = []; 
     salvarLista(); 
-    modalEl.style.display = 'none'; 
-    document.getElementById('nomeSolicitante').value = ''; 
-    document.getElementById('email').value = ''; 
-    document.getElementById('contato').value = ''; 
-    document.getElementById('lotacao').value = ''; 
-    document.getElementById('modalSectorSelect').value = ''; 
+    fecharModalSolicitacao(); 
+    ['nomeSolicitante','email','contato','lotacao'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+    const sectorSelect = document.getElementById('modalSectorSelect'); if(sectorSelect) sectorSelect.value = '';
   });
 
-  function buildCategoryChips() { let cats = [...new Set(materiaisDB.map(m => m.categoria))]; const chipContainer = document.getElementById('categoryChips'); chipContainer.innerHTML = `<div class="chip-cat ${currentFilter === '' ? 'active' : ''}" data-cat="">Todos</div>` + cats.map(cat => `<div class="chip-cat ${currentFilter === cat ? 'active' : ''}" data-cat="${cat}">${cat}</div>`).join(''); document.querySelectorAll('.chip-cat').forEach(chip => chip.addEventListener('click', () => { currentFilter = chip.getAttribute('data-cat'); buildCategoryChips(); renderCatalogo(); })); }
-  document.getElementById('searchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderCatalogo(); });
+  function buildCategoryChips() { let cats = [...new Set(materiaisDB.map(m => m.categoria))]; const chipContainer = document.getElementById('categoryChips'); if(!chipContainer) return; chipContainer.innerHTML = `<div class="chip-cat ${currentFilter === '' ? 'active' : ''}" data-cat="">Todos</div>` + cats.map(cat => `<div class="chip-cat ${currentFilter === cat ? 'active' : ''}" data-cat="${cat}">${cat}</div>`).join(''); document.querySelectorAll('.chip-cat').forEach(chip => chip.addEventListener('click', () => { currentFilter = chip.getAttribute('data-cat'); buildCategoryChips(); renderCatalogo(); })); }
+  const searchInput = document.getElementById('searchInput'); if(searchInput) searchInput.addEventListener('input', (e) => { currentSearch = e.target.value; renderCatalogo(); });
 
-  function atualizarPainelLogistico() { let low = materiaisDB.filter(m => m.estoque > 0 && m.estoque <= 5).length; let out = materiaisDB.filter(m => m.estoque === 0).length; if(out>0) { document.querySelector('.led-red').style.boxShadow = '0 0 8px #B91C1C'; } else if(low>0) { document.querySelector('.led-yellow').style.boxShadow = '0 0 8px #F4B942'; } else { document.querySelector('.led-green').style.boxShadow = '0 0 8px #1E7E34'; } document.getElementById('lastUpdateTime').innerHTML = `Atualizado há menos de 1 minuto`; }
+  function atualizarPainelLogistico() { let low = materiaisDB.filter(m => m.estoque > 0 && m.estoque <= 5).length; let out = materiaisDB.filter(m => m.estoque === 0).length; if(out>0) { const ledRed = document.querySelector('.led-red'); if(ledRed) ledRed.style.boxShadow = '0 0 8px #B91C1C'; } else if(low>0) { const ledYellow = document.querySelector('.led-yellow'); if(ledYellow) ledYellow.style.boxShadow = '0 0 8px #F4B942'; } else { const ledGreen = document.querySelector('.led-green'); if(ledGreen) ledGreen.style.boxShadow = '0 0 8px #1E7E34'; } const updateSpan = document.getElementById('lastUpdateTime'); if(updateSpan) updateSpan.innerHTML = `Atualizado há menos de 1 minuto`; }
   setInterval(() => { atualizarPainelLogistico(); }, 30000); atualizarPainelLogistico();
 
-  // CARROSSEL
+  // Carrossel
   let slideIndex = 0; const track = document.getElementById('carouselTrack'); const slides = document.querySelectorAll('.carousel-slide'); const dotsContainer = document.getElementById('carouselDots'); let autoInterval;
-  function updateCarousel() { track.style.transform = `translateX(-${slideIndex * 100}%)`; document.querySelectorAll('.dot').forEach((dot, i) => { dot.classList.toggle('active', i === slideIndex); }); }
-  function createDots() { slides.forEach((_, i) => { const dot = document.createElement('div'); dot.classList.add('dot'); if(i===0) dot.classList.add('active'); dot.addEventListener('click', () => { slideIndex = i; updateCarousel(); resetAutoPlay(); }); dotsContainer.appendChild(dot); }); }
+  function updateCarousel() { if(track) track.style.transform = `translateX(-${slideIndex * 100}%)`; document.querySelectorAll('.dot').forEach((dot, i) => { dot.classList.toggle('active', i === slideIndex); }); }
+  function createDots() { if(!dotsContainer) return; slides.forEach((_, i) => { const dot = document.createElement('div'); dot.classList.add('dot'); if(i===0) dot.classList.add('active'); dot.addEventListener('click', () => { slideIndex = i; updateCarousel(); resetAutoPlay(); }); dotsContainer.appendChild(dot); }); }
   function nextSlide() { slideIndex = (slideIndex + 1) % slides.length; updateCarousel(); resetAutoPlay(); }
   function prevSlide() { slideIndex = (slideIndex - 1 + slides.length) % slides.length; updateCarousel(); resetAutoPlay(); }
   function resetAutoPlay() { if(autoInterval) clearInterval(autoInterval); autoInterval = setInterval(() => { nextSlide(); }, 5000); }
-  document.getElementById('nextSlideBtn').addEventListener('click', nextSlide); document.getElementById('prevSlideBtn').addEventListener('click', prevSlide); createDots(); resetAutoPlay(); 
-  let startX; track.parentElement.addEventListener('touchstart', e => startX = e.touches[0].clientX); track.parentElement.addEventListener('touchend', e => { let endX = e.changedTouches[0].clientX; if(startX - endX > 50) nextSlide(); if(endX - startX > 50) prevSlide(); });
-  track.parentElement.addEventListener('mouseenter', () => { if(autoInterval) clearInterval(autoInterval); }); track.parentElement.addEventListener('mouseleave', resetAutoPlay);
+  const prevBtn = document.getElementById('prevSlideBtn'); if(prevBtn) prevBtn.addEventListener('click', prevSlide);
+  const nextBtn = document.getElementById('nextSlideBtn'); if(nextBtn) nextBtn.addEventListener('click', nextSlide);
+  if(slides.length) createDots(); resetAutoPlay(); 
 
-  // RIPPLE
-  document.body.addEventListener('click', (e) => { let btn = e.target.closest('button, .btn-add-cart, .chip-cat, .cart-qty-control button'); if(btn && !btn.disabled) { let ripple = document.createElement('span'); ripple.classList.add('ripple'); ripple.style.left = `${e.clientX - btn.getBoundingClientRect().left}px`; ripple.style.top = `${e.clientY - btn.getBoundingClientRect().top}px`; btn.style.position = 'relative'; btn.style.overflow = 'hidden'; btn.appendChild(ripple); setTimeout(() => ripple.remove(), 500); } });
-
-  // BOTTOM NAV
+  // Bottom nav
   const navItems = document.querySelectorAll('.nav-item');
   const subtitleSpan = document.getElementById('subtitleText');
   const subtitleIcon = document.querySelector('#dynamicSubtitle i');
   function setActiveNav(selectedBtn) { navItems.forEach(btn => btn.classList.remove('active')); selectedBtn.classList.add('active'); }
   function updateSubtitle(navId) {
+    if(!subtitleSpan || !subtitleIcon) return;
     if (navId === 'home') { subtitleSpan.innerText = 'Status do almoxarifado em tempo real'; subtitleIcon.innerText = 'insights'; }
     else if (navId === 'categories') { subtitleSpan.innerText = 'Categorias e materiais disponíveis para retirada'; subtitleIcon.innerText = 'category'; }
     else if (navId === 'orders') { subtitleSpan.innerText = 'Histórico e acompanhamento de requisições'; subtitleIcon.innerText = 'receipt_long'; }
   }
-  function handleNavClick(btn) { const nav = btn.getAttribute('data-nav'); setActiveNav(btn); updateSubtitle(nav); if (nav === 'home') window.scrollTo({ top: 0, behavior: 'smooth' }); if (nav === 'categories') document.querySelector('.categories-scroll').scrollIntoView({ behavior: 'smooth' }); if (nav === 'orders') document.getElementById('statusSection').scrollIntoView({ behavior: 'smooth' }); }
+  function handleNavClick(btn) { const nav = btn.getAttribute('data-nav'); setActiveNav(btn); updateSubtitle(nav); if (nav === 'home') window.scrollTo({ top: 0, behavior: 'smooth' }); if (nav === 'categories') document.querySelector('.categories-scroll')?.scrollIntoView({ behavior: 'smooth' }); if (nav === 'orders') document.getElementById('statusSection')?.scrollIntoView({ behavior: 'smooth' }); }
   navItems.forEach(btn => btn.addEventListener('click', () => handleNavClick(btn)));
-  const defaultNav = document.querySelector('.nav-item[data-nav="home"]');
-  if(defaultNav) { setActiveNav(defaultNav); updateSubtitle('home'); }
+  const defaultNav = document.querySelector('.nav-item[data-nav="home"]'); if(defaultNav) { setActiveNav(defaultNav); updateSubtitle('home'); }
 
-  // SPLASH SCREEN - tempo aumentado para 5 segundos (garante carregamento da imagem)
-  window.addEventListener('load', () => { 
-    setTimeout(() => { 
-      let splash = document.getElementById('splashScreen'); 
-      if(splash) {
-        splash.style.opacity = '0'; 
-        setTimeout(() => splash.remove(), 500);
-      }
-    }, 5000); // 5 segundos
-  });
+  // ---------- MÓDULO FILA DE ÁGUA (ISOLADO) ----------
+  const QUEUE_KEY = "fila_agua";
+  function getQueue() { return getLocalStorageItem(QUEUE_KEY, []); }
+  function saveQueue(queue) { setLocalStorageItem(QUEUE_KEY, queue); renderQueue(); }
+  function addToQueue(solicitante) {
+    const queue = getQueue();
+    const newEntry = { id: Date.now(), setor: solicitante.setor, nome: solicitante.nome, email: solicitante.email, contato: solicitante.contato, perfil: solicitante.perfil, lotacao: solicitante.lotacao, data: new Date().toISOString(), status: "aguardando" };
+    queue.push(newEntry);
+    saveQueue(queue);
+    return queue.length;
+  }
+  function calculatePosition(currentId) { const queue = getQueue(); const index = queue.findIndex(item => item.id === currentId); return index === -1 ? null : index + 1; }
+  function advanceQueue() {
+    let queue = getQueue();
+    if(queue.length === 0) return Swal.fire("Fila vazia", "Nenhum aguardando atendimento.", "info");
+    const first = queue[0];
+    if(first.status === "aguardando") first.status = "em atendimento";
+    else if(first.status === "em atendimento") { first.status = "finalizado"; queue = queue.filter(item => item.id !== first.id); }
+    saveQueue(queue);
+    Swal.fire("Fila atualizada", `Atendimento ${first.status === "finalizado" ? "finalizado" : "iniciado"} para ${first.nome}`, "success");
+  }
+  function renderQueue() {
+    const container = document.getElementById('queueListContainer');
+    if(!container) return;
+    const queue = getQueue();
+    if(queue.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px;">📭 Nenhum solicitação na fila de água mineral.</div>'; return; }
+    let lastUserId = localStorage.getItem('lastWaterUserId');
+    let html = '';
+    queue.forEach((item, idx) => {
+      const pos = idx + 1;
+      const isCurrent = (lastUserId && item.id == lastUserId);
+      let statusClass = item.status === 'aguardando' ? 'status-aguardando' : (item.status === 'em atendimento' ? 'status-atendimento' : 'status-finalizado');
+      let statusText = item.status === 'aguardando' ? 'Aguardando' : (item.status === 'em atendimento' ? 'Em atendimento' : 'Finalizado');
+      html += `<div class="queue-item ${isCurrent ? 'current-user' : ''}"><div class="queue-pos">#${pos}</div><div class="queue-info"><strong>${item.nome}</strong> - ${item.setor}<br><small>${new Date(item.data).toLocaleString()}</small></div><div class="queue-status ${statusClass}">${statusText}</div></div>`;
+    });
+    container.innerHTML = html;
+  }
+  function openWaterModal() { const modal = document.getElementById('modalAgua'); if(modal) modal.style.display = 'flex'; }
+  function closeWaterModal() { const modal = document.getElementById('modalAgua'); if(modal) modal.style.display = 'none'; }
+  function submitWaterRequest() {
+    const setor = document.getElementById('aguaSetor')?.value;
+    if(!setor || setor === 'Selecione o setor') return Swal.fire('Setor obrigatório', '', 'error');
+    const nome = document.getElementById('aguaNome')?.value.trim();
+    const email = document.getElementById('aguaEmail')?.value.trim();
+    const contato = document.getElementById('aguaContato')?.value.trim();
+    const lotacao = document.getElementById('aguaLotacao')?.value.trim();
+    if(!nome || !email || !contato || !lotacao) return Swal.fire('Preencha todos os campos obrigatórios', '', 'error');
+    const perfil = document.getElementById('aguaPerfil')?.value;
+    const solicitante = { setor, nome, email, contato, perfil, lotacao };
+    const position = addToQueue(solicitante);
+    const queue = getQueue();
+    const lastItem = queue[queue.length-1];
+    localStorage.setItem('lastWaterUserId', lastItem.id);
+    Swal.fire({ icon: 'success', title: 'Solicitação registrada!', html: `✅ ${nome}, sua solicitação de água mineral foi adicionada à fila.<br><strong>🎟️ Sua posição: ${position}º lugar.</strong><br>Você será atendido em breve.`, confirmButtonText: 'Ok' });
+    closeWaterModal();
+    ['aguaNome','aguaEmail','aguaContato','aguaLotacao'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+    const sectorSelect = document.getElementById('aguaSetor'); if(sectorSelect) sectorSelect.value = '';
+  }
+  const waterCard = document.getElementById('waterRequestBtn'); if(waterCard) waterCard.addEventListener('click', openWaterModal);
+  const confirmWater = document.getElementById('confirmarAguaBtn'); if(confirmWater) confirmWater.addEventListener('click', submitWaterRequest);
+  const advanceBtn = document.getElementById('advanceQueueBtn'); if(advanceBtn) advanceBtn.addEventListener('click', advanceQueue);
+  window.addEventListener('click', (e) => { if(e.target === document.getElementById('modalAgua')) closeWaterModal(); if(e.target === document.getElementById('solicitanteModal')) fecharModalSolicitacao(); });
   
-  let msgs = ["Verificando estoque...", "Atualizando dados...", "Conectando ao almoxarifado..."]; 
-  let idxMsg = 0; 
-  setInterval(() => { 
-    let msgDiv = document.getElementById('splashMsg'); 
-    if(msgDiv) msgDiv.innerText = msgs[idxMsg % msgs.length]; 
-    idxMsg++; 
-  }, 800);
+  // Inicializações finais
+  renderCatalogo(); buildCategoryChips(); renderizarListaRequisicao(); renderizarStatus(); atualizarBadges(); renderQueue();
 
-  renderCatalogo(); 
-  buildCategoryChips(); 
-  renderizarListaRequisicao(); 
-  renderizarStatus(); 
-  atualizarBadges();
-  // Nenhum alerta inicial é exibido
+  // Splash screen com timeout
+  setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 500); } }, 5000);
+  let splashMsgs = ["Verificando estoque...", "Atualizando dados...", "Conectando ao almoxarifado..."]; let splashIdx = 0;
+  setInterval(() => { const msgDiv = document.getElementById('splashMsg'); if(msgDiv) msgDiv.innerText = splashMsgs[splashIdx % splashMsgs.length]; splashIdx++; }, 800);
+});
 </script>
 </body>
 </html>
