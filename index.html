@@ -125,32 +125,39 @@
     .admin-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
     .admin-tab-btn { background: white; border: 2px solid #E2E8F0; color: #5A6874; padding: 16px; border-radius: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .admin-tab-btn.active { border-color: #005BBB; color: #005BBB; background: #F8FAFE; }
+
+    /* Ajuste para imagens nos botões da navegação inferior */
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+    /* Ajuste para imagens nos atalhos grandes */
+    .big-shortcut-icon img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
   </style>
 </head>
 <body>
 
 <div class="splash-screen" id="splashScreen">
   <div class="splash-content">
-    
     <img 
       src="Inicialização CT ALMOX.png" 
       alt="Logo" 
       class="splash-icon-img">
-
     <div class="splash-title">Smart Almox</div>
-    
     <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 8px;">
       Almoxarifado CT UFPB
     </div>
-
     <div class="modern-loader">
       <div class="modern-loader-bar"></div>
     </div>
-
     <p id="splashStatus" style="margin-top:16px; font-size:0.8rem;">
       Sincronizando com a nuvem...
     </p>
-
   </div>
 </div>
 
@@ -167,7 +174,7 @@
   </div>
 </header>
 
-<!-- VIEW HOME (dois botões grandes) -->
+<!-- VIEW HOME (dois botões grandes com imagens substituídas) -->
 <div id="view-home" class="view-section active">
   <div class="carousel-section">
     <div class="carousel-container">
@@ -184,12 +191,18 @@
     </div>
   </div>
   <div class="home-buttons-container">
+    <!-- Botão Água Mineral com imagem substituída -->
     <div class="big-shortcut" onclick="mudarView('agua')">
-      <div class="big-shortcut-icon"><i class="material-icons">local_drink</i></div>
+      <div class="big-shortcut-icon">
+        <img src="Agua%20mineral%20Home.png" alt="Água Mineral">
+      </div>
       <div class="big-shortcut-text"><h3>Água Mineral</h3><p>Solicitar garrafão de 20L para sua unidade</p></div>
     </div>
+    <!-- Botão Materiais com imagem substituída -->
     <div class="big-shortcut" onclick="mudarView('materiais')">
-      <div class="big-shortcut-icon"><i class="material-icons">inventory_2</i></div>
+      <div class="big-shortcut-icon">
+        <img src="Material%20home.png" alt="Materiais">
+      </div>
       <div class="big-shortcut-text"><h3>Materiais</h3><p>Expediente, Informática, Limpeza e outros</p></div>
     </div>
   </div>
@@ -209,7 +222,7 @@
   <div class="product-grid" id="catalogoContainerModerno"></div>
 </div>
 
-<!-- VIEW ÁGUA (original do novo código) -->
+<!-- VIEW ÁGUA (original) -->
 <div id="view-agua" class="view-section">
   <div style="max-width: 800px; margin: 16px auto; padding: 0 16px;">
     <div id="aguaStatusCard" style="display: none; background: white; border-radius: 24px; padding: 30px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
@@ -280,11 +293,18 @@
 
 <a href="https://wa.me/558332167082" target="_blank" class="whatsapp-float"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
 
+<!-- BOTÕES DE NAVEGAÇÃO INFERIOR COM IMAGENS SUBSTITUÍDAS -->
 <div class="bottom-nav">
   <button class="nav-item active" data-target="home" onclick="mudarView('home')"><i class="material-icons">home</i><span>Início</span></button>
-  <button class="nav-item" data-target="materiais" onclick="mudarView('materiais')"><i class="material-icons">category</i><span>Materiais</span></button>
+  <button class="nav-item" data-target="materiais" onclick="mudarView('materiais')">
+    <img src="Bot%C3%A3o%20Materiais.png" alt="Materiais">
+    <span>Materiais</span>
+  </button>
   <button class="nav-item" data-target="agua" onclick="mudarView('agua')"><i class="material-icons">local_drink</i><span>Água</span></button>
-  <button class="nav-item" data-target="orders" onclick="mudarView('orders')"><i class="material-icons">receipt</i><span>Meus Pedidos</span></button>
+  <button class="nav-item" data-target="orders" onclick="mudarView('orders')">
+    <img src="Bot%C3%A3o%20meus%20pedidos.png" alt="Meus Pedidos">
+    <span>Meus Pedidos</span>
+  </button>
 </div>
 
 <script>
