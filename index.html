@@ -14,18 +14,31 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background-color: #F5F7FA; font-family: 'Inter', system-ui, sans-serif; color: #1E2A3E; padding-bottom: 90px; scroll-behavior: smooth; overflow-x: hidden; }
     
-    /* ===== SPLASH ===== */
+    /* ===== SPLASH COM 3 BOLINHAS ANIMADAS ===== */
     .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; transition: opacity 0.5s ease-out; opacity: 1; }
     .splash-content { animation: fadeInUpScale 0.8s ease-out; }
     .splash-icon-img { width: min(30vw, 140px); max-width: 140px; margin-bottom: 24px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); animation: gentleFloat 2s infinite ease-in-out; }
     .splash-title { font-size: 2.5rem; font-weight: 800; background: white; background-clip: text; -webkit-background-clip: text; color: transparent; }
-    .modern-loader { margin-top: 32px; width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
-    .modern-loader-bar { width: 0%; height: 100%; background: white; border-radius: 4px; animation: loadingProgress 2s ease-out forwards; }
+    /* 3 bolinhas animadas */
+    .dot-loader { display: flex; gap: 14px; justify-content: center; align-items: center; margin-top: 32px; }
+    .dot { width: 16px; height: 16px; background-color: white; border-radius: 50%; display: inline-block; animation: bounce 0.6s ease-in-out infinite alternate; }
+    .dot:nth-child(1) { animation-delay: 0s; }
+    .dot:nth-child(2) { animation-delay: 0.15s; }
+    .dot:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes bounce { 0% { transform: translateY(0px); } 100% { transform: translateY(-16px); } }
     @keyframes fadeInUpScale { from { opacity:0; transform: translateY(20px) scale(0.95); } to { opacity:1; transform: translateY(0) scale(1); } }
     @keyframes gentleFloat { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
-    @keyframes loadingProgress { 0% { width: 0%; } 30% { width: 40%; } 70% { width: 75%; } 100% { width: 100%; } }
 
-    /* ===== HEADER (estilo novo) ===== */
+    /* ===== WELCOME OVERLAY (BOAS-VINDAS) ===== */
+    .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 24px; transition: all 0.3s ease; }
+    .welcome-card { background: white; max-width: 380px; width: 100%; border-radius: 48px; padding: 32px 24px; text-align: center; box-shadow: 0 32px 48px -20px rgba(0,0,0,0.3); animation: scaleIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+    .welcome-card h2 { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #005BBB, #003D7A); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 16px; }
+    .welcome-card p { color: #2C3E50; font-size: 1rem; line-height: 1.4; margin-bottom: 28px; }
+    .btn-welcome { background: #005BBB; border: none; padding: 14px 24px; border-radius: 40px; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; width: 100%; transition: 0.2s; }
+    .btn-welcome:active { transform: scale(0.97); background: #003D7A; }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+    /* ===== HEADER ===== */
     .app-header { position: sticky; top: 0; z-index: 110; background: white; padding: 12px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
     .header-row { display: flex; align-items: center; gap: 12px; }
     .brand { cursor: pointer; }
@@ -35,16 +48,17 @@
     .cart-icon-header:active { transform: scale(0.95); }
     .cart-count-badge { position: absolute; top: -4px; right: -6px; background: #005BBB; color: white; font-size: 0.7rem; font-weight: 700; border-radius: 30px; padding: 2px 7px; min-width: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
-    /* ===== HOME (dois botões grandes) ===== */
+    /* HOME BOTOES */
     .home-buttons-container { padding: 16px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 600px) { .home-buttons-container { grid-template-columns: 1fr; } }
     .big-shortcut { background: white; border-radius: 28px; padding: 24px; display: flex; align-items: center; gap: 20px; box-shadow: 0 8px 20px rgba(0,91,187,0.08); cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
     .big-shortcut:active { transform: scale(0.97); border-color: #005BBB; background: #F8FAFE; }
     .big-shortcut-icon { width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; background: #F0F7FF; color: #005BBB; font-size: 32px; }
+    .big-shortcut-icon img { width: 36px; height: 36px; object-fit: contain; }
     .big-shortcut-text h3 { font-size: 1.2rem; font-weight: 800; color: #1E2A3E; margin-bottom: 4px; }
     .big-shortcut-text p { font-size: 0.85rem; color: #6B7A8A; font-weight: 500; }
 
-    /* ===== CARROSSEL (mantido da home original) ===== */
+    /* CARROSSEL */
     .carousel-section { max-width: 1400px; margin: 16px auto 0; padding: 0 16px; }
     .carousel-container { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); background: #fff; }
     .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
@@ -54,29 +68,22 @@
     .slide-text p { color: #2c3e50; font-weight: 500; }
     .slide-icon { font-size: 48px; background: #005BBB10; border-radius: 60px; padding: 12px; }
 
-    /* ===== QUICK ACTIONS (estilo Nubank) ===== */
-    .quick-actions { padding: 20px 16px 8px 16px; overflow-x: auto; white-space: nowrap; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+    /* QUICK ACTIONS, PESQUISA, CARDS (MANTIDOS) */
+    .quick-actions { padding: 20px 16px 8px 16px; overflow-x: auto; white-space: nowrap; scrollbar-width: thin; }
     .actions-wrapper { display: flex; gap: 24px; justify-content: flex-start; }
-    .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; background: none; border: none; cursor: pointer; transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); padding: 0; }
+    .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; background: none; border: none; cursor: pointer; transition: transform 0.2s; padding: 0; }
     .action-btn:active { transform: scale(0.94); }
-    .action-circle { width: 70px; height: 70px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02); transition: all 0.2s ease; color: #005BBB; }
+    .action-circle { width: 70px; height: 70px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); color: #005BBB; }
     .action-circle .material-icons { font-size: 32px; }
-    .action-btn.active .action-circle { background: #005BBB; color: white; box-shadow: 0 10px 20px rgba(0, 91, 187, 0.25); transform: translateY(-2px); }
-    .action-label { font-size: 0.75rem; font-weight: 600; color: #2C3E50; letter-spacing: -0.2px; }
-    .action-btn.active .action-label { color: #005BBB; font-weight: 700; }
-
-    /* ===== BARRA DE PESQUISA (moderna) ===== */
+    .action-btn.active .action-circle { background: #005BBB; color: white; transform: translateY(-2px); }
+    .action-label { font-size: 0.75rem; font-weight: 600; color: #2C3E50; }
     .search-container { padding: 0 16px 16px 16px; }
-    .search-bar-modern { background: white; border-radius: 32px; display: flex; align-items: center; padding: 12px 18px; gap: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); border: 1px solid #EDF2F7; transition: all 0.2s; }
+    .search-bar-modern { background: white; border-radius: 32px; display: flex; align-items: center; padding: 12px 18px; gap: 12px; border: 1px solid #EDF2F7; transition: all 0.2s; }
     .search-bar-modern:focus-within { border-color: #005BBB; box-shadow: 0 0 0 3px rgba(0, 91, 187, 0.1); }
-    .search-bar-modern input { background: transparent; border: none; font-size: 0.95rem; width: 100%; outline: none; font-weight: 500; font-family: 'Inter', sans-serif; }
-    .search-bar-modern i { color: #8A99A8; }
-
-    /* ===== CARDS DE PRODUTOS MODERNOS ===== */
+    .search-bar-modern input { background: transparent; border: none; font-size: 0.95rem; width: 100%; outline: none; font-weight: 500; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; padding: 16px; }
-    .product-card { background: white; border-radius: 20px; padding: 16px 12px; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04); transition: all 0.25s ease; cursor: pointer; border: 1px solid #f0f2f5; animation: fadeSlideUp 0.35s ease-out; }
-    .product-card:active { transform: translateY(-4px); box-shadow: 0 20px 28px -12px rgba(0, 0, 0, 0.12); }
-    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .product-card { background: white; border-radius: 20px; padding: 16px 12px; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04); cursor: pointer; transition: all 0.25s ease; border: 1px solid #f0f2f5; animation: fadeSlideUp 0.35s ease-out; }
+    .product-card:active { transform: translateY(-4px); }
     .product-img { background: #F8FAFE; border-radius: 18px; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
     .product-img img { max-width: 80px; max-height: 80px; object-fit: contain; }
     .product-title { font-weight: 700; font-size: 0.9rem; margin: 8px 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -84,413 +91,207 @@
     .badge-available { background: #E3F7EC; color: #1E7E34; }
     .badge-low { background: #FFF1E0; color: #B45F06; }
     .badge-out { background: #FFEBEE; color: #B91C1C; }
-    .btn-add-cart { background: #005BBB; width: 100%; border: none; padding: 10px 0; border-radius: 44px; color: white; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; cursor: pointer; }
+    .btn-add-cart { background: #005BBB; width: 100%; border: none; padding: 10px 0; border-radius: 44px; color: white; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
     .btn-add-cart:active { transform: scale(0.96); background: #004499; }
-    .btn-add-cart:disabled { background: #B9CFDF; cursor: not-allowed; transform: none; }
+    .btn-add-cart:disabled { background: #B9CFDF; cursor: not-allowed; }
 
-    /* ===== MODAIS E OUTROS COMPONENTES (do código original) ===== */
+    /* MODAIS */
     .modal-modern { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 1000; padding: 16px; }
-    .modal-container { background: white; width: 100%; max-width: 680px; border-radius: 32px; padding: 28px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+    .modal-container { background: white; width: 100%; max-width: 680px; border-radius: 32px; padding: 28px; max-height: 90vh; overflow-y: auto; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
     .input-group { display: flex; flex-direction: column; gap: 6px; }
-    .input-group label { font-size: 0.75rem; font-weight: 600; color: #334155; text-transform: uppercase; }
-    .input-group input, .input-group select { background: #F8FAFE; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; font-size: 0.9rem; font-family: inherit; }
+    .input-group label { font-size: 0.75rem; font-weight: 600; color: #334155; }
+    .input-group input, .input-group select { background: #F8FAFE; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; font-size: 0.9rem; }
     .full-width { grid-column: span 2; }
     @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
-    .btn-primary { background: linear-gradient(135deg, #005BBB, #003D7A); color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; width: 100%; box-shadow: 0 8px 18px rgba(0,91,187,0.25); transition: 0.2s; }
-    .btn-primary:active { transform: scale(0.97); }
-    .btn-secondary { background: #F1F5F9; color: #334155; border: 1px solid #E2E8F0; padding: 12px; border-radius: 14px; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; width: 100%; transition: 0.2s; }
-    .btn-secondary:active { transform: scale(0.97); background: #E2E8F0; }
-
+    .btn-primary { background: linear-gradient(135deg, #005BBB, #003D7A); color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; width: 100%; }
+    .btn-secondary { background: #F1F5F9; color: #334155; border: 1px solid #E2E8F0; padding: 12px; border-radius: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; width: 100%; }
     .bottom-nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); max-width: 500px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 8px 16px 12px; border-radius: 48px; box-shadow: 0 8px 28px rgba(0,0,0,0.12); z-index: 105; border: 1px solid rgba(0,91,187,0.1); }
-    .nav-item { display: flex; flex-direction: column; align-items: center; background: transparent; border: none; font-weight: 600; font-size: 0.7rem; color: #6C7A8A; gap: 4px; cursor: pointer; border-radius: 40px; padding: 6px 12px; position: relative; transition: all 0.1s; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; background: transparent; border: none; font-weight: 600; font-size: 0.7rem; color: #6C7A8A; gap: 4px; cursor: pointer; border-radius: 40px; padding: 6px 12px; transition: all 0.1s; }
     .nav-item:active { transform: scale(0.95); }
     .nav-item.active { background: rgba(0,91,187,0.12); color: #005BBB; }
-    .nav-item.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: #005BBB; border-radius: 4px; }
-
+    .nav-item img { width: 24px; height: 24px; object-fit: contain; }
     .view-section { display: none; animation: fadeIn 0.3s ease; }
     .view-section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .whatsapp-float { position: fixed; bottom: 90px; right: 20px; background: #25D366; border-radius: 40px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; transition: 0.2s; z-index: 100; text-decoration: none; }
-    .whatsapp-float:active { transform: scale(0.94); }
-    .cart-item-row { display: flex; align-items: center; gap: 12px; background: #F9FBFD; border-radius: 20px; padding: 12px; margin-bottom: 10px; border: 1px solid #EDF2F7; }
-    .cart-qty-control { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-    .cart-qty-control button { background: #EFF3F8; border: none; width: 32px; height: 32px; border-radius: 30px; font-weight: bold; cursor: pointer; }
-    .cart-remove-btn { background: transparent; color: #ef4444; border: none; cursor: pointer; padding: 8px; margin-left: 8px; }
-
-    .admin-card, .pedido-admin-card, .status-modern-card { background: white; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .admin-table { width: 100%; border-collapse: collapse; }
-    .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #EDF2F7; }
-    .admin-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-    .admin-tab-btn { background: white; border: 2px solid #E2E8F0; color: #5A6874; padding: 16px; border-radius: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-    .admin-tab-btn.active { border-color: #005BBB; color: #005BBB; background: #F8FAFE; }
-
-    /* Ajuste para imagens nos botões da navegação inferior */
-    .nav-item img {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-    }
-    /* Ajuste para imagens nos atalhos grandes */
-    .big-shortcut-icon img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-    }
+    /* FAQ STYLE */
+    .faq-container { max-width: 800px; margin: 16px auto; padding: 0 16px 32px; }
+    .faq-card { background: white; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.2s; }
+    .faq-question { font-weight: 800; font-size: 1rem; color: #005BBB; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .faq-answer { color: #334155; font-size: 0.9rem; line-height: 1.4; padding-left: 28px; border-left: 3px solid #005BBB30; }
+    .admin-card, .pedido-admin-card { background: white; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .whatsapp-float { position: fixed; bottom: 90px; right: 20px; background: #25D366; border-radius: 40px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; z-index: 100; }
   </style>
 </head>
 <body>
 
 <div class="splash-screen" id="splashScreen">
   <div class="splash-content">
-    <img 
-      src="Inicialização CT ALMOX.png" 
-      alt="Logo" 
-      class="splash-icon-img">
+    <img src="Inicialização CT ALMOX.png" alt="Logo" class="splash-icon-img">
     <div class="splash-title">Smart Almox</div>
-    <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 8px;">
-      Almoxarifado CT UFPB
+    <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 8px;">Almoxarifado CT UFPB</div>
+    <div class="dot-loader" id="dotLoader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
     </div>
-    <div class="modern-loader">
-      <div class="modern-loader-bar"></div>
-    </div>
-    <p id="splashStatus" style="margin-top:16px; font-size:0.8rem;">
-      Sincronizando com a nuvem...
-    </p>
+    <p id="splashStatus" style="margin-top:16px; font-size:0.8rem;">Carregando ambiente...</p>
   </div>
 </div>
 
 <header class="app-header">
   <div class="header-row">
-    <div class="brand" onclick="abrirAdmin()">
-      <h2>Smart Almox</h2>
-      <span>Almoxarifado CT UFPB</span>
-    </div>
-    <div class="cart-icon-header" onclick="abrirCarrinho()">
-      <i class="material-icons">shopping_cart</i>
-      <span id="headerCartBadge" class="cart-count-badge">0</span>
-    </div>
+    <div class="brand" onclick="abrirAdmin()"><h2>Smart Almox</h2><span>Almoxarifado CT UFPB</span></div>
+    <div class="cart-icon-header" onclick="abrirCarrinho()"><i class="material-icons">shopping_cart</i><span id="headerCartBadge" class="cart-count-badge">0</span></div>
   </div>
 </header>
 
-<!-- VIEW HOME (dois botões grandes com imagens substituídas) -->
+<!-- VIEW HOME (dois botões + novo botão FAQ) -->
 <div id="view-home" class="view-section active">
-  <div class="carousel-section">
-    <div class="carousel-container">
-      <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide">
-          <div class="slide-text"><h3>📦 Smart Almox</h3><p>Consulte o status antes de se deslocar até o almoxarifado</p></div>
-          <div class="slide-icon">🚀</div>
-        </div>
-        <div class="carousel-slide">
-          <div class="slide-text"><h3>⚡ Entregas ágeis</h3><p>Materiais separados em até 2h úteis</p></div>
-          <div class="slide-icon">📋</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="carousel-section"><div class="carousel-container"><div class="carousel-track" id="carouselTrack"><div class="carousel-slide"><div class="slide-text"><h3>📦 Smart Almox</h3><p>Consulte o status antes de se deslocar até o almoxarifado</p></div><div class="slide-icon">🚀</div></div><div class="carousel-slide"><div class="slide-text"><h3>⚡ Entregas ágeis</h3><p>Materiais separados em até 2h úteis</p></div><div class="slide-icon">📋</div></div></div></div></div>
   <div class="home-buttons-container">
-    <!-- Botão Água Mineral com imagem substituída -->
     <div class="big-shortcut" onclick="mudarView('agua')">
-      <div class="big-shortcut-icon">
-        <img src="Agua%20mineral%20Home.png" alt="Água Mineral">
-      </div>
+      <div class="big-shortcut-icon"><img src="Bot%C3%A3o%20Menu%20%C3%A1gua.png" alt="Água Mineral"></div>
       <div class="big-shortcut-text"><h3>Água Mineral</h3><p>Solicitar garrafão de 20L para sua unidade</p></div>
     </div>
-    <!-- Botão Materiais com imagem substituída -->
     <div class="big-shortcut" onclick="mudarView('materiais')">
-      <div class="big-shortcut-icon">
-        <img src="Material%20home.png" alt="Materiais">
-      </div>
+      <div class="big-shortcut-icon"><img src="Material%20home.png" alt="Materiais"></div>
       <div class="big-shortcut-text"><h3>Materiais</h3><p>Expediente, Informática, Limpeza e outros</p></div>
     </div>
-  </div>
-</div>
-
-<!-- VIEW MATERIAIS (VERSÃO MODERNIZADA) -->
-<div id="view-materiais" class="view-section">
-  <div class="quick-actions">
-    <div class="actions-wrapper" id="quickActionsWrapper"></div>
-  </div>
-  <div class="search-container">
-    <div class="search-bar-modern">
-      <i class="material-icons">search</i>
-      <input type="text" id="searchInputMateriais" placeholder="Buscar material...">
-    </div>
-  </div>
-  <div class="product-grid" id="catalogoContainerModerno"></div>
-</div>
-
-<!-- VIEW ÁGUA (original) -->
-<div id="view-agua" class="view-section">
-  <div style="max-width: 800px; margin: 16px auto; padding: 0 16px;">
-    <div id="aguaStatusCard" style="display: none; background: white; border-radius: 24px; padding: 30px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
-      <i class="material-icons" style="font-size: 64px; color: #005BBB;">hourglass_top</i>
-      <h2 style="margin: 16px 0;">Sua Posição: <span id="aguaPosicao">#1</span></h2>
-      <p style="color: #6B7A8A; margin-bottom: 24px;">Seu pedido de água está na fila real. Aguarde a entrega no seu setor.</p>
-      <button class="btn-secondary" onclick="cancelarAgua()">Cancelar Solicitação</button>
-    </div>
-    <div id="aguaFormCard" style="background: white; border-radius: 24px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-      <h2 style="margin-bottom: 8px;"><i class="material-icons" style="color: #005BBB;">local_drink</i> Solicitar Água</h2>
-      <div class="form-grid">
-        <div class="input-group full-width"><label>Setor/Unidade *</label><select id="aguaSetor"><option value="">Selecione...</option><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div>
-        <div class="input-group"><label>Nome *</label><input type="text" id="aguaNome"></div>
-        <div class="input-group"><label>WhatsApp *</label><input type="text" id="aguaContato" class="mask-whatsapp" placeholder="(83) 90000-0000"></div>
-        <div class="input-group"><label>E-mail *</label><input type="email" id="aguaEmail"></div>
-        <div class="input-group"><label>Perfil</label><select id="aguaPerfil"><option>Técnico-Administrativo</option><option>Docente</option><option>Discente</option></select></div>
-        <div class="input-group"><label>Lotação/Sala *</label><input type="text" id="aguaLotacao"></div>
-      </div>
-      <button class="btn-primary" onclick="submitAgua()"><i class="material-icons">check_circle</i> Entrar na fila</button>
+    <!-- NOVO BOTÃO FAQ -->
+    <div class="big-shortcut" onclick="mudarView('faq')">
+      <div class="big-shortcut-icon"><img src="perguntas-e-respostas.png" alt="FAQ"></div>
+      <div class="big-shortcut-text"><h3>Tire suas dúvidas</h3><p>sobre o Almoxarifado</p></div>
     </div>
   </div>
 </div>
 
+<!-- VIEW MATERIAIS -->
+<div id="view-materiais" class="view-section"><div class="quick-actions"><div class="actions-wrapper" id="quickActionsWrapper"></div></div><div class="search-container"><div class="search-bar-modern"><i class="material-icons">search</i><input type="text" id="searchInputMateriais" placeholder="Buscar material..."></div></div><div class="product-grid" id="catalogoContainerModerno"></div></div>
+<!-- VIEW ÁGUA -->
+<div id="view-agua" class="view-section"><div style="max-width:800px;margin:16px auto;padding:0 16px;"><div id="aguaStatusCard" style="display:none;background:white;border-radius:24px;padding:30px;text-align:center;"><i class="material-icons" style="font-size:64px;color:#005BBB;">hourglass_top</i><h2>Sua Posição: <span id="aguaPosicao">#1</span></h2><button class="btn-secondary" onclick="cancelarAgua()">Cancelar Solicitação</button></div><div id="aguaFormCard" style="background:white;border-radius:24px;padding:24px;"><h2><i class="material-icons">local_drink</i> Solicitar Água</h2><div class="form-grid"><div class="input-group full-width"><label>Setor/Unidade *</label><select id="aguaSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="aguaNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="aguaContato" class="mask-whatsapp" placeholder="(83) 90000-0000"></div><div class="input-group"><label>E-mail *</label><input type="email" id="aguaEmail"></div><div class="input-group"><label>Perfil</label><select id="aguaPerfil"><option>Técnico-Administrativo</option><option>Docente</option><option>Discente</option></select></div><div class="input-group"><label>Lotação/Sala *</label><input type="text" id="aguaLotacao"></div></div><button class="btn-primary" onclick="submitAgua()"><i class="material-icons">check_circle</i> Entrar na fila</button></div></div></div>
 <!-- VIEW MEUS PEDIDOS -->
-<div id="view-orders" class="view-section">
-  <div style="max-width: 800px; margin: 16px auto; padding: 0 16px;" id="historicoContainer"></div>
+<div id="view-orders" class="view-section"><div style="max-width:800px;margin:16px auto;padding:0 16px;" id="historicoContainer"></div></div>
+<!-- VIEW ADMIN -->
+<div id="view-admin" class="view-section"><div style="max-width:1400px;margin:16px auto;padding:0 16px;"><div style="display:flex;justify-content:space-between;"><h2><i class="material-icons">admin_panel_settings</i> Painel Gestor</h2><button class="btn-secondary" style="width:auto;" onclick="forcarAtualizacao()">Atualizar</button></div><div class="admin-tabs"><button class="admin-tab-btn" onclick="switchAdminTab('cadastrar')">Cadastrar</button><button class="admin-tab-btn" onclick="switchAdminTab('estoque')">Estoque</button></div><div id="admin-tab-cadastrar" class="admin-card"><h3>Novo Material</h3><div class="form-grid"><div class="input-group"><label>Categoria</label><select id="adminNovaCatSelect"></select><input type="text" id="adminNovaCatInput" placeholder="Nova categoria" style="display:none;"></div><div class="input-group"><label>Nome</label><input type="text" id="adminNovoNome"></div><div class="input-group"><label>Imagem URL</label><input type="text" id="adminNovaImg"></div><div class="input-group"><label>Estoque</label><input type="number" id="adminNovoEstoque" value="0"></div></div><button class="btn-primary" onclick="adminAdicionarItem()">Salvar</button></div><div id="admin-tab-estoque" class="admin-card"><h3>Gerenciar Estoque</h3><table class="admin-table"><thead><tr><th>Material</th><th>Estoque</th><th>Adicionar</th><th>Obs</th><th>Ações</th></tr></thead><tbody id="adminTableBody"></tbody></table></div><div class="admin-card"><h3>Pendentes / Fila Água</h3><div id="adminPendentesList"></div></div><div class="admin-card"><h3>Últimos Atualizados</h3><div id="adminUltimosList"></div><button class="btn-secondary" onclick="abrirTodosPedidosModal()">Ver todos os pedidos</button></div></div></div>
+
+<!-- NOVA VIEW: PERGUNTAS E RESPOSTAS (FAQ) -->
+<div id="view-faq" class="view-section">
+  <div class="faq-container" id="faqContainer"></div>
 </div>
 
-<!-- VIEW ADMIN (painel gestor) -->
-<div id="view-admin" class="view-section">
-  <div style="max-width: 1400px; margin: 16px auto; padding: 0 16px;">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
-      <h2><i class="material-icons" style="vertical-align: middle;">admin_panel_settings</i> Painel Gestor</h2>
-      <div style="display:flex; gap:8px;">
-        <button class="btn-secondary" style="width: auto; padding: 8px 16px;" onclick="forcarAtualizacao()"><i class="material-icons">refresh</i> Atualizar</button>
-        <button class="btn-secondary" style="width: auto; padding: 8px 16px;" onclick="mudarSenha()">Trocar Senha</button>
-      </div>
-    </div>
-    <div class="admin-tabs">
-      <button class="admin-tab-btn" id="btn-tab-cadastrar" onclick="switchAdminTab('cadastrar')"><i class="material-icons">add_box</i> Cadastrar Material</button>
-      <button class="admin-tab-btn" id="btn-tab-estoque" onclick="switchAdminTab('estoque')"><i class="material-icons">inventory</i> Gerenciar Estoque</button>
-    </div>
-    <div id="admin-tab-cadastrar" class="admin-card" style="display: none;">
-      <h3>Novo Material</h3>
-      <div class="form-grid">
-        <div class="input-group"><label>Categoria *</label><select id="adminNovaCatSelect" onchange="checkNovaCat()"></select><input type="text" id="adminNovaCatInput" placeholder="Digite a nova categoria..." style="display:none; margin-top:8px;"></div>
-        <div class="input-group"><label>Nome do Item *</label><input type="text" id="adminNovoNome"></div>
-        <div class="input-group"><label>URL da Imagem</label><input type="text" id="adminNovaImg" placeholder="https://..."></div>
-        <div class="input-group"><label>Estoque Inicial</label><input type="number" id="adminNovoEstoque" value="0"></div>
-      </div>
-      <button class="btn-primary" style="width: auto; padding: 12px 24px;" onclick="adminAdicionarItem()">Salvar Material</button>
-    </div>
-    <div id="admin-tab-estoque" class="admin-card" style="display: none;">
-      <h3>Entradas de Estoque e Histórico</h3>
-      <table class="admin-table"><thead><tr><th>Material</th><th>Estoque Atual</th><th style="width:100px;">Adicionar</th><th style="width:150px;">Observação</th><th style="width:180px;">Ações</th></tr></thead><tbody id="adminTableBody"></tbody></table>
-    </div>
-    <div class="admin-card"><h3 style="color:#B91C1C;"><i class="material-icons">pending_actions</i> Pendentes / Fila de Água</h3><div id="adminPendentesList"></div></div>
-    <div class="admin-card"><h3 style="color:#1E7E34;"><i class="material-icons">history</i> Últimos 10 Atualizados</h3><div id="adminUltimosList"></div><button class="btn-secondary" style="margin-top:16px;" onclick="abrirTodosPedidosModal()"><i class="material-icons">list_alt</i> Consultar e Exportar Todos os Pedidos</button></div>
-  </div>
-</div>
-
-<!-- MODAIS (carrinho, checkout, etc) -->
-<div id="modalCarrinho" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between; margin-bottom:16px;"><h2><i class="material-icons">shopping_cart</i> Carrinho</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalCarrinho')">close</i></div><div id="carrinhoItensList" style="max-height: 40vh; overflow-y: auto; margin-bottom:20px;"></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap:12px;"><button class="btn-secondary" onclick="limparCarrinho()">Limpar</button><button class="btn-secondary" onclick="fecharModal('modalCarrinho')">Continuar</button><button class="btn-primary full-width" onclick="abrirCheckout()"><i class="material-icons">assignment</i> Finalizar</button></div></div></div>
-<div id="modalCheckout" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2><i class="material-icons">assignment</i> Finalizar Requisição</h2><i class="material-icons" style="cursor:pointer;" onclick="voltarParaCarrinho()">arrow_back</i></div><div class="form-grid"><div class="input-group full-width"><label>Setor/Unidade *</label><select id="reqSetor"><option value="">Selecione...</option><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome completo *</label><input type="text" id="reqNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="reqContato" class="mask-whatsapp" placeholder="(83) 90000-0000"></div><div class="input-group"><label>E-mail *</label><input type="email" id="reqEmail"></div><div class="input-group"><label>Perfil</label><select id="reqPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div><div class="input-group"><label>Lotação/Sala *</label><input type="text" id="reqLotacao"></div><div class="input-group full-width"><label>Assunto</label><input type="text" id="reqAssunto" value="Solicitação de materiais"></div></div><button class="btn-primary" onclick="finalizarRequisicaoModal()"><i class="material-icons">send</i> Enviar Pedido</button></div></div>
-<div id="modalTodosPedidos" class="modal-modern"><div class="modal-container" style="max-width:900px;"><div style="display:flex; justify-content:space-between;"><h2>Todos os Pedidos</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalTodosPedidos')">close</i></div><div style="display:flex; gap:12px; margin-bottom:16px;"><button class="btn-primary" style="width:auto; background:#1E7E34;" onclick="exportarXLSX()">Excel</button><button class="btn-primary" style="width:auto; background:#B91C1C;" onclick="exportarPDF()">PDF</button></div><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Tipo</th><th>Setor</th><th>Solicitante</th><th>Status</th></tr></thead><tbody id="tabelaTodosPedidosBody"></tbody></table></div></div></div>
-<div id="modalEditarPedido" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Gerenciar Pedido</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalEditarPedido')">close</i></div><div id="editarPedidoHeader" style="margin-bottom:16px;"></div><div class="input-group full-width"><label>Status</label><select id="editPedidoStatus"><option value="Aguardando">Aguardando</option><option value="Aguardando retirada">Aguardando retirada</option><option value="Entregue">Entregue</option><option value="Cancelado/Rejeitado">Cancelado/Rejeitado</option></select></div><div id="editarPedidoItensContainer"></div><input type="hidden" id="editPedidoIdAtual"><button class="btn-primary" onclick="salvarEdicaoPedido()">Salvar</button></div></div>
-<div id="modalHistoricoItem" class="modal-modern"><div class="modal-container" style="max-width:900px;"><div style="display:flex; justify-content:space-between;"><h2 id="histItemNomeHeader">Histórico do Material</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalHistoricoItem')">close</i></div><div style="display:flex; gap:12px; margin-bottom:16px;"><button class="btn-primary" style="width:auto; background:#1E7E34;" onclick="exportarHistoricoItemXLSX()">Excel</button><button class="btn-primary" style="width:auto; background:#B91C1C;" onclick="exportarHistoricoItemPDF()">PDF</button></div><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Ação</th><th>Qtd</th><th>Saldo</th><th>Observação</th></tr></thead><tbody id="tabelaHistoricoItemBody"></tbody></table></div><input type="hidden" id="histItemIdAtual"></div></div>
+<!-- MODAIS (carrinho, checkout) -->
+<div id="modalCarrinho" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Carrinho</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalCarrinho')">close</i></div><div id="carrinhoItensList" style="max-height:40vh;overflow-y:auto;margin-bottom:20px;"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;"><button class="btn-secondary" onclick="limparCarrinho()">Limpar</button><button class="btn-secondary" onclick="fecharModal('modalCarrinho')">Continuar</button><button class="btn-primary" onclick="abrirCheckout()">Finalizar</button></div></div></div>
+<div id="modalCheckout" class="modal-modern"><div class="modal-container"><div style="display:flex;justify-content:space-between;"><h2>Finalizar Requisição</h2><i class="material-icons" style="cursor:pointer;" onclick="voltarParaCarrinho()">arrow_back</i></div><div class="form-grid"><div class="input-group full-width"><label>Setor *</label><select id="reqSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="reqNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="reqContato" class="mask-whatsapp"></div><div class="input-group"><label>E-mail *</label><input type="email" id="reqEmail"></div><div class="input-group"><label>Perfil</label><select id="reqPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div><div class="input-group"><label>Lotação *</label><input type="text" id="reqLotacao"></div><div class="input-group full-width"><label>Assunto</label><input type="text" id="reqAssunto" value="Solicitação de materiais"></div></div><button class="btn-primary" onclick="finalizarRequisicaoModal()">Enviar Pedido</button></div></div></div>
+<div id="modalTodosPedidos" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Todos os Pedidos</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalTodosPedidos')">close</i></div><div style="display:flex;gap:12px;margin-bottom:16px;"><button class="btn-primary" style="background:#1E7E34;" onclick="exportarXLSX()">Excel</button><button class="btn-primary" style="background:#B91C1C;" onclick="exportarPDF()">PDF</button></div><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Tipo</th><th>Setor</th><th>Solicitante</th><th>Status</th></tr></thead><tbody id="tabelaTodosPedidosBody"></tbody></table></div></div></div>
+<div id="modalEditarPedido" class="modal-modern"><div class="modal-container"><h2>Gerenciar Pedido</h2><div id="editarPedidoHeader"></div><div class="input-group"><label>Status</label><select id="editPedidoStatus"><option>Aguardando</option><option>Aguardando retirada</option><option>Entregue</option><option>Cancelado/Rejeitado</option></select></div><div id="editarPedidoItensContainer"></div><input type="hidden" id="editPedidoIdAtual"><button class="btn-primary" onclick="salvarEdicaoPedido()">Salvar</button></div></div>
+<div id="modalHistoricoItem" class="modal-modern"><div class="modal-container"><h2 id="histItemNomeHeader">Histórico</h2><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Ação</th><th>Qtd</th><th>Saldo</th><th>Observação</th></tr></thead><tbody id="tabelaHistoricoItemBody"></tbody></table></div><input type="hidden" id="histItemIdAtual"></div></div>
 
 <a href="https://wa.me/558332167082" target="_blank" class="whatsapp-float"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
 
-<!-- BOTÕES DE NAVEGAÇÃO INFERIOR COM IMAGENS SUBSTITUÍDAS -->
+<!-- BOTTOM NAV (HOME AGORA COM IMAGEM) -->
 <div class="bottom-nav">
-  <button class="nav-item active" data-target="home" onclick="mudarView('home')"><i class="material-icons">home</i><span>Início</span></button>
-  <button class="nav-item" data-target="materiais" onclick="mudarView('materiais')">
-    <img src="Bot%C3%A3o%20Materiais.png" alt="Materiais">
-    <span>Materiais</span>
-  </button>
+  <button class="nav-item active" data-target="home" onclick="mudarView('home')"><img src="Bot%C3%A3o%20Home.png" alt="Início"><span>Início</span></button>
+  <button class="nav-item" data-target="materiais" onclick="mudarView('materiais')"><img src="Bot%C3%A3o%20Materiais.png" alt="Materiais"><span>Materiais</span></button>
   <button class="nav-item" data-target="agua" onclick="mudarView('agua')"><i class="material-icons">local_drink</i><span>Água</span></button>
-  <button class="nav-item" data-target="orders" onclick="mudarView('orders')">
-    <img src="Bot%C3%A3o%20meus%20pedidos.png" alt="Meus Pedidos">
-    <span>Meus Pedidos</span>
-  </button>
+  <button class="nav-item" data-target="orders" onclick="mudarView('orders')"><img src="Bot%C3%A3o%20meus%20pedidos.png" alt="Meus Pedidos"><span>Meus Pedidos</span></button>
 </div>
 
 <script>
-// ==================== CONFIGURAÇÃO GLOBAL ====================
+// ==================== DADOS E CONFIG GLOBAL ====================
 const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbynotzi-Mu68mNg3ZWbCgC2KTQp7xwaUxWYJEfLvX3i4M1G8J8qFCj_y8L67Jzj6KtWjg/exec";
 function enviarParaGoogleSheets(dados) { fetch(GOOGLE_SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados) }).catch(e => console.error); }
 function salvarBackupNuvem() { enviarParaGoogleSheets({ tipo: 'backup_estado_app', materiais: materiaisDB, historico: historicoGlobal, fila: filaAgua, histItens: historicoItens }); }
-function forcarAtualizacao() { window.location.href = window.location.pathname + '?t=' + new Date().getTime(); }
-
-// ==================== DADOS PRINCIPAIS (compatíveis) ====================
-const DB_MATERIAIS = 'almox_db_materiais';
-const DB_CARRINHO  = 'almox_db_carrinho';
-const DB_HISTORICO = 'almox_db_hist_global';
-const DB_FILA_AGUA = 'almox_db_fila_agua';
-const DB_HIST_ITEN = 'almox_db_hist_itens';
-const DB_PREFS_USR = 'almox_db_prefs_user';
-const DB_PEDIDO_AG = 'almox_db_meu_pedido_agua';
-
-let materiaisDB = JSON.parse(localStorage.getItem(DB_MATERIAIS));
-if(!materiaisDB) {
-  materiaisDB = [
-    { id: 'mat1', categoria: 'Expediente', nome: 'Caneta azul', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 },
-    { id: 'mat2', categoria: 'Expediente', nome: 'Papel A4 (resma)', imagem: 'https://cdn-icons-png.flaticon.com/512/2965/2965311.png', estoque: 20 },
-    { id: 'mat3', categoria: 'Limpeza', nome: 'Copo descartável', imagem: 'https://cdn-icons-png.flaticon.com/512/3024/3024502.png', estoque: 0 },
-    { id: 'mat4', categoria: 'Expediente', nome: 'Caderno 96fl', imagem: 'https://cdn-icons-png.flaticon.com/512/2428/2428703.png', estoque: 12 },
-    { id: 'mat5', categoria: 'Informática', nome: 'Teclado USB', imagem: 'https://cdn-icons-png.flaticon.com/512/1055/1055687.png', estoque: 5 },
-    { id: 'mat6', categoria: 'Informática', nome: 'Mouse óptico', imagem: 'https://cdn-icons-png.flaticon.com/512/2615/2615230.png', estoque: 8 },
-    { id: 'mat7', categoria: 'Elétrico', nome: 'Pilha AAA', imagem: 'https://cdn-icons-png.flaticon.com/512/1124/1124451.png', estoque: 15 },
-    { id: 'mat8', categoria: 'Limpeza', nome: 'Desinfetante', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 6 }
-  ];
-  localStorage.setItem(DB_MATERIAIS, JSON.stringify(materiaisDB));
-}
-
-let carrinho = JSON.parse(localStorage.getItem(DB_CARRINHO)) || [];
-let historicoGlobal = JSON.parse(localStorage.getItem(DB_HISTORICO)) || []; 
-let filaAgua = JSON.parse(localStorage.getItem(DB_FILA_AGUA)) || [];
-let historicoItens = JSON.parse(localStorage.getItem(DB_HIST_ITEN)) || [];
-
-function registrarHistoricoItem(idItem, tipo, qtd, obs, saldo) { historicoItens.unshift({ idItem, data: new Date().toLocaleString(), tipo, qtd, obs, saldo }); localStorage.setItem(DB_HIST_ITEN, JSON.stringify(historicoItens)); }
-
-// ==================== AUXILIARES ====================
+let materiaisDB = JSON.parse(localStorage.getItem('almox_db_materiais'));
+if(!materiaisDB) materiaisDB = [ { id: 'mat1', categoria: 'Expediente', nome: 'Caneta azul', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 }, { id: 'mat2', categoria: 'Expediente', nome: 'Papel A4 (resma)', imagem: 'https://cdn-icons-png.flaticon.com/512/2965/2965311.png', estoque: 20 }, { id: 'mat3', categoria: 'Limpeza', nome: 'Copo descartável', imagem: 'https://cdn-icons-png.flaticon.com/512/3024/3024502.png', estoque: 0 }, { id: 'mat4', categoria: 'Expediente', nome: 'Caderno 96fl', imagem: 'https://cdn-icons-png.flaticon.com/512/2428/2428703.png', estoque: 12 }, { id: 'mat5', categoria: 'Informática', nome: 'Teclado USB', imagem: 'https://cdn-icons-png.flaticon.com/512/1055/1055687.png', estoque: 5 }, { id: 'mat6', categoria: 'Informática', nome: 'Mouse óptico', imagem: 'https://cdn-icons-png.flaticon.com/512/2615/2615230.png', estoque: 8 }, { id: 'mat7', categoria: 'Elétrico', nome: 'Pilha AAA', imagem: 'https://cdn-icons-png.flaticon.com/512/1124/1124451.png', estoque: 15 }, { id: 'mat8', categoria: 'Limpeza', nome: 'Desinfetante', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 6 } ]; localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
+let carrinho = JSON.parse(localStorage.getItem('almox_db_carrinho')) || [];
+let historicoGlobal = JSON.parse(localStorage.getItem('almox_db_hist_global')) || [];
+let filaAgua = JSON.parse(localStorage.getItem('almox_db_fila_agua')) || [];
+let historicoItens = JSON.parse(localStorage.getItem('almox_db_hist_itens')) || [];
+function registrarHistoricoItem(idItem, tipo, qtd, obs, saldo) { historicoItens.unshift({ idItem, data: new Date().toLocaleString(), tipo, qtd, obs, saldo }); localStorage.setItem('almox_db_hist_itens', JSON.stringify(historicoItens)); }
 function atualizarBadges() { document.getElementById('headerCartBadge').innerText = carrinho.reduce((a,c) => a + c.qtd, 0); }
-function salvarCarrinho() { localStorage.setItem(DB_CARRINHO, JSON.stringify(carrinho)); atualizarBadges(); renderCarrinho(); }
-function addAoCarrinho(id) {
-  let itemDB = materiaisDB.find(m => m.id === id); let noCarrinho = carrinho.find(c => c.id === id);
-  if(noCarrinho) { if(noCarrinho.qtd < itemDB.estoque) noCarrinho.qtd++; else return Swal.fire({toast:true, position:'top-end', icon:'error', title:'Limite', timer:1500}); }
-  else { carrinho.push({ id: itemDB.id, nome: itemDB.nome, imagem: itemDB.imagem, qtd: 1 }); }
-  salvarCarrinho(); Swal.fire({toast:true, position:'top-end', icon:'success', title:'Adicionado!', timer:1000});
-}
+function salvarCarrinho() { localStorage.setItem('almox_db_carrinho', JSON.stringify(carrinho)); atualizarBadges(); renderCarrinho(); }
+function addAoCarrinho(id) { let itemDB = materiaisDB.find(m => m.id === id); let noCarrinho = carrinho.find(c => c.id === id); if(noCarrinho) { if(noCarrinho.qtd < itemDB.estoque) noCarrinho.qtd++; else return Swal.fire({toast:true, icon:'error', title:'Limite', timer:1500}); } else carrinho.push({ id: itemDB.id, nome: itemDB.nome, imagem: itemDB.imagem, qtd: 1 }); salvarCarrinho(); Swal.fire({toast:true, icon:'success', title:'Adicionado!', timer:1000}); }
 function alterarQtd(id, delta) { let cItem = carrinho.find(c => c.id === id); if(!cItem) return; let dbItem = materiaisDB.find(m => m.id === id); cItem.qtd += delta; if(cItem.qtd > dbItem.estoque) cItem.qtd = dbItem.estoque; if(cItem.qtd <= 0) carrinho = carrinho.filter(c => c.id !== id); salvarCarrinho(); }
-function renderCarrinho() { const container = document.getElementById('carrinhoItensList'); if(carrinho.length === 0) return container.innerHTML = '<div style="text-align:center;">Vazio.</div>'; container.innerHTML = carrinho.map(c => `<div class="cart-item-row"><img src="${c.imagem}" style="width:40px;"><div style="flex:1;">${c.nome}</div><div class="cart-qty-control"><button onclick="alterarQtd('${c.id}', -1)">-</button><span>${c.qtd}</span><button onclick="alterarQtd('${c.id}', 1)">+</button></div><button class="cart-remove-btn" onclick="alterarQtd('${c.id}', -999)"><i class="material-icons">delete</i></button></div>`).join(''); }
-function abrirCarrinho() { renderCarrinho(); document.getElementById('modalCarrinho').style.display = 'flex'; }
-function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
-function limparCarrinho() { carrinho = []; salvarCarrinho(); }
-function abrirCheckout() { if(carrinho.length === 0) return Swal.fire('Vazio', 'Adicione itens.', 'warning'); fecharModal('modalCarrinho'); document.getElementById('modalCheckout').style.display = 'flex'; }
+function renderCarrinho() { let container = document.getElementById('carrinhoItensList'); if(carrinho.length===0) return container.innerHTML='<div style="text-align:center;">Vazio.</div>'; container.innerHTML = carrinho.map(c => `<div class="cart-item-row"><img src="${c.imagem}" style="width:40px;"><div style="flex:1;">${c.nome}</div><div class="cart-qty-control"><button onclick="alterarQtd('${c.id}',-1)">-</button><span>${c.qtd}</span><button onclick="alterarQtd('${c.id}',1)">+</button></div><button class="cart-remove-btn" onclick="alterarQtd('${c.id}',-999)"><i class="material-icons">delete</i></button></div>`).join(''); }
+function abrirCarrinho() { renderCarrinho(); document.getElementById('modalCarrinho').style.display='flex'; }
+function fecharModal(id) { document.getElementById(id).style.display='none'; }
+function limparCarrinho() { carrinho=[]; salvarCarrinho(); }
+function abrirCheckout() { if(carrinho.length===0) return Swal.fire('Vazio','Adicione itens','warning'); fecharModal('modalCarrinho'); document.getElementById('modalCheckout').style.display='flex'; }
 function voltarParaCarrinho() { fecharModal('modalCheckout'); abrirCarrinho(); }
-function finalizarRequisicaoModal() {
-  const setor = document.getElementById('reqSetor').value, nome = document.getElementById('reqNome').value.trim(), whatsapp = document.getElementById('reqContato').value, email = document.getElementById('reqEmail').value.trim(), perfil = document.getElementById('reqPerfil').value, lotacao = document.getElementById('reqLotacao').value.trim();
-  if(!setor || !nome || !whatsapp || !email || !lotacao) return Swal.fire('Preencha todos os campos');
-  carrinho.forEach(c => { let dbM = materiaisDB.find(m => m.id === c.id); if(dbM) { dbM.estoque -= c.qtd; registrarHistoricoItem(c.id, 'Saída (Reserva)', c.qtd, `Pedido: ${nome} (${setor})`, dbM.estoque); } });
-  localStorage.setItem(DB_MATERIAIS, JSON.stringify(materiaisDB));
-  let pedido = { id: Date.now(), tipo: 'Material', data: new Date().toLocaleString(), setor, nome, whatsapp, email, perfil, lotacao, itens: [...carrinho], status: 'Aguardando' };
-  historicoGlobal.unshift(pedido); localStorage.setItem(DB_HISTORICO, JSON.stringify(historicoGlobal));
-  enviarParaGoogleSheets({ tipo: "requisicao", nome, setor, whatsapp, email, lotacao, itens: carrinho.map(i=>`${i.nome}(${i.qtd})`).join(', ') });
-  salvarBackupNuvem();
-  Swal.fire('✅ Enviada!', 'Acompanhe na aba Meus Pedidos.', 'success');
-  limparCarrinho(); fecharModal('modalCheckout'); mudarView('orders');
-}
-
-// ==================== VIEWS E NAVEGAÇÃO ====================
-function mudarView(viewId) {
-  document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-  document.getElementById(`view-${viewId}`).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  document.querySelector(`.nav-item[data-target="${viewId}"]`)?.classList.add('active');
-  if(viewId === 'materiais') renderCatalogoModerno();
-  if(viewId === 'orders') renderHistoricoUsuario();
-  if(viewId === 'agua') { checkAguaStatus(); carregarDadosLocaisUsuario(); }
-  if(viewId === 'admin') { renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); }
-  window.scrollTo(0,0);
-}
+function finalizarRequisicaoModal() { const setor=document.getElementById('reqSetor').value, nome=document.getElementById('reqNome').value.trim(), whatsapp=document.getElementById('reqContato').value, email=document.getElementById('reqEmail').value.trim(), perfil=document.getElementById('reqPerfil').value, lotacao=document.getElementById('reqLotacao').value.trim(); if(!setor||!nome||!whatsapp||!email||!lotacao) return Swal.fire('Preencha todos os campos'); carrinho.forEach(c=>{ let dbM=materiaisDB.find(m=>m.id===c.id); if(dbM){ dbM.estoque-=c.qtd; registrarHistoricoItem(c.id,'Saída (Reserva)',c.qtd,`Pedido: ${nome} (${setor})`,dbM.estoque); } }); localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); let pedido={id:Date.now(), tipo:'Material', data:new Date().toLocaleString(), setor, nome, whatsapp, email, perfil, lotacao, itens:[...carrinho], status:'Aguardando'}; historicoGlobal.unshift(pedido); localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); enviarParaGoogleSheets({ tipo:"requisicao", nome, setor, whatsapp, email, lotacao, itens:carrinho.map(i=>`${i.nome}(${i.qtd})`).join(', ') }); salvarBackupNuvem(); Swal.fire('✅ Enviada!','Acompanhe na aba Meus Pedidos.','success'); limparCarrinho(); fecharModal('modalCheckout'); mudarView('orders'); }
+function mudarView(viewId) { document.querySelectorAll('.view-section').forEach(el=>el.classList.remove('active')); document.getElementById(`view-${viewId}`).classList.add('active'); document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.querySelector(`.nav-item[data-target="${viewId}"]`)?.classList.add('active'); if(viewId==='materiais') renderCatalogoModerno(); if(viewId==='orders') renderHistoricoUsuario(); if(viewId==='agua') { checkAguaStatus(); carregarDadosLocaisUsuario(); } if(viewId==='admin') { renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); } window.scrollTo(0,0); }
 function abrirAdmin() { let senha = localStorage.getItem('senhaAdminCT') || ""; Swal.fire({ title: 'Acesso Restrito', input: 'password', showCancelButton: true }).then(res => { if(res.isConfirmed && res.value === senha) mudarView('admin'); else if(res.isConfirmed) Swal.fire('Erro', 'Senha incorreta', 'error'); }); }
-function mudarSenha() { Swal.fire({ title: 'Nova Senha', input: 'password', showCancelButton:true }).then(res => { if(res.isConfirmed) localStorage.setItem('senhaAdminCT', res.value); }); }
-
-// ==================== MATERIAIS MODERNOS (QUICK ACTIONS + CARDS) ====================
-let currentFilterCat = "Todos";
-let currentSearchMat = "";
-function renderCatalogoModerno() {
-  let filtered = materiaisDB.filter(m => {
-    let catMatch = false;
-    if(currentFilterCat === "Todos") catMatch = true;
-    else if(currentFilterCat === "Expediente") catMatch = (m.categoria === "Expediente");
-    else if(currentFilterCat === "Aula") catMatch = (m.categoria === "Informática" || m.categoria === "Elétrico");
-    else if(currentFilterCat === "Higienização") catMatch = (m.categoria === "Limpeza");
-    else catMatch = (m.categoria === currentFilterCat);
-    return catMatch && (currentSearchMat === "" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase()));
-  });
-  const container = document.getElementById('catalogoContainerModerno');
-  if(!container) return;
-  container.innerHTML = filtered.map(item => {
-    let badgeClass = item.estoque <= 0 ? 'badge-out' : (item.estoque <= 5 ? 'badge-low' : 'badge-available');
-    let badgeText = item.estoque <= 0 ? '❌ Indisponível' : (item.estoque <= 5 ? `⚠️ Baixo (${item.estoque})` : `✅ ${item.estoque} un.`);
-    return `<div class="product-card"><div class="product-img"><img src="${item.imagem}" alt="${item.nome}"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" onclick="addAoCarrinho('${item.id}')" ${item.estoque <= 0 ? 'disabled' : ''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`;
-  }).join('');
-}
-function setFilter(cat) {
-  currentFilterCat = cat;
-  renderCatalogoModerno();
-  document.querySelectorAll('.action-btn').forEach(btn => { if(btn.getAttribute('data-cat') === cat) btn.classList.add('active'); else btn.classList.remove('active'); });
-}
-// Quick actions
-const quickActions = [
-  { id:"Todos", label:"Todos", icon:"apps" },
-  { id:"Expediente", label:"Expediente", icon:"description" },
-  { id:"Aula", label:"Aula", icon:"school" },
-  { id:"Higienização", label:"Higienização", icon:"cleaning_services" }
-];
-const wrapper = document.getElementById('quickActionsWrapper');
-quickActions.forEach(a => {
-  const btn = document.createElement('button');
-  btn.className = 'action-btn';
-  if(a.id === 'Todos') btn.classList.add('active');
-  btn.setAttribute('data-cat', a.id);
-  btn.innerHTML = `<div class="action-circle"><i class="material-icons">${a.icon}</i></div><span class="action-label">${a.label}</span>`;
-  btn.onclick = () => setFilter(a.id);
-  wrapper.appendChild(btn);
-});
-document.getElementById('searchInputMateriais').addEventListener('input', (e) => { currentSearchMat = e.target.value; renderCatalogoModerno(); });
-
-// ==================== ÁGUA E FILA ====================
-function checkAguaStatus() {
-  let meuId = localStorage.getItem(DB_PEDIDO_AG);
-  if(meuId) {
-    let posIndex = filaAgua.findIndex(p => p.id == meuId);
-    if(posIndex !== -1) { document.getElementById('aguaFormCard').style.display = 'none'; document.getElementById('aguaStatusCard').style.display = 'block'; document.getElementById('aguaPosicao').innerText = `#${posIndex + 1}`; }
-    else { localStorage.removeItem(DB_PEDIDO_AG); document.getElementById('aguaFormCard').style.display = 'block'; document.getElementById('aguaStatusCard').style.display = 'none'; }
-  } else { document.getElementById('aguaFormCard').style.display = 'block'; document.getElementById('aguaStatusCard').style.display = 'none'; }
-}
-function submitAgua() {
-  const setor = document.getElementById('aguaSetor').value, nome = document.getElementById('aguaNome').value, whatsapp = document.getElementById('aguaContato').value, email = document.getElementById('aguaEmail').value, perfil = document.getElementById('aguaPerfil').value, lotacao = document.getElementById('aguaLotacao').value;
-  if(!setor || !nome || !whatsapp || !lotacao || !email) return Swal.fire('Preencha todos os campos');
-  let id = Date.now();
-  let pAgua = { id, tipo: 'Água', data: new Date().toLocaleString(), setor, nome, whatsapp, lotacao, status: 'Aguardando' };
-  filaAgua.push(pAgua); historicoGlobal.unshift(pAgua);
-  localStorage.setItem(DB_FILA_AGUA, JSON.stringify(filaAgua)); localStorage.setItem(DB_HISTORICO, JSON.stringify(historicoGlobal)); localStorage.setItem(DB_PEDIDO_AG, id);
-  enviarParaGoogleSheets({ tipo: "filaAgua", nome, setor, whatsapp, lotacao });
-  salvarBackupNuvem();
-  Swal.fire('Entrou na fila!', 'Você está na fila da água.', 'success'); checkAguaStatus();
-}
-function cancelarAgua() {
-  let meuId = localStorage.getItem(DB_PEDIDO_AG);
-  filaAgua = filaAgua.filter(f => f.id != meuId); localStorage.setItem(DB_FILA_AGUA, JSON.stringify(filaAgua)); localStorage.removeItem(DB_PEDIDO_AG);
-  let h = historicoGlobal.find(x => x.id == meuId); if(h) h.status = 'Cancelado/Rejeitado'; localStorage.setItem(DB_HISTORICO, JSON.stringify(historicoGlobal));
-  checkAguaStatus();
-}
-function renderHistoricoUsuario() {
-  const cont = document.getElementById('historicoContainer');
-  if(historicoGlobal.length === 0) return cont.innerHTML = '<div style="text-align:center;">Nenhum pedido.</div>';
-  cont.innerHTML = historicoGlobal.map(h => `<div style="background:white; border-radius:20px; padding:20px; margin-bottom:16px;"><div style="display:flex; justify-content:space-between;"><div><strong>${h.tipo === 'Água' ? '💧 Água' : '📦 Materiais'} - ${h.setor}</strong><br><span style="font-size:0.8rem;">${h.data}</span></div><span style="background:#FEF08A; color:#854D0E; padding:4px 12px; border-radius:20px;">${h.status}</span></div>${h.tipo === 'Material' ? `<ul>${h.itens.map(i=>`<li>${i.nome} (${i.qtd})</li>`).join('')}</ul>` : ''}</div>`).join('');
-}
-
-// ==================== ADMIN (resumido, mas funcional) ====================
-function switchAdminTab(tab) { document.getElementById('btn-tab-cadastrar').classList.remove('active'); document.getElementById('btn-tab-estoque').classList.remove('active'); document.getElementById('admin-tab-cadastrar').style.display = 'none'; document.getElementById('admin-tab-estoque').style.display = 'none'; document.getElementById(`btn-tab-${tab}`).classList.add('active'); document.getElementById(`admin-tab-${tab}`).style.display = 'block'; }
-function renderCategoriasAdmin() { const cats = [...new Set(materiaisDB.map(m => m.categoria))]; const select = document.getElementById('adminNovaCatSelect'); select.innerHTML = '<option value="">Selecione...</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('') + '<option value="NOVA">➕ Criar Nova Categoria...</option>'; }
-function checkNovaCat() { const select = document.getElementById('adminNovaCatSelect'); const input = document.getElementById('adminNovaCatInput'); if(select.value === 'NOVA') input.style.display = 'block'; else input.style.display = 'none'; }
-function adminAdicionarItem() { let cat = document.getElementById('adminNovaCatSelect').value; if(cat === 'NOVA') cat = document.getElementById('adminNovaCatInput').value.trim(); const nome = document.getElementById('adminNovoNome').value.trim(); const img = document.getElementById('adminNovaImg').value.trim() || 'https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; const est = parseInt(document.getElementById('adminNovoEstoque').value) || 0; if(!cat || !nome) return Swal.fire('Erro', 'Categoria e Nome obrigatórios'); let newId = Date.now().toString(); materiaisDB.push({ id: newId, categoria: cat, nome, imagem: img, estoque: est }); localStorage.setItem(DB_MATERIAIS, JSON.stringify(materiaisDB)); if(est > 0) registrarHistoricoItem(newId, 'Entrada Inicial', est, 'Cadastro', est); salvarBackupNuvem(); Swal.fire('Sucesso', 'Material cadastrado!'); renderCategoriasAdmin(); renderAdminEstoque(); }
-function renderAdminEstoque() { document.getElementById('adminTableBody').innerHTML = materiaisDB.map(m => `<tr><td>${m.nome}<br><span style="font-size:0.75rem;">${m.categoria}</span></td><td style="font-weight:800;">${m.estoque}</td><td><input type="number" class="admin-input" id="entrada-${m.id}" placeholder="+ Qtd"></td><td><input type="text" class="admin-input" id="obs-${m.id}" placeholder="Motivo"></td><td><button class="btn-primary" style="padding:6px;" onclick="registrarEntrada('${m.id}')">Adicionar</button> <button class="btn-secondary" style="padding:6px;" onclick="abrirHistoricoItem('${m.id}')">Histórico</button></td></tr>`).join(''); }
-function registrarEntrada(id) { let qtd = parseInt(document.getElementById(`entrada-${id}`).value); let obs = document.getElementById(`obs-${id}`).value.trim() || 'Ajuste manual'; if(!qtd || qtd<=0) return Swal.fire('Atenção', 'Quantidade inválida'); let item = materiaisDB.find(m => m.id === id); if(item) { item.estoque += qtd; localStorage.setItem(DB_MATERIAIS, JSON.stringify(materiaisDB)); registrarHistoricoItem(id, 'Entrada Manual', qtd, obs, item.estoque); salvarBackupNuvem(); document.getElementById(`entrada-${id}`).value = ''; document.getElementById(`obs-${id}`).value = ''; Swal.fire({toast:true, icon:'success', title:'Estoque atualizado', timer:1500}); renderAdminEstoque(); } }
-function abrirHistoricoItem(id) { let item = materiaisDB.find(m => m.id === id); if(!item) return; document.getElementById('histItemNomeHeader').innerHTML = `<i class="material-icons">manage_history</i> ${item.nome}`; document.getElementById('histItemIdAtual').value = id; let hist = historicoItens.filter(h => h.idItem === id); document.getElementById('tabelaHistoricoItemBody').innerHTML = hist.length ? hist.map(h => `<tr><td>${h.data}</td><td>${h.tipo}</td><td>${h.qtd}</td><td>${h.saldo}</td><td>${h.obs}</td></tr>`).join('') : '<tr><td colspan="5">Sem histórico</td></tr>'; document.getElementById('modalHistoricoItem').style.display = 'flex'; }
-function exportarHistoricoItemXLSX() { let id = document.getElementById('histItemIdAtual').value; let item = materiaisDB.find(m => m.id === id); let dados = historicoItens.filter(h => h.idItem === id).map(h => ({ Data: h.data, Tipo: h.tipo, Quantidade: h.qtd, Saldo: h.saldo, Observacao: h.obs })); if(!dados.length) return; let ws = XLSX.utils.json_to_sheet(dados); let wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Hist"); XLSX.writeFile(wb, `Historico_${item.nome.replace(/\s/g,'_')}.xlsx`); }
-function exportarHistoricoItemPDF() { let id = document.getElementById('histItemIdAtual').value; let item = materiaisDB.find(m => m.id === id); let hist = historicoItens.filter(h => h.idItem === id); if(!hist.length) return; const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text(`Histórico: ${item.nome}`, 14, 15); doc.autoTable({ startY: 25, head: [['Data', 'Tipo', 'Qtd', 'Saldo', 'Observação']], body: hist.map(h => [h.data, h.tipo, h.qtd, h.saldo, h.obs]) }); doc.save(`Historico_${item.nome.replace(/\s/g,'_')}.pdf`); }
-function renderAdminPedidos() { let pendentes = historicoGlobal.filter(h => h.status === 'Aguardando' || h.status === 'Aguardando retirada'); let ultimos10 = historicoGlobal.filter(h => h.status !== 'Aguardando' && h.status !== 'Aguardando retirada').slice(0, 10); document.getElementById('adminPendentesList').innerHTML = pendentes.length ? pendentes.map(p => `<div class="pedido-admin-card"><div><strong>${p.tipo} - ${p.setor}</strong><br>Solicitante: ${p.nome}</div><div><button class="btn-primary" style="padding:6px 12px; width:auto;" onclick="abrirEdicaoPedido('${p.id}')">Gerenciar</button></div></div>`).join('') : '<p>Nenhum pendente.</p>'; document.getElementById('adminUltimosList').innerHTML = ultimos10.map(p => `<div style="padding:10px; border-bottom:1px solid #EDF2F7;"><strong>${p.tipo}</strong> - ${p.setor} (${p.nome}) <span style="float:right;">${p.status}</span></div>`).join(''); }
-function abrirEdicaoPedido(id) { let pedido = historicoGlobal.find(h => h.id == id); if(!pedido) return; document.getElementById('editPedidoIdAtual').value = id; document.getElementById('editarPedidoHeader').innerHTML = `<strong>Solicitante:</strong> ${pedido.nome} <br><strong>Setor:</strong> ${pedido.setor}`; document.getElementById('editPedidoStatus').value = pedido.status; const contItens = document.getElementById('editarPedidoItensContainer'); if(pedido.tipo === 'Material' && pedido.itens) contItens.innerHTML = '<h4>Itens:</h4>' + pedido.itens.map((item, idx) => `<div><span>${item.nome}</span> <input type="number" id="editItemQtd_${idx}" value="${item.qtd}" style="width:60px;"> un</div>`).join(''); else contItens.innerHTML = ''; document.getElementById('modalEditarPedido').style.display = 'flex'; }
-function salvarEdicaoPedido() { let id = document.getElementById('editPedidoIdAtual').value; let pedido = historicoGlobal.find(h => h.id == id); if(!pedido) return; let novoStatus = document.getElementById('editPedidoStatus').value; if(pedido.tipo === 'Material' && pedido.itens) { pedido.itens.forEach((item, idx) => { let novaQtd = parseInt(document.getElementById(`editItemQtd_${idx}`).value); if(novaQtd !== item.qtd) { let dbM = materiaisDB.find(m => m.id === item.id); if(dbM) { let dif = item.qtd - novaQtd; dbM.estoque += dif; registrarHistoricoItem(item.id, 'Ajuste Admin', Math.abs(dif), `Pedido ${pedido.nome}`, dbM.estoque); item.qtd = novaQtd; } } }); } if(pedido.tipo === 'Água' && (novoStatus === 'Entregue' || novoStatus === 'Cancelado/Rejeitado')) { filaAgua = filaAgua.filter(f => f.id != id); localStorage.setItem(DB_FILA_AGUA, JSON.stringify(filaAgua)); } pedido.status = novoStatus; localStorage.setItem(DB_MATERIAIS, JSON.stringify(materiaisDB)); localStorage.setItem(DB_HISTORICO, JSON.stringify(historicoGlobal)); salvarBackupNuvem(); fecharModal('modalEditarPedido'); renderAdminPedidos(); renderAdminEstoque(); Swal.fire({toast:true, icon:'success', title:'Atualizado!', timer:1500}); }
-function abrirTodosPedidosModal() { document.getElementById('tabelaTodosPedidosBody').innerHTML = historicoGlobal.map(p => `<tr><td>${p.data}</td><td>${p.tipo}</td><td>${p.setor}</td><td>${p.nome}</td><td>${p.status}</td></tr>`).join(''); document.getElementById('modalTodosPedidos').style.display = 'flex'; }
-function exportarXLSX() { let dados = historicoGlobal.map(p => ({ Data: p.data, Tipo: p.tipo, Setor: p.setor, Solicitante: p.nome, WhatsApp: p.whatsapp, Status: p.status })); let ws = XLSX.utils.json_to_sheet(dados); let wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Pedidos"); XLSX.writeFile(wb, "Pedidos_Almox_UFPB.xlsx"); }
+let currentFilterCat="Todos", currentSearchMat="";
+function renderCatalogoModerno() { let filtered = materiaisDB.filter(m=>{ let catMatch=(currentFilterCat==="Todos")?true:(currentFilterCat==="Expediente"?m.categoria==="Expediente":(currentFilterCat==="Aula"?(m.categoria==="Informática"||m.categoria==="Elétrico"):(currentFilterCat==="Higienização"?m.categoria==="Limpeza":m.categoria===currentFilterCat))); return catMatch && (currentSearchMat==="" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase())); }); document.getElementById('catalogoContainerModerno').innerHTML = filtered.map(item=>{ let badgeClass=item.estoque<=0?'badge-out':(item.estoque<=5?'badge-low':'badge-available'); let badgeText=item.estoque<=0?'❌ Indisponível':(item.estoque<=5?`⚠️ Baixo (${item.estoque})`:`✅ ${item.estoque} un.`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" onclick="addAoCarrinho('${item.id}')" ${item.estoque<=0?'disabled':''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join(''); }
+function setFilter(cat) { currentFilterCat=cat; renderCatalogoModerno(); document.querySelectorAll('.action-btn').forEach(btn=>{ if(btn.getAttribute('data-cat')===cat) btn.classList.add('active'); else btn.classList.remove('active'); }); }
+const quickActions = [{id:"Todos",label:"Todos",icon:"apps"},{id:"Expediente",label:"Expediente",icon:"description"},{id:"Aula",label:"Aula",icon:"school"},{id:"Higienização",label:"Higienização",icon:"cleaning_services"}]; const wrapper = document.getElementById('quickActionsWrapper'); quickActions.forEach(a=>{ const btn=document.createElement('button'); btn.className='action-btn'; if(a.id==='Todos') btn.classList.add('active'); btn.setAttribute('data-cat',a.id); btn.innerHTML=`<div class="action-circle"><i class="material-icons">${a.icon}</i></div><span class="action-label">${a.label}</span>`; btn.onclick=()=>setFilter(a.id); wrapper.appendChild(btn); }); document.getElementById('searchInputMateriais').addEventListener('input',(e)=>{ currentSearchMat=e.target.value; renderCatalogoModerno(); });
+function checkAguaStatus() { let meuId=localStorage.getItem('almox_db_meu_pedido_agua'); if(meuId){ let posIndex=filaAgua.findIndex(p=>p.id==meuId); if(posIndex!==-1){ document.getElementById('aguaFormCard').style.display='none'; document.getElementById('aguaStatusCard').style.display='block'; document.getElementById('aguaPosicao').innerText=`#${posIndex+1}`; }else{ localStorage.removeItem('almox_db_meu_pedido_agua'); document.getElementById('aguaFormCard').style.display='block'; document.getElementById('aguaStatusCard').style.display='none'; } } else { document.getElementById('aguaFormCard').style.display='block'; document.getElementById('aguaStatusCard').style.display='none'; } }
+function submitAgua() { let setor=document.getElementById('aguaSetor').value, nome=document.getElementById('aguaNome').value, whatsapp=document.getElementById('aguaContato').value, email=document.getElementById('aguaEmail').value, perfil=document.getElementById('aguaPerfil').value, lotacao=document.getElementById('aguaLotacao').value; if(!setor||!nome||!whatsapp||!lotacao||!email) return Swal.fire('Preencha todos os campos'); let id=Date.now(); let pAgua={id, tipo:'Água', data:new Date().toLocaleString(), setor, nome, whatsapp, lotacao, status:'Aguardando'}; filaAgua.push(pAgua); historicoGlobal.unshift(pAgua); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); localStorage.setItem('almox_db_meu_pedido_agua',id); enviarParaGoogleSheets({ tipo:"filaAgua", nome, setor, whatsapp, lotacao }); salvarBackupNuvem(); Swal.fire('Entrou na fila!','Você está na fila da água.','success'); checkAguaStatus(); }
+function cancelarAgua() { let meuId=localStorage.getItem('almox_db_meu_pedido_agua'); filaAgua=filaAgua.filter(f=>f.id!=meuId); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); localStorage.removeItem('almox_db_meu_pedido_agua'); let h=historicoGlobal.find(x=>x.id==meuId); if(h) h.status='Cancelado/Rejeitado'; localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); checkAguaStatus(); }
+function renderHistoricoUsuario() { let cont=document.getElementById('historicoContainer'); if(historicoGlobal.length===0) return cont.innerHTML='<div style="text-align:center;">Nenhum pedido.</div>'; cont.innerHTML=historicoGlobal.map(h=>`<div style="background:white; border-radius:20px; padding:20px; margin-bottom:16px;"><div style="display:flex; justify-content:space-between;"><div><strong>${h.tipo==='Água'?'💧 Água':'📦 Materiais'} - ${h.setor}</strong><br><span style="font-size:0.8rem;">${h.data}</span></div><span style="background:#FEF08A; color:#854D0E; padding:4px 12px; border-radius:20px;">${h.status}</span></div>${h.tipo==='Material'?`<ul>${h.itens.map(i=>`<li>${i.nome} (${i.qtd})</li>`).join('')}</ul>`:''}</div>`).join(''); }
+function switchAdminTab(tab) { document.getElementById('admin-tab-cadastrar').style.display='none'; document.getElementById('admin-tab-estoque').style.display='none'; document.getElementById(`admin-tab-${tab}`).style.display='block'; }
+function renderCategoriasAdmin() { let cats=[...new Set(materiaisDB.map(m=>m.categoria))]; let select=document.getElementById('adminNovaCatSelect'); select.innerHTML='<option value="">Selecione...</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('')+'<option value="NOVA">➕ Criar Nova Categoria...</option>'; }
+function checkNovaCat() { let select=document.getElementById('adminNovaCatSelect'); let input=document.getElementById('adminNovaCatInput'); input.style.display=(select.value==='NOVA'?'block':'none'); }
+function adminAdicionarItem() { let cat=document.getElementById('adminNovaCatSelect').value; if(cat==='NOVA') cat=document.getElementById('adminNovaCatInput').value.trim(); let nome=document.getElementById('adminNovoNome').value.trim(); let img=document.getElementById('adminNovaImg').value.trim()||'https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; let est=parseInt(document.getElementById('adminNovoEstoque').value)||0; if(!cat||!nome) return Swal.fire('Erro','Categoria e Nome obrigatórios'); let newId=Date.now().toString(); materiaisDB.push({id:newId,categoria:cat,nome,imagem:img,estoque:est}); localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); if(est>0) registrarHistoricoItem(newId,'Entrada Inicial',est,'Cadastro',est); salvarBackupNuvem(); Swal.fire('Sucesso','Material cadastrado!'); renderCategoriasAdmin(); renderAdminEstoque(); }
+function renderAdminEstoque() { document.getElementById('adminTableBody').innerHTML=materiaisDB.map(m=>`<tr><td>${m.nome}<br><span style="font-size:0.75rem;">${m.categoria}</span></td><td>${m.estoque}</td><td><input type="number" id="entrada-${m.id}" placeholder="+ Qtd"></td><td><input type="text" id="obs-${m.id}" placeholder="Motivo"></td><td><button class="btn-primary" style="padding:6px;" onclick="registrarEntrada('${m.id}')">Adicionar</button> <button class="btn-secondary" style="padding:6px;" onclick="abrirHistoricoItem('${m.id}')">Histórico</button></td></tr>`).join(''); }
+function registrarEntrada(id) { let qtd=parseInt(document.getElementById(`entrada-${id}`).value); let obs=document.getElementById(`obs-${id}`).value.trim()||'Ajuste manual'; if(!qtd||qtd<=0) return Swal.fire('Atenção','Quantidade inválida'); let item=materiaisDB.find(m=>m.id===id); if(item){ item.estoque+=qtd; localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); registrarHistoricoItem(id,'Entrada Manual',qtd,obs,item.estoque); salvarBackupNuvem(); document.getElementById(`entrada-${id}`).value=''; document.getElementById(`obs-${id}`).value=''; Swal.fire({toast:true, icon:'success', title:'Estoque atualizado', timer:1500}); renderAdminEstoque(); } }
+function abrirHistoricoItem(id) { let item=materiaisDB.find(m=>m.id===id); document.getElementById('histItemNomeHeader').innerHTML=`<i class="material-icons">manage_history</i> ${item.nome}`; document.getElementById('histItemIdAtual').value=id; let hist=historicoItens.filter(h=>h.idItem===id); document.getElementById('tabelaHistoricoItemBody').innerHTML=hist.length?hist.map(h=>`<tr><td>${h.data}</td><td>${h.tipo}</td><td>${h.qtd}</td><td>${h.saldo}</td><td>${h.obs}</td></tr>`).join(''):'<tr><td colspan="5">Sem histórico</td></tr>'; document.getElementById('modalHistoricoItem').style.display='flex'; }
+function renderAdminPedidos() { let pendentes=historicoGlobal.filter(h=>h.status==='Aguardando'||h.status==='Aguardando retirada'); let ultimos10=historicoGlobal.filter(h=>h.status!=='Aguardando'&&h.status!=='Aguardando retirada').slice(0,10); document.getElementById('adminPendentesList').innerHTML=pendentes.length?pendentes.map(p=>`<div class="pedido-admin-card"><div><strong>${p.tipo} - ${p.setor}</strong><br>Solicitante: ${p.nome}</div><div><button class="btn-primary" style="padding:6px 12px; width:auto;" onclick="abrirEdicaoPedido('${p.id}')">Gerenciar</button></div></div>`).join(''):'<p>Nenhum pendente.</p>'; document.getElementById('adminUltimosList').innerHTML=ultimos10.map(p=>`<div style="padding:10px; border-bottom:1px solid #EDF2F7;"><strong>${p.tipo}</strong> - ${p.setor} (${p.nome}) <span style="float:right;">${p.status}</span></div>`).join(''); }
+function abrirEdicaoPedido(id) { let pedido=historicoGlobal.find(h=>h.id==id); if(!pedido) return; document.getElementById('editPedidoIdAtual').value=id; document.getElementById('editarPedidoHeader').innerHTML=`<strong>Solicitante:</strong> ${pedido.nome}<br><strong>Setor:</strong> ${pedido.setor}`; document.getElementById('editPedidoStatus').value=pedido.status; let contItens=document.getElementById('editarPedidoItensContainer'); if(pedido.tipo==='Material'&&pedido.itens) contItens.innerHTML='<h4>Itens:</h4>'+pedido.itens.map((item,idx)=>`<div><span>${item.nome}</span> <input type="number" id="editItemQtd_${idx}" value="${item.qtd}" style="width:60px;"> un</div>`).join(''); else contItens.innerHTML=''; document.getElementById('modalEditarPedido').style.display='flex'; }
+function salvarEdicaoPedido() { let id=document.getElementById('editPedidoIdAtual').value; let pedido=historicoGlobal.find(h=>h.id==id); if(!pedido) return; let novoStatus=document.getElementById('editPedidoStatus').value; if(pedido.tipo==='Material'&&pedido.itens){ pedido.itens.forEach((item,idx)=>{ let novaQtd=parseInt(document.getElementById(`editItemQtd_${idx}`).value); if(novaQtd!==item.qtd){ let dbM=materiaisDB.find(m=>m.id===item.id); if(dbM){ let dif=item.qtd-novaQtd; dbM.estoque+=dif; registrarHistoricoItem(item.id,'Ajuste Admin',Math.abs(dif),`Pedido ${pedido.nome}`,dbM.estoque); item.qtd=novaQtd; } } }); } if(pedido.tipo==='Água'&&(novoStatus==='Entregue'||novoStatus==='Cancelado/Rejeitado')){ filaAgua=filaAgua.filter(f=>f.id!=id); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); } pedido.status=novoStatus; localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); salvarBackupNuvem(); fecharModal('modalEditarPedido'); renderAdminPedidos(); renderAdminEstoque(); Swal.fire({toast:true, icon:'success', title:'Atualizado!', timer:1500}); }
+function abrirTodosPedidosModal() { document.getElementById('tabelaTodosPedidosBody').innerHTML=historicoGlobal.map(p=>`<tr><td>${p.data}</td><td>${p.tipo}</td><td>${p.setor}</td><td>${p.nome}</td><td>${p.status}</td></tr>`).join(''); document.getElementById('modalTodosPedidos').style.display='flex'; }
+function exportarXLSX() { let dados=historicoGlobal.map(p=>({ Data:p.data, Tipo:p.tipo, Setor:p.setor, Solicitante:p.nome, WhatsApp:p.whatsapp, Status:p.status })); let ws=XLSX.utils.json_to_sheet(dados); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Pedidos"); XLSX.writeFile(wb,"Pedidos_Almox_UFPB.xlsx"); }
 function exportarPDF() { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text("Relatório de Pedidos", 14, 15); doc.autoTable({ startY: 25, head: [['Data', 'Tipo', 'Setor', 'Solicitante', 'Status']], body: historicoGlobal.map(p => [p.data.split(' ')[0], p.tipo, p.setor, p.nome, p.status]) }); doc.save("Relatorio_Pedidos.pdf"); }
+function carregarDadosLocaisUsuario() { let prefs=JSON.parse(localStorage.getItem('almox_db_prefs_user')); if(prefs){ if(document.getElementById('reqNome')) document.getElementById('reqNome').value=prefs.nome||''; if(document.getElementById('reqContato')) document.getElementById('reqContato').value=prefs.whatsapp||''; if(document.getElementById('reqEmail')) document.getElementById('reqEmail').value=prefs.email||''; if(document.getElementById('aguaNome')) document.getElementById('aguaNome').value=prefs.nome||''; if(document.getElementById('aguaContato')) document.getElementById('aguaContato').value=prefs.whatsapp||''; if(document.getElementById('aguaEmail')) document.getElementById('aguaEmail').value=prefs.email||''; } }
+document.querySelectorAll('.mask-whatsapp').forEach(inp=>inp.addEventListener('input',function(e){ let v=e.target.value.replace(/\D/g,""); if(v.length>11) v=v.slice(0,11); if(v.length>2) v=`(${v.substring(0,2)}) ${v.substring(2)}`; if(v.length>10) v=`${v.substring(0,10)}-${v.substring(10)}`; e.target.value=v; }));
 
-function carregarDadosLocaisUsuario() { let prefs = JSON.parse(localStorage.getItem(DB_PREFS_USR)); if(prefs) { if(document.getElementById('reqNome')) document.getElementById('reqNome').value = prefs.nome || ''; if(document.getElementById('reqContato')) document.getElementById('reqContato').value = prefs.whatsapp || ''; if(document.getElementById('reqEmail')) document.getElementById('reqEmail').value = prefs.email || ''; if(document.getElementById('aguaNome')) document.getElementById('aguaNome').value = prefs.nome || ''; if(document.getElementById('aguaContato')) document.getElementById('aguaContato').value = prefs.whatsapp || ''; if(document.getElementById('aguaEmail')) document.getElementById('aguaEmail').value = prefs.email || ''; } }
+// ========== FAQ: 20 perguntas e respostas ==========
+const faqData = [
+  { q: "1) O que é o Almoxarifado?", r: "Setor responsável por receber, armazenar, controlar e distribuir materiais do CT." },
+  { q: "2) Qual a função do Almoxarifado?", r: "Gerenciar materiais de uso comum e atender demandas gerais dos setores." },
+  { q: "3) O Almoxarifado compra materiais?", r: "Não. Apenas recebe, armazena e distribui materiais adquiridos por outros setores." },
+  { q: "4) Quem deve planejar os materiais?", r: "Cada setor deve planejar suas próprias necessidades de forma antecipada." },
+  { q: "5) O Almoxarifado atende todas as demandas?", r: "Não. Atua principalmente com materiais de uso comum e situações emergenciais." },
+  { q: "6) O que são materiais de estoque?", r: "Materiais de uso comum, como papel, canetas e itens de limpeza." },
+  { q: "7) O que são materiais não de estoque?", r: "Materiais específicos, como itens de laboratório, solicitados diretamente ao setor de compras." },
+  { q: "8) Quem pode solicitar material?", r: "Servidores do CT e, em casos específicos, alunos de projetos e centros acadêmicos." },
+  { q: "9) Visitantes podem solicitar material?", r: "Não. Apenas podem tirar dúvidas." },
+  { q: "10) Como funciona a entrega dos materiais?", r: "Após solicitação, o Almoxarifado agenda data e horário para retirada." },
+  { q: "11) O que é necessário para retirar material?", r: "Apresentar o número e código do chamado." },
+  { q: "12) Como funciona material permanente?", r: "Exige transferência de responsabilidade antes da retirada." },
+  { q: "13) Quem recebe o material é responsável?", r: "Sim. A responsabilidade passa para quem recebe." },
+  { q: "14) Posso pedir qualquer quantidade?", r: "Não. Apenas o necessário para uso imediato." },
+  { q: "15) O Almoxarifado pode ajustar pedidos?", r: "Sim. Conforme disponibilidade em estoque." },
+  { q: "16) O que fazer se faltar material?", r: "Solicitar emergencialmente ou ajustar o planejamento do setor." },
+  { q: "17) Como funciona a distribuição?", r: "Pode ser por requisição ou fornecimento automático." },
+  { q: "18) Quem pode receber materiais específicos?", r: "Apenas responsáveis autorizados." },
+  { q: "19) Como funciona a água mineral?", r: "Troca de vasilhame vazio por cheio via intermédio do Almoxarifado." },
+  { q: "20) O que acontece em caso de mau uso?", r: "O responsável pode sofrer penalidades administrativas." }
+];
+function buildFaqScreen() { const container = document.getElementById('faqContainer'); if(!container) return; container.innerHTML = faqData.map(f => `<div class="faq-card"><div class="faq-question"><i class="material-icons" style="font-size:20px;">help_outline</i> ${f.q}</div><div class="faq-answer">${f.r}</div></div>`).join(''); }
+buildFaqScreen();
 
-document.querySelectorAll('.mask-whatsapp').forEach(inp => inp.addEventListener('input', function(e) { let v = e.target.value.replace(/\D/g,""); if(v.length>11) v=v.slice(0,11); if(v.length>2) v=`(${v.substring(0,2)}) ${v.substring(2)}`; if(v.length>10) v=`${v.substring(0,10)}-${v.substring(10)}`; e.target.value=v; }));
+// ========== SPLASH + WELCOME ==========
+let splashRemoved = false;
+function showWelcomeIfNeeded() {
+  if(localStorage.getItem('welcome_dismissed')) return;
+  const welcomeDiv = document.createElement('div');
+  welcomeDiv.className = 'welcome-overlay';
+  welcomeDiv.id = 'welcomeOverlay';
+  welcomeDiv.innerHTML = `<div class="welcome-card"><h2>✨ Boas-vindas ✨</h2><p>Seja bem-vindo(a) ao App do Almoxarifado!<br>Estamos aqui para facilitar o seu dia a dia.</p><button class="btn-welcome" id="btnContinueWelcome">Continuar</button></div>`;
+  document.body.appendChild(welcomeDiv);
+  document.getElementById('btnContinueWelcome').onclick = () => { welcomeDiv.remove(); localStorage.setItem('welcome_dismissed', 'true'); };
+}
+setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => { if(splash && splash.parentNode) splash.remove(); showWelcomeIfNeeded(); }, 500); } }, 2800);
 
-// INICIALIZAÇÃO
-let slideIndex = 0; const track = document.getElementById('carouselTrack'); const slides = document.querySelectorAll('.carousel-slide'); if(track) { setInterval(() => { slideIndex = (slideIndex + 1) % slides.length; track.style.transform = `translateX(-${slideIndex * 100}%)`; }, 5000); }
-setTimeout(() => { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity='0'; setTimeout(()=>s.remove(),500); } }, 3500);
-carregarDadosLocaisUsuario(); atualizarBadges(); renderCatalogoModerno();
+// ========== INICIALIZAÇÕES GERAIS ==========
+let slideIndex=0; const track=document.getElementById('carouselTrack'); const slides=document.querySelectorAll('.carousel-slide'); if(track && slides.length) { setInterval(() => { slideIndex = (slideIndex+1)%slides.length; track.style.transform = `translateX(-${slideIndex*100}%)`; }, 5000); }
+carregarDadosLocaisUsuario(); atualizarBadges(); renderCatalogoModerno(); renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos();
+function forcarAtualizacao() { window.location.href = window.location.pathname + '?t=' + new Date().getTime(); }
+function mudarSenha() { Swal.fire({ title: 'Nova Senha', input: 'password', showCancelButton:true }).then(res => { if(res.isConfirmed) localStorage.setItem('senhaAdminCT', res.value); }); }
+window.checkNovaCat = checkNovaCat; window.registrarEntrada = registrarEntrada; window.abrirHistoricoItem = abrirHistoricoItem; window.exportarHistoricoItemXLSX = function(){ let id=document.getElementById('histItemIdAtual').value; let item=materiaisDB.find(m=>m.id===id); let dados=historicoItens.filter(h=>h.idItem===id).map(h=>({Data:h.data,Tipo:h.tipo,Quantidade:h.qtd,Saldo:h.saldo,Observacao:h.obs})); if(!dados.length) return; let ws=XLSX.utils.json_to_sheet(dados); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Hist"); XLSX.writeFile(wb,`Historico_${item.nome.replace(/\s/g,'_')}.xlsx`); }; window.exportarHistoricoItemPDF = function(){ let id=document.getElementById('histItemIdAtual').value; let item=materiaisDB.find(m=>m.id===id); let hist=historicoItens.filter(h=>h.idItem===id); if(!hist.length) return; const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text(`Histórico: ${item.nome}`, 14, 15); doc.autoTable({ startY: 25, head: [['Data','Tipo','Qtd','Saldo','Observação']], body: hist.map(h=>[h.data,h.tipo,h.qtd,h.saldo,h.obs]) }); doc.save(`Historico_${item.nome.replace(/\s/g,'_')}.pdf`); };
 </script>
 </body>
 </html>
