@@ -19,7 +19,6 @@
     .splash-content { animation: fadeInUpScale 0.8s ease-out; }
     .splash-icon-img { width: min(30vw, 140px); max-width: 140px; margin-bottom: 24px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); animation: gentleFloat 2s infinite ease-in-out; }
     .splash-title { font-size: 2.5rem; font-weight: 800; background: white; background-clip: text; -webkit-background-clip: text; color: transparent; }
-    /* 3 bolinhas animadas */
     .dot-loader { display: flex; gap: 14px; justify-content: center; align-items: center; margin-top: 32px; }
     .dot { width: 16px; height: 16px; background-color: white; border-radius: 50%; display: inline-block; animation: bounce 0.6s ease-in-out infinite alternate; }
     .dot:nth-child(1) { animation-delay: 0s; }
@@ -31,84 +30,104 @@
 
     /* ===== WELCOME OVERLAY (BOAS-VINDAS) ===== */
     .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 24px; transition: all 0.3s ease; }
-    .welcome-card { background: white; max-width: 380px; width: 100%; border-radius: 48px; padding: 32px 24px; text-align: center; box-shadow: 0 32px 48px -20px rgba(0,0,0,0.3); animation: scaleIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+    .welcome-card { background: white; max-width: 380px; width: 100%; border-radius: 48px; padding: 32px 24px; text-align: center; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.25); animation: scaleIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); transition: all 0.2s ease; }
+    .welcome-card:hover { transform: translateY(-2px); box-shadow: 0 24px 48px -12px rgba(0,0,0,0.3); }
     .welcome-card h2 { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #005BBB, #003D7A); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 16px; }
     .welcome-card p { color: #2C3E50; font-size: 1rem; line-height: 1.4; margin-bottom: 28px; }
-    .btn-welcome { background: #005BBB; border: none; padding: 14px 24px; border-radius: 40px; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; width: 100%; transition: 0.2s; }
+    .btn-welcome { background: #005BBB; border: none; padding: 14px 24px; border-radius: 40px; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; width: 100%; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,91,187,0.2); }
+    .btn-welcome:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,91,187,0.25); background: #004a9f; }
     .btn-welcome:active { transform: scale(0.97); background: #003D7A; }
     @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
     /* ===== HEADER ===== */
-    .app-header { position: sticky; top: 0; z-index: 110; background: white; padding: 12px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+    .app-header { position: sticky; top: 0; z-index: 110; background: white; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: box-shadow 0.2s ease; }
     .header-row { display: flex; align-items: center; gap: 12px; }
-    .brand { cursor: pointer; }
+    .brand { cursor: pointer; transition: all 0.2s ease; }
+    .brand:hover { transform: translateY(-1px); }
+    .brand:active { transform: scale(0.98); }
     .brand h2 { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%); background-clip: text; -webkit-background-clip: text; color: transparent; }
     .brand span { font-size: 0.7rem; font-weight: 500; color: #5A6874; }
-    .cart-icon-header { position: relative; cursor: pointer; background: #F0F2F5; border-radius: 30px; padding: 8px; display: flex; align-items: center; justify-content: center; margin-left: auto; transition: transform 0.1s; }
+    .cart-icon-header { position: relative; cursor: pointer; background: #F0F2F5; border-radius: 30px; padding: 8px; display: flex; align-items: center; justify-content: center; margin-left: auto; transition: all 0.2s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+    .cart-icon-header:hover { background: #E6EAF0; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
     .cart-icon-header:active { transform: scale(0.95); }
     .cart-count-badge { position: absolute; top: -4px; right: -6px; background: #005BBB; color: white; font-size: 0.7rem; font-weight: 700; border-radius: 30px; padding: 2px 7px; min-width: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
     /* HOME BOTOES */
     .home-buttons-container { padding: 16px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 600px) { .home-buttons-container { grid-template-columns: 1fr; } }
-    .big-shortcut { background: white; border-radius: 28px; padding: 24px; display: flex; align-items: center; gap: 20px; box-shadow: 0 8px 20px rgba(0,91,187,0.08); cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
-    .big-shortcut:active { transform: scale(0.97); border-color: #005BBB; background: #F8FAFE; }
-    .big-shortcut-icon { width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; background: #F0F7FF; color: #005BBB; font-size: 32px; }
+    .big-shortcut { background: white; border-radius: 28px; padding: 24px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; }
+    .big-shortcut:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,91,187,0.08); border-color: rgba(0,91,187,0.1); }
+    .big-shortcut:active { transform: scale(0.98); border-color: #005BBB; background: #F8FAFE; }
+    .big-shortcut-icon { width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; background: #F0F7FF; color: #005BBB; font-size: 32px; transition: all 0.2s ease; }
+    .big-shortcut:hover .big-shortcut-icon { background: #E0EEFF; }
     .big-shortcut-icon img { width: 36px; height: 36px; object-fit: contain; }
     .big-shortcut-text h3 { font-size: 1.2rem; font-weight: 800; color: #1E2A3E; margin-bottom: 4px; }
     .big-shortcut-text p { font-size: 0.85rem; color: #6B7A8A; font-weight: 500; }
 
     /* CARROSSEL */
     .carousel-section { max-width: 1400px; margin: 16px auto 0; padding: 0 16px; }
-    .carousel-container { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); background: #fff; }
+    .carousel-container { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); background: #fff; transition: box-shadow 0.2s ease; }
+    .carousel-container:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
     .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
     .carousel-slide { min-width: 100%; background: linear-gradient(120deg, #F0F7FF 0%, #FFFFFF 100%); padding: 24px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: space-between; }
     .slide-text { flex: 2; }
     .slide-text h3 { font-size: 1.3rem; font-weight: 800; color: #005BBB; margin-bottom: 8px; }
     .slide-text p { color: #2c3e50; font-weight: 500; }
-    .slide-icon { font-size: 48px; background: #005BBB10; border-radius: 60px; padding: 12px; }
+    .slide-icon { font-size: 48px; background: #005BBB10; border-radius: 60px; padding: 12px; transition: all 0.2s ease; }
 
-    /* QUICK ACTIONS, PESQUISA, CARDS (MANTIDOS) */
+    /* QUICK ACTIONS, PESQUISA, CARDS (MANTIDOS COM REFINAMENTO) */
     .quick-actions { padding: 20px 16px 8px 16px; overflow-x: auto; white-space: nowrap; scrollbar-width: thin; }
     .actions-wrapper { display: flex; gap: 24px; justify-content: flex-start; }
-    .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; background: none; border: none; cursor: pointer; transition: transform 0.2s; padding: 0; }
-    .action-btn:active { transform: scale(0.94); }
-    .action-circle { width: 70px; height: 70px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); color: #005BBB; }
+    .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; background: none; border: none; cursor: pointer; transition: all 0.2s ease; padding: 0; }
+    .action-btn:hover { transform: translateY(-2px); }
+    .action-btn:active { transform: scale(0.96); }
+    .action-circle { width: 70px; height: 70px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); color: #005BBB; transition: all 0.2s ease; }
     .action-circle .material-icons { font-size: 32px; }
-    .action-btn.active .action-circle { background: #005BBB; color: white; transform: translateY(-2px); }
+    .action-btn.active .action-circle { background: #005BBB; color: white; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,91,187,0.2); }
     .action-label { font-size: 0.75rem; font-weight: 600; color: #2C3E50; }
     .search-container { padding: 0 16px 16px 16px; }
-    .search-bar-modern { background: white; border-radius: 32px; display: flex; align-items: center; padding: 12px 18px; gap: 12px; border: 1px solid #EDF2F7; transition: all 0.2s; }
+    .search-bar-modern { background: white; border-radius: 32px; display: flex; align-items: center; padding: 12px 18px; gap: 12px; border: 1px solid #EDF2F7; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .search-bar-modern:hover { border-color: #CDD9E6; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
     .search-bar-modern:focus-within { border-color: #005BBB; box-shadow: 0 0 0 3px rgba(0, 91, 187, 0.1); }
     .search-bar-modern input { background: transparent; border: none; font-size: 0.95rem; width: 100%; outline: none; font-weight: 500; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; padding: 16px; }
-    .product-card { background: white; border-radius: 20px; padding: 16px 12px; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04); cursor: pointer; transition: all 0.25s ease; border: 1px solid #f0f2f5; animation: fadeSlideUp 0.35s ease-out; }
-    .product-card:active { transform: translateY(-4px); }
-    .product-img { background: #F8FAFE; border-radius: 18px; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .product-card { background: white; border-radius: 20px; padding: 16px 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); cursor: pointer; transition: all 0.25s ease; border: 1px solid #f0f2f5; animation: fadeSlideUp 0.35s ease-out; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,91,187,0.08); border-color: #E0EEFF; }
+    .product-card:active { transform: scale(0.98); }
+    .product-img { background: #F8FAFE; border-radius: 18px; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; transition: all 0.2s ease; }
+    .product-card:hover .product-img { background: #F0F7FF; }
     .product-img img { max-width: 80px; max-height: 80px; object-fit: contain; }
     .product-title { font-weight: 700; font-size: 0.9rem; margin: 8px 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .badge-stock { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 40px; margin: 6px 0; }
+    .badge-stock { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 40px; margin: 6px 0; transition: all 0.2s ease; }
     .badge-available { background: #E3F7EC; color: #1E7E34; }
     .badge-low { background: #FFF1E0; color: #B45F06; }
     .badge-out { background: #FFEBEE; color: #B91C1C; }
-    .btn-add-cart { background: #005BBB; width: 100%; border: none; padding: 10px 0; border-radius: 44px; color: white; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
-    .btn-add-cart:active { transform: scale(0.96); background: #004499; }
-    .btn-add-cart:disabled { background: #B9CFDF; cursor: not-allowed; }
+    .btn-add-cart { background: #005BBB; width: 100%; border: none; padding: 10px 0; border-radius: 44px; color: white; font-weight: 600; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(0,91,187,0.2); }
+    .btn-add-cart:hover { transform: translateY(-2px); background: #004a9f; box-shadow: 0 8px 16px rgba(0,91,187,0.25); }
+    .btn-add-cart:active { transform: scale(0.97); background: #003D7A; }
+    .btn-add-cart:disabled { background: #B9CFDF; box-shadow: none; cursor: not-allowed; opacity: 0.7; }
 
     /* MODAIS */
     .modal-modern { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 1000; padding: 16px; }
-    .modal-container { background: white; width: 100%; max-width: 680px; border-radius: 32px; padding: 28px; max-height: 90vh; overflow-y: auto; }
+    .modal-container { background: white; width: 100%; max-width: 680px; border-radius: 32px; padding: 28px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 48px -12px rgba(0,0,0,0.3); transition: all 0.2s ease; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
     .input-group { display: flex; flex-direction: column; gap: 6px; }
     .input-group label { font-size: 0.75rem; font-weight: 600; color: #334155; }
-    .input-group input, .input-group select { background: #F8FAFE; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; font-size: 0.9rem; }
+    .input-group input, .input-group select { background: #F8FAFE; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; font-size: 0.9rem; transition: all 0.2s ease; }
+    .input-group input:hover, .input-group select:hover { border-color: #CBD5E1; background: #FFFFFF; }
+    .input-group input:focus, .input-group select:focus { border-color: #005BBB; box-shadow: 0 0 0 3px rgba(0,91,187,0.1); outline: none; }
     .full-width { grid-column: span 2; }
     @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
-    .btn-primary { background: linear-gradient(135deg, #005BBB, #003D7A); color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; width: 100%; }
-    .btn-secondary { background: #F1F5F9; color: #334155; border: 1px solid #E2E8F0; padding: 12px; border-radius: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; width: 100%; }
-    .bottom-nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); max-width: 500px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 8px 16px 12px; border-radius: 48px; box-shadow: 0 8px 28px rgba(0,0,0,0.12); z-index: 105; border: 1px solid rgba(0,91,187,0.1); }
-    .nav-item { display: flex; flex-direction: column; align-items: center; background: transparent; border: none; font-weight: 600; font-size: 0.7rem; color: #6C7A8A; gap: 4px; cursor: pointer; border-radius: 40px; padding: 6px 12px; transition: all 0.1s; }
-    .nav-item:active { transform: scale(0.95); }
+    .btn-primary { background: linear-gradient(135deg, #005BBB, #003D7A); color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; width: 100%; transition: all 0.2s ease; box-shadow: 0 8px 16px rgba(0,91,187,0.2); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 20px rgba(0,91,187,0.3); filter: brightness(1.05); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-secondary { background: #F1F5F9; color: #334155; border: 1px solid #E2E8F0; padding: 12px; border-radius: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; width: 100%; transition: all 0.2s ease; }
+    .btn-secondary:hover { background: #E2E8F0; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .btn-secondary:active { transform: scale(0.98); }
+    .bottom-nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); max-width: 500px; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); display: flex; justify-content: space-around; align-items: center; padding: 8px 16px 12px; border-radius: 48px; box-shadow: 0 8px 28px rgba(0,0,0,0.12); z-index: 105; border: 1px solid rgba(0,91,187,0.1); transition: box-shadow 0.2s ease; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; background: transparent; border: none; font-weight: 600; font-size: 0.7rem; color: #6C7A8A; gap: 4px; cursor: pointer; border-radius: 40px; padding: 6px 12px; transition: all 0.2s ease; }
+    .nav-item:hover { background: rgba(0,91,187,0.05); color: #005BBB; transform: translateY(-2px); }
+    .nav-item:active { transform: scale(0.96); }
     .nav-item.active { background: rgba(0,91,187,0.12); color: #005BBB; }
     .nav-item img { width: 24px; height: 24px; object-fit: contain; }
     .view-section { display: none; animation: fadeIn 0.3s ease; }
@@ -117,18 +136,38 @@
 
     /* FAQ STYLE */
     .faq-container { max-width: 800px; margin: 16px auto; padding: 0 16px 32px; }
-    .faq-card { background: white; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.2s; }
-    .faq-question { font-weight: 800; font-size: 1rem; color: #005BBB; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-    .faq-answer { color: #334155; font-size: 0.9rem; line-height: 1.4; padding-left: 28px; border-left: 3px solid #005BBB30; }
-    .admin-card, .pedido-admin-card { background: white; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .whatsapp-float { position: fixed; bottom: 90px; right: 20px; background: #25D366; border-radius: 40px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; z-index: 100; }
+    .faq-card { background: white; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: all 0.2s ease; cursor: default; }
+    .faq-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,91,187,0.08); border-left: 3px solid #005BBB; }
+    .faq-question { font-weight: 800; font-size: 1rem; color: #005BBB; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease; }
+    .faq-card:hover .faq-question { color: #003D7A; }
+    .faq-answer { color: #334155; font-size: 0.9rem; line-height: 1.5; padding-left: 28px; border-left: 3px solid #005BBB30; transition: border-color 0.2s ease; }
+    .faq-card:hover .faq-answer { border-left-color: #005BBB; }
+    .admin-card, .pedido-admin-card { background: white; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: all 0.2s ease; }
+    .admin-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+    .whatsapp-float { position: fixed; bottom: 90px; right: 20px; background: #25D366; border-radius: 40px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(37,211,102,0.3); cursor: pointer; z-index: 100; transition: all 0.2s ease; }
+    .whatsapp-float:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 12px 24px rgba(37,211,102,0.4); }
+    .whatsapp-float:active { transform: scale(0.95); }
+    
+    /* Cart item refinamento */
+    .cart-item-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #EDF2F7; transition: all 0.2s ease; }
+    .cart-item-row:hover { background: #F8FAFE; margin: 0 -8px; padding: 12px 8px; border-radius: 16px; }
+    .cart-qty-control { display: flex; align-items: center; gap: 8px; }
+    .cart-qty-control button { background: #F1F5F9; border: none; width: 28px; height: 28px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+    .cart-qty-control button:hover { background: #E2E8F0; transform: scale(1.1); }
+    .cart-qty-control button:active { transform: scale(0.95); }
+    .cart-remove-btn { background: none; border: none; color: #B91C1C; cursor: pointer; transition: all 0.2s ease; padding: 4px; border-radius: 20px; }
+    .cart-remove-btn:hover { background: #FFEBEE; transform: scale(1.1); }
+    .admin-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+    .admin-table th { text-align: left; padding: 8px 12px; color: #5A6874; font-weight: 600; font-size: 0.8rem; }
+    .admin-table td { background: #F8FAFE; padding: 14px 12px; border-radius: 16px; transition: all 0.2s ease; }
+    .admin-table tr:hover td { background: #F0F7FF; box-shadow: 0 2px 8px rgba(0,91,187,0.05); }
   </style>
 </head>
 <body>
 
 <div class="splash-screen" id="splashScreen">
   <div class="splash-content">
-    <img src="Inicialização CT ALMOX.png" alt="Logo" class="splash-icon-img">
+    <img src="Inicialização CT ALMOX.png" alt="Logo" class="splash-icon-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;">
     <div class="splash-title">Smart Almox</div>
     <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 8px;">Almoxarifado CT UFPB</div>
     <div class="dot-loader" id="dotLoader">
@@ -147,21 +186,20 @@
   </div>
 </header>
 
-<!-- VIEW HOME (dois botões + novo botão FAQ) -->
+<!-- VIEW HOME -->
 <div id="view-home" class="view-section active">
   <div class="carousel-section"><div class="carousel-container"><div class="carousel-track" id="carouselTrack"><div class="carousel-slide"><div class="slide-text"><h3>📦 Smart Almox</h3><p>Consulte o status antes de se deslocar até o almoxarifado</p></div><div class="slide-icon">🚀</div></div><div class="carousel-slide"><div class="slide-text"><h3>⚡ Entregas ágeis</h3><p>Materiais separados em até 2h úteis</p></div><div class="slide-icon">📋</div></div></div></div></div>
   <div class="home-buttons-container">
     <div class="big-shortcut" onclick="mudarView('agua')">
-      <div class="big-shortcut-icon"><img src="Bot%C3%A3o%20Menu%20%C3%A1gua.png" alt="Água Mineral"></div>
+      <div class="big-shortcut-icon"><img src="Bot%C3%A3o%20Menu%20%C3%A1gua.png" alt="Água Mineral" onerror="this.src='https://cdn-icons-png.flaticon.com/512/824/824700.png'; this.onerror=null;"></div>
       <div class="big-shortcut-text"><h3>Água Mineral</h3><p>Solicitar garrafão de 20L para sua unidade</p></div>
     </div>
     <div class="big-shortcut" onclick="mudarView('materiais')">
-      <div class="big-shortcut-icon"><img src="Material%20home.png" alt="Materiais"></div>
+      <div class="big-shortcut-icon"><img src="Material%20home.png" alt="Materiais" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2965/2965311.png'; this.onerror=null;"></div>
       <div class="big-shortcut-text"><h3>Materiais</h3><p>Expediente, Informática, Limpeza e outros</p></div>
     </div>
-    <!-- NOVO BOTÃO FAQ -->
     <div class="big-shortcut" onclick="mudarView('faq')">
-      <div class="big-shortcut-icon"><img src="perguntas-e-respostas.png" alt="FAQ"></div>
+      <div class="big-shortcut-icon"><img src="perguntas-e-respostas.png" alt="FAQ" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4406/4406239.png'; this.onerror=null;"></div>
       <div class="big-shortcut-text"><h3>Tire suas dúvidas</h3><p>sobre o Almoxarifado</p></div>
     </div>
   </div>
@@ -170,32 +208,31 @@
 <!-- VIEW MATERIAIS -->
 <div id="view-materiais" class="view-section"><div class="quick-actions"><div class="actions-wrapper" id="quickActionsWrapper"></div></div><div class="search-container"><div class="search-bar-modern"><i class="material-icons">search</i><input type="text" id="searchInputMateriais" placeholder="Buscar material..."></div></div><div class="product-grid" id="catalogoContainerModerno"></div></div>
 <!-- VIEW ÁGUA -->
-<div id="view-agua" class="view-section"><div style="max-width:800px;margin:16px auto;padding:0 16px;"><div id="aguaStatusCard" style="display:none;background:white;border-radius:24px;padding:30px;text-align:center;"><i class="material-icons" style="font-size:64px;color:#005BBB;">hourglass_top</i><h2>Sua Posição: <span id="aguaPosicao">#1</span></h2><button class="btn-secondary" onclick="cancelarAgua()">Cancelar Solicitação</button></div><div id="aguaFormCard" style="background:white;border-radius:24px;padding:24px;"><h2><i class="material-icons">local_drink</i> Solicitar Água</h2><div class="form-grid"><div class="input-group full-width"><label>Setor/Unidade *</label><select id="aguaSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="aguaNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="aguaContato" class="mask-whatsapp" placeholder="(83) 90000-0000"></div><div class="input-group"><label>E-mail *</label><input type="email" id="aguaEmail"></div><div class="input-group"><label>Perfil</label><select id="aguaPerfil"><option>Técnico-Administrativo</option><option>Docente</option><option>Discente</option></select></div><div class="input-group"><label>Lotação/Sala *</label><input type="text" id="aguaLotacao"></div></div><button class="btn-primary" onclick="submitAgua()"><i class="material-icons">check_circle</i> Entrar na fila</button></div></div></div>
+<div id="view-agua" class="view-section"><div style="max-width:800px;margin:16px auto;padding:0 16px;"><div id="aguaStatusCard" style="display:none;background:white;border-radius:24px;padding:30px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.04);"><i class="material-icons" style="font-size:64px;color:#005BBB;">hourglass_top</i><h2>Sua Posição: <span id="aguaPosicao">#1</span></h2><button class="btn-secondary" onclick="cancelarAgua()">Cancelar Solicitação</button></div><div id="aguaFormCard" style="background:white;border-radius:24px;padding:24px;box-shadow:0 4px 12px rgba(0,0,0,0.04);"><h2><i class="material-icons">local_drink</i> Solicitar Água</h2><div class="form-grid"><div class="input-group full-width"><label>Setor/Unidade *</label><select id="aguaSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="aguaNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="aguaContato" class="mask-whatsapp" placeholder="(83) 90000-0000"></div><div class="input-group"><label>E-mail *</label><input type="email" id="aguaEmail"></div><div class="input-group"><label>Perfil</label><select id="aguaPerfil"><option>Técnico-Administrativo</option><option>Docente</option><option>Discente</option></select></div><div class="input-group"><label>Lotação/Sala *</label><input type="text" id="aguaLotacao"></div></div><button class="btn-primary" onclick="submitAgua()"><i class="material-icons">check_circle</i> Entrar na fila</button></div></div></div>
 <!-- VIEW MEUS PEDIDOS -->
 <div id="view-orders" class="view-section"><div style="max-width:800px;margin:16px auto;padding:0 16px;" id="historicoContainer"></div></div>
 <!-- VIEW ADMIN -->
-<div id="view-admin" class="view-section"><div style="max-width:1400px;margin:16px auto;padding:0 16px;"><div style="display:flex;justify-content:space-between;"><h2><i class="material-icons">admin_panel_settings</i> Painel Gestor</h2><button class="btn-secondary" style="width:auto;" onclick="forcarAtualizacao()">Atualizar</button></div><div class="admin-tabs"><button class="admin-tab-btn" onclick="switchAdminTab('cadastrar')">Cadastrar</button><button class="admin-tab-btn" onclick="switchAdminTab('estoque')">Estoque</button></div><div id="admin-tab-cadastrar" class="admin-card"><h3>Novo Material</h3><div class="form-grid"><div class="input-group"><label>Categoria</label><select id="adminNovaCatSelect"></select><input type="text" id="adminNovaCatInput" placeholder="Nova categoria" style="display:none;"></div><div class="input-group"><label>Nome</label><input type="text" id="adminNovoNome"></div><div class="input-group"><label>Imagem URL</label><input type="text" id="adminNovaImg"></div><div class="input-group"><label>Estoque</label><input type="number" id="adminNovoEstoque" value="0"></div></div><button class="btn-primary" onclick="adminAdicionarItem()">Salvar</button></div><div id="admin-tab-estoque" class="admin-card"><h3>Gerenciar Estoque</h3><table class="admin-table"><thead><tr><th>Material</th><th>Estoque</th><th>Adicionar</th><th>Obs</th><th>Ações</th></tr></thead><tbody id="adminTableBody"></tbody></table></div><div class="admin-card"><h3>Pendentes / Fila Água</h3><div id="adminPendentesList"></div></div><div class="admin-card"><h3>Últimos Atualizados</h3><div id="adminUltimosList"></div><button class="btn-secondary" onclick="abrirTodosPedidosModal()">Ver todos os pedidos</button></div></div></div>
+<div id="view-admin" class="view-section"><div style="max-width:1400px;margin:16px auto;padding:0 16px;"><div style="display:flex;justify-content:space-between;"><h2><i class="material-icons">admin_panel_settings</i> Painel Gestor</h2><button class="btn-secondary" style="width:auto;" onclick="forcarAtualizacao()">Atualizar</button></div><div class="admin-tabs"><button class="admin-tab-btn" onclick="switchAdminTab('cadastrar')">Cadastrar</button><button class="admin-tab-btn" onclick="switchAdminTab('estoque')">Estoque</button></div><div id="admin-tab-cadastrar" class="admin-card"><h3>Novo Material</h3><div class="form-grid"><div class="input-group"><label>Categoria</label><select id="adminNovaCatSelect" onchange="checkNovaCat()"></select><input type="text" id="adminNovaCatInput" placeholder="Nova categoria" style="display:none;"></div><div class="input-group"><label>Nome</label><input type="text" id="adminNovoNome"></div><div class="input-group"><label>Imagem URL</label><input type="text" id="adminNovaImg"></div><div class="input-group"><label>Estoque</label><input type="number" id="adminNovoEstoque" value="0"></div></div><button class="btn-primary" onclick="adminAdicionarItem()">Salvar</button></div><div id="admin-tab-estoque" class="admin-card"><h3>Gerenciar Estoque</h3><table class="admin-table"><thead><tr><th>Material</th><th>Estoque</th><th>Adicionar</th><th>Obs</th><th>Ações</th></tr></thead><tbody id="adminTableBody"></tbody></table></div><div class="admin-card"><h3>Pendentes / Fila Água</h3><div id="adminPendentesList"></div></div><div class="admin-card"><h3>Últimos Atualizados</h3><div id="adminUltimosList"></div><button class="btn-secondary" onclick="abrirTodosPedidosModal()">Ver todos os pedidos</button></div></div></div>
 
-<!-- NOVA VIEW: PERGUNTAS E RESPOSTAS (FAQ) -->
+<!-- VIEW FAQ -->
 <div id="view-faq" class="view-section">
   <div class="faq-container" id="faqContainer"></div>
 </div>
 
-<!-- MODAIS (carrinho, checkout) -->
-<div id="modalCarrinho" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Carrinho</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalCarrinho')">close</i></div><div id="carrinhoItensList" style="max-height:40vh;overflow-y:auto;margin-bottom:20px;"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;"><button class="btn-secondary" onclick="limparCarrinho()">Limpar</button><button class="btn-secondary" onclick="fecharModal('modalCarrinho')">Continuar</button><button class="btn-primary" onclick="abrirCheckout()">Finalizar</button></div></div></div>
-<div id="modalCheckout" class="modal-modern"><div class="modal-container"><div style="display:flex;justify-content:space-between;"><h2>Finalizar Requisição</h2><i class="material-icons" style="cursor:pointer;" onclick="voltarParaCarrinho()">arrow_back</i></div><div class="form-grid"><div class="input-group full-width"><label>Setor *</label><select id="reqSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="reqNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="reqContato" class="mask-whatsapp"></div><div class="input-group"><label>E-mail *</label><input type="email" id="reqEmail"></div><div class="input-group"><label>Perfil</label><select id="reqPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div><div class="input-group"><label>Lotação *</label><input type="text" id="reqLotacao"></div><div class="input-group full-width"><label>Assunto</label><input type="text" id="reqAssunto" value="Solicitação de materiais"></div></div><button class="btn-primary" onclick="finalizarRequisicaoModal()">Enviar Pedido</button></div></div></div>
+<!-- MODAIS -->
+<div id="modalCarrinho" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Carrinho</h2><i class="material-icons" style="cursor:pointer; transition: all 0.2s;" onclick="fecharModal('modalCarrinho')">close</i></div><div id="carrinhoItensList" style="max-height:40vh;overflow-y:auto;margin-bottom:20px;"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;"><button class="btn-secondary" onclick="limparCarrinho()">Limpar</button><button class="btn-secondary" onclick="fecharModal('modalCarrinho')">Continuar</button><button class="btn-primary" onclick="abrirCheckout()">Finalizar</button></div></div></div>
+<div id="modalCheckout" class="modal-modern"><div class="modal-container"><div style="display:flex;justify-content:space-between;"><h2>Finalizar Requisição</h2><i class="material-icons" style="cursor:pointer;" onclick="voltarParaCarrinho()">arrow_back</i></div><div class="form-grid"><div class="input-group full-width"><label>Setor *</label><select id="reqSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="reqNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="reqContato" class="mask-whatsapp"></div><div class="input-group"><label>E-mail *</label><input type="email" id="reqEmail"></div><div class="input-group"><label>Perfil</label><select id="reqPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div><div class="input-group"><label>Lotação *</label><input type="text" id="reqLotacao"></div><div class="input-group full-width"><label>Assunto</label><input type="text" id="reqAssunto" value="Solicitação de materiais"></div></div><button class="btn-primary" onclick="finalizarRequisicaoModal()">Enviar Pedido</button></div></div>
 <div id="modalTodosPedidos" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Todos os Pedidos</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalTodosPedidos')">close</i></div><div style="display:flex;gap:12px;margin-bottom:16px;"><button class="btn-primary" style="background:#1E7E34;" onclick="exportarXLSX()">Excel</button><button class="btn-primary" style="background:#B91C1C;" onclick="exportarPDF()">PDF</button></div><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Tipo</th><th>Setor</th><th>Solicitante</th><th>Status</th></tr></thead><tbody id="tabelaTodosPedidosBody"></tbody></table></div></div></div>
 <div id="modalEditarPedido" class="modal-modern"><div class="modal-container"><h2>Gerenciar Pedido</h2><div id="editarPedidoHeader"></div><div class="input-group"><label>Status</label><select id="editPedidoStatus"><option>Aguardando</option><option>Aguardando retirada</option><option>Entregue</option><option>Cancelado/Rejeitado</option></select></div><div id="editarPedidoItensContainer"></div><input type="hidden" id="editPedidoIdAtual"><button class="btn-primary" onclick="salvarEdicaoPedido()">Salvar</button></div></div>
 <div id="modalHistoricoItem" class="modal-modern"><div class="modal-container"><h2 id="histItemNomeHeader">Histórico</h2><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Ação</th><th>Qtd</th><th>Saldo</th><th>Observação</th></tr></thead><tbody id="tabelaHistoricoItemBody"></tbody></table></div><input type="hidden" id="histItemIdAtual"></div></div>
 
 <a href="https://wa.me/558332167082" target="_blank" class="whatsapp-float"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
 
-<!-- BOTTOM NAV (HOME AGORA COM IMAGEM) -->
 <div class="bottom-nav">
-  <button class="nav-item active" data-target="home" onclick="mudarView('home')"><img src="Bot%C3%A3o%20Home.png" alt="Início"><span>Início</span></button>
-  <button class="nav-item" data-target="materiais" onclick="mudarView('materiais')"><img src="Bot%C3%A3o%20Materiais.png" alt="Materiais"><span>Materiais</span></button>
+  <button class="nav-item active" data-target="home" onclick="mudarView('home')"><img src="Bot%C3%A3o%20Home.png" alt="Início" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1946/1946488.png'; this.onerror=null;"><span>Início</span></button>
+  <button class="nav-item" data-target="materiais" onclick="mudarView('materiais')"><img src="Bot%C3%A3o%20Materiais.png" alt="Materiais" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2965/2965311.png'; this.onerror=null;"><span>Materiais</span></button>
   <button class="nav-item" data-target="agua" onclick="mudarView('agua')"><i class="material-icons">local_drink</i><span>Água</span></button>
-  <button class="nav-item" data-target="orders" onclick="mudarView('orders')"><img src="Bot%C3%A3o%20meus%20pedidos.png" alt="Meus Pedidos"><span>Meus Pedidos</span></button>
+  <button class="nav-item" data-target="orders" onclick="mudarView('orders')"><img src="Bot%C3%A3o%20meus%20pedidos.png" alt="Meus Pedidos" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; this.onerror=null;"><span>Meus Pedidos</span></button>
 </div>
 
 <script>
@@ -203,8 +240,61 @@
 const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbynotzi-Mu68mNg3ZWbCgC2KTQp7xwaUxWYJEfLvX3i4M1G8J8qFCj_y8L67Jzj6KtWjg/exec";
 function enviarParaGoogleSheets(dados) { fetch(GOOGLE_SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados) }).catch(e => console.error); }
 function salvarBackupNuvem() { enviarParaGoogleSheets({ tipo: 'backup_estado_app', materiais: materiaisDB, historico: historicoGlobal, fila: filaAgua, histItens: historicoItens }); }
+
+// INCLUSÃO DOS MATERIAIS DAS TABELAS FORNECIDAS (caso localStorage esteja vazio)
+const materiaisIniciais = [
+  // Expediente
+  { id: 'EXP001', categoria: 'Expediente', nome: 'Caneta Esferográfica Azul – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 },
+  { id: 'EXP002', categoria: 'Expediente', nome: 'Caneta Esferográfica Preta – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 },
+  { id: 'EXP003', categoria: 'Expediente', nome: 'Caneta Esferográfica Vermelha – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 30 },
+  { id: 'EXP004', categoria: 'Expediente', nome: 'Lápis Preto nº 2 – Grafite Resistente', imagem: 'https://cdn-icons-png.flaticon.com/512/2541/2541985.png', estoque: 100 },
+  { id: 'EXP005', categoria: 'Expediente', nome: 'Borracha Branca – Alta Maciez', imagem: 'https://cdn-icons-png.flaticon.com/512/3199/3199869.png', estoque: 80 },
+  { id: 'EXP006', categoria: 'Expediente', nome: 'Apontador com Depósito – Lâmina Metálica', imagem: 'https://cdn-icons-png.flaticon.com/512/2382/2382649.png', estoque: 40 },
+  { id: 'EXP007', categoria: 'Expediente', nome: 'Corretivo Líquido – Secagem Rápida', imagem: 'https://cdn-icons-png.flaticon.com/512/2947/2947954.png', estoque: 25 },
+  { id: 'EXP008', categoria: 'Expediente', nome: 'Marca-Texto – Tinta Fluorescente', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103597.png', estoque: 60 },
+  { id: 'EXP009', categoria: 'Expediente', nome: 'Papel A4 75g/m² – Resma', imagem: 'https://cdn-icons-png.flaticon.com/512/2965/2965311.png', estoque: 35 },
+  { id: 'EXP010', categoria: 'Expediente', nome: 'Envelope Branco Ofício – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/2577/2577085.png', estoque: 15 },
+  { id: 'EXP011', categoria: 'Expediente', nome: 'Envelope Pardo A4 – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/2577/2577085.png', estoque: 12 },
+  { id: 'EXP012', categoria: 'Expediente', nome: 'Pasta AZ – Lombada Larga', imagem: 'https://cdn-icons-png.flaticon.com/512/2713/2713887.png', estoque: 45 },
+  { id: 'EXP013', categoria: 'Expediente', nome: 'Pasta Suspensa – Cartão Kraft (Caixa)', imagem: 'https://cdn-icons-png.flaticon.com/512/2713/2713887.png', estoque: 30 },
+  { id: 'EXP014', categoria: 'Expediente', nome: 'Pasta Catálogo – Com Plásticos', imagem: 'https://cdn-icons-png.flaticon.com/512/2713/2713887.png', estoque: 20 },
+  { id: 'EXP015', categoria: 'Expediente', nome: 'Clipes Metálicos – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/2937/2937061.png', estoque: 200 },
+  { id: 'EXP016', categoria: 'Expediente', nome: 'Elástico para Dinheiro – Pacote', imagem: 'https://cdn-icons-png.flaticon.com/512/2909/2909775.png', estoque: 150 },
+  { id: 'EXP017', categoria: 'Expediente', nome: 'Grampeador de Mesa – Estrutura Reforçada', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135767.png', estoque: 18 },
+  { id: 'EXP018', categoria: 'Expediente', nome: 'Grampo 26/6 – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135767.png', estoque: 60 },
+  { id: 'EXP019', categoria: 'Expediente', nome: 'Perfurador de Papel – Capacidade Média', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135767.png', estoque: 10 },
+  { id: 'EXP020', categoria: 'Expediente', nome: 'Fita Adesiva Transparente – Rolo', imagem: 'https://cdn-icons-png.flaticon.com/512/2909/2909775.png', estoque: 40 },
+  { id: 'EXP021', categoria: 'Expediente', nome: 'Fita Adesiva Larga – Rolo', imagem: 'https://cdn-icons-png.flaticon.com/512/2909/2909775.png', estoque: 30 },
+  { id: 'EXP022', categoria: 'Expediente', nome: 'Cola Branca Líquida – Base PVA', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135767.png', estoque: 50 },
+  { id: 'EXP023', categoria: 'Expediente', nome: 'Bloco Adesivo – Folhas Reposicionáveis (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/2541/2541985.png', estoque: 70 },
+  // Limpeza e Higiene
+  { id: 'LIM001', categoria: 'Limpeza', nome: 'Álcool 70% – Ação Desinfetante (Litro)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 20 },
+  { id: 'LIM002', categoria: 'Limpeza', nome: 'Água Sanitária – Base de Hipoclorito (Litro)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 15 },
+  { id: 'LIM003', categoria: 'Limpeza', nome: 'Detergente Líquido – Alto Poder Desengordurante (Un)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 25 },
+  { id: 'LIM004', categoria: 'Limpeza', nome: 'Sabão em Pó – Limpeza Profunda (KG)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 30 },
+  { id: 'LIM005', categoria: 'Limpeza', nome: 'Sabão Líquido – Uso Institucional (Litro)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 22 },
+  { id: 'LIM006', categoria: 'Limpeza', nome: 'Desinfetante – Ação Germicida (Litro)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 18 },
+  { id: 'LIM007', categoria: 'Limpeza', nome: 'Limpador Multiuso – Versátil (Un)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 20 },
+  { id: 'LIM008', categoria: 'Limpeza', nome: 'Esponja Dupla Face – Lado Abrasivo e Macio', imagem: 'https://cdn-icons-png.flaticon.com/512/3082/3082013.png', estoque: 100 },
+  { id: 'LIM009', categoria: 'Limpeza', nome: 'Pano de Chão – Alta Absorção', imagem: 'https://cdn-icons-png.flaticon.com/512/3090/3090979.png', estoque: 35 },
+  { id: 'LIM010', categoria: 'Limpeza', nome: 'Flanela – Tecido Macio para Polimento', imagem: 'https://cdn-icons-png.flaticon.com/512/3090/3090979.png', estoque: 40 },
+  { id: 'LIM011', categoria: 'Limpeza', nome: 'Luvas de Limpeza – Borracha Resistente (Par)', imagem: 'https://cdn-icons-png.flaticon.com/512/2329/2329862.png', estoque: 60 },
+  { id: 'LIM012', categoria: 'Limpeza', nome: 'Vassoura – Cerdas Resistentes', imagem: 'https://cdn-icons-png.flaticon.com/512/2329/2329862.png', estoque: 12 },
+  { id: 'LIM013', categoria: 'Limpeza', nome: 'Rodo – Base Reforçada com Borracha', imagem: 'https://cdn-icons-png.flaticon.com/512/2329/2329862.png', estoque: 10 },
+  { id: 'LIM014', categoria: 'Limpeza', nome: 'Balde Plástico – Alta Capacidade', imagem: 'https://cdn-icons-png.flaticon.com/512/2329/2329862.png', estoque: 8 },
+  { id: 'LIM015', categoria: 'Limpeza', nome: 'Saco de Lixo 30L – Alta Resistência (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 50 },
+  { id: 'LIM016', categoria: 'Limpeza', nome: 'Saco de Lixo 50L – Boa Capacidade (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 45 },
+  { id: 'LIM017', categoria: 'Limpeza', nome: 'Saco de Lixo 100L – Grande Volume (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 30 },
+  { id: 'LIM018', categoria: 'Limpeza', nome: 'Papel Higiênico Rolão – Alto Rendimento (Rolo)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 80 },
+  { id: 'LIM019', categoria: 'Limpeza', nome: 'Papel Toalha – Alta Absorção (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 60 }
+];
+
 let materiaisDB = JSON.parse(localStorage.getItem('almox_db_materiais'));
-if(!materiaisDB) materiaisDB = [ { id: 'mat1', categoria: 'Expediente', nome: 'Caneta azul', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 }, { id: 'mat2', categoria: 'Expediente', nome: 'Papel A4 (resma)', imagem: 'https://cdn-icons-png.flaticon.com/512/2965/2965311.png', estoque: 20 }, { id: 'mat3', categoria: 'Limpeza', nome: 'Copo descartável', imagem: 'https://cdn-icons-png.flaticon.com/512/3024/3024502.png', estoque: 0 }, { id: 'mat4', categoria: 'Expediente', nome: 'Caderno 96fl', imagem: 'https://cdn-icons-png.flaticon.com/512/2428/2428703.png', estoque: 12 }, { id: 'mat5', categoria: 'Informática', nome: 'Teclado USB', imagem: 'https://cdn-icons-png.flaticon.com/512/1055/1055687.png', estoque: 5 }, { id: 'mat6', categoria: 'Informática', nome: 'Mouse óptico', imagem: 'https://cdn-icons-png.flaticon.com/512/2615/2615230.png', estoque: 8 }, { id: 'mat7', categoria: 'Elétrico', nome: 'Pilha AAA', imagem: 'https://cdn-icons-png.flaticon.com/512/1124/1124451.png', estoque: 15 }, { id: 'mat8', categoria: 'Limpeza', nome: 'Desinfetante', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 6 } ]; localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
+if(!materiaisDB) {
+  materiaisDB = materiaisIniciais;
+  localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
+}
+
 let carrinho = JSON.parse(localStorage.getItem('almox_db_carrinho')) || [];
 let historicoGlobal = JSON.parse(localStorage.getItem('almox_db_hist_global')) || [];
 let filaAgua = JSON.parse(localStorage.getItem('almox_db_fila_agua')) || [];
@@ -214,28 +304,28 @@ function atualizarBadges() { document.getElementById('headerCartBadge').innerTex
 function salvarCarrinho() { localStorage.setItem('almox_db_carrinho', JSON.stringify(carrinho)); atualizarBadges(); renderCarrinho(); }
 function addAoCarrinho(id) { let itemDB = materiaisDB.find(m => m.id === id); let noCarrinho = carrinho.find(c => c.id === id); if(noCarrinho) { if(noCarrinho.qtd < itemDB.estoque) noCarrinho.qtd++; else return Swal.fire({toast:true, icon:'error', title:'Limite', timer:1500}); } else carrinho.push({ id: itemDB.id, nome: itemDB.nome, imagem: itemDB.imagem, qtd: 1 }); salvarCarrinho(); Swal.fire({toast:true, icon:'success', title:'Adicionado!', timer:1000}); }
 function alterarQtd(id, delta) { let cItem = carrinho.find(c => c.id === id); if(!cItem) return; let dbItem = materiaisDB.find(m => m.id === id); cItem.qtd += delta; if(cItem.qtd > dbItem.estoque) cItem.qtd = dbItem.estoque; if(cItem.qtd <= 0) carrinho = carrinho.filter(c => c.id !== id); salvarCarrinho(); }
-function renderCarrinho() { let container = document.getElementById('carrinhoItensList'); if(carrinho.length===0) return container.innerHTML='<div style="text-align:center;">Vazio.</div>'; container.innerHTML = carrinho.map(c => `<div class="cart-item-row"><img src="${c.imagem}" style="width:40px;"><div style="flex:1;">${c.nome}</div><div class="cart-qty-control"><button onclick="alterarQtd('${c.id}',-1)">-</button><span>${c.qtd}</span><button onclick="alterarQtd('${c.id}',1)">+</button></div><button class="cart-remove-btn" onclick="alterarQtd('${c.id}',-999)"><i class="material-icons">delete</i></button></div>`).join(''); }
+function renderCarrinho() { let container = document.getElementById('carrinhoItensList'); if(carrinho.length===0) return container.innerHTML='<div style="text-align:center;">Vazio.</div>'; container.innerHTML = carrinho.map(c => `<div class="cart-item-row"><img src="${c.imagem}" style="width:40px; border-radius:8px;"><div style="flex:1;">${c.nome}</div><div class="cart-qty-control"><button onclick="alterarQtd('${c.id}',-1)">-</button><span>${c.qtd}</span><button onclick="alterarQtd('${c.id}',1)">+</button></div><button class="cart-remove-btn" onclick="alterarQtd('${c.id}',-999)"><i class="material-icons">delete</i></button></div>`).join(''); }
 function abrirCarrinho() { renderCarrinho(); document.getElementById('modalCarrinho').style.display='flex'; }
 function fecharModal(id) { document.getElementById(id).style.display='none'; }
 function limparCarrinho() { carrinho=[]; salvarCarrinho(); }
 function abrirCheckout() { if(carrinho.length===0) return Swal.fire('Vazio','Adicione itens','warning'); fecharModal('modalCarrinho'); document.getElementById('modalCheckout').style.display='flex'; }
 function voltarParaCarrinho() { fecharModal('modalCheckout'); abrirCarrinho(); }
 function finalizarRequisicaoModal() { const setor=document.getElementById('reqSetor').value, nome=document.getElementById('reqNome').value.trim(), whatsapp=document.getElementById('reqContato').value, email=document.getElementById('reqEmail').value.trim(), perfil=document.getElementById('reqPerfil').value, lotacao=document.getElementById('reqLotacao').value.trim(); if(!setor||!nome||!whatsapp||!email||!lotacao) return Swal.fire('Preencha todos os campos'); carrinho.forEach(c=>{ let dbM=materiaisDB.find(m=>m.id===c.id); if(dbM){ dbM.estoque-=c.qtd; registrarHistoricoItem(c.id,'Saída (Reserva)',c.qtd,`Pedido: ${nome} (${setor})`,dbM.estoque); } }); localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); let pedido={id:Date.now(), tipo:'Material', data:new Date().toLocaleString(), setor, nome, whatsapp, email, perfil, lotacao, itens:[...carrinho], status:'Aguardando'}; historicoGlobal.unshift(pedido); localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); enviarParaGoogleSheets({ tipo:"requisicao", nome, setor, whatsapp, email, lotacao, itens:carrinho.map(i=>`${i.nome}(${i.qtd})`).join(', ') }); salvarBackupNuvem(); Swal.fire('✅ Enviada!','Acompanhe na aba Meus Pedidos.','success'); limparCarrinho(); fecharModal('modalCheckout'); mudarView('orders'); }
-function mudarView(viewId) { document.querySelectorAll('.view-section').forEach(el=>el.classList.remove('active')); document.getElementById(`view-${viewId}`).classList.add('active'); document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.querySelector(`.nav-item[data-target="${viewId}"]`)?.classList.add('active'); if(viewId==='materiais') renderCatalogoModerno(); if(viewId==='orders') renderHistoricoUsuario(); if(viewId==='agua') { checkAguaStatus(); carregarDadosLocaisUsuario(); } if(viewId==='admin') { renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); } window.scrollTo(0,0); }
-function abrirAdmin() { let senha = localStorage.getItem('senhaAdminCT') || ""; Swal.fire({ title: 'Acesso Restrito', input: 'password', showCancelButton: true }).then(res => { if(res.isConfirmed && res.value === senha) mudarView('admin'); else if(res.isConfirmed) Swal.fire('Erro', 'Senha incorreta', 'error'); }); }
+function mudarView(viewId) { document.querySelectorAll('.view-section').forEach(el=>el.classList.remove('active')); document.getElementById(`view-${viewId}`).classList.add('active'); document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.querySelector(`.nav-item[data-target="${viewId}"]`)?.classList.add('active'); if(viewId==='materiais') renderCatalogoModerno(); if(viewId==='orders') renderHistoricoUsuario(); if(viewId==='agua') { checkAguaStatus(); carregarDadosLocaisUsuario(); } if(viewId==='admin') { renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); } if(viewId==='faq') { buildFaqScreen(); } window.scrollTo(0,0); }
+function abrirAdmin() { let senha = localStorage.getItem('senhaAdminCT') || "admin123"; Swal.fire({ title: 'Acesso Restrito', input: 'password', showCancelButton: true }).then(res => { if(res.isConfirmed && res.value === senha) mudarView('admin'); else if(res.isConfirmed) Swal.fire('Erro', 'Senha incorreta', 'error'); }); }
 let currentFilterCat="Todos", currentSearchMat="";
-function renderCatalogoModerno() { let filtered = materiaisDB.filter(m=>{ let catMatch=(currentFilterCat==="Todos")?true:(currentFilterCat==="Expediente"?m.categoria==="Expediente":(currentFilterCat==="Aula"?(m.categoria==="Informática"||m.categoria==="Elétrico"):(currentFilterCat==="Higienização"?m.categoria==="Limpeza":m.categoria===currentFilterCat))); return catMatch && (currentSearchMat==="" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase())); }); document.getElementById('catalogoContainerModerno').innerHTML = filtered.map(item=>{ let badgeClass=item.estoque<=0?'badge-out':(item.estoque<=5?'badge-low':'badge-available'); let badgeText=item.estoque<=0?'❌ Indisponível':(item.estoque<=5?`⚠️ Baixo (${item.estoque})`:`✅ ${item.estoque} un.`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" onclick="addAoCarrinho('${item.id}')" ${item.estoque<=0?'disabled':''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join(''); }
+function renderCatalogoModerno() { let filtered = materiaisDB.filter(m=>{ let catMatch=(currentFilterCat==="Todos")?true:(currentFilterCat==="Expediente"?m.categoria==="Expediente":(currentFilterCat==="Aula"?(m.categoria==="Informática"||m.categoria==="Elétrico"):(currentFilterCat==="Higienização"?m.categoria==="Limpeza":m.categoria===currentFilterCat))); return catMatch && (currentSearchMat==="" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase())); }); document.getElementById('catalogoContainerModerno').innerHTML = filtered.map(item=>{ let badgeClass=item.estoque<=0?'badge-out':(item.estoque<=5?'badge-low':'badge-available'); let badgeText=item.estoque<=0?'❌ Indisponível':(item.estoque<=5?`⚠️ Baixo (${item.estoque})`:`✅ ${item.estoque} un.`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" onclick="addAoCarrinho('${item.id}')" ${item.estoque<=0?'disabled':''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join(''); }
 function setFilter(cat) { currentFilterCat=cat; renderCatalogoModerno(); document.querySelectorAll('.action-btn').forEach(btn=>{ if(btn.getAttribute('data-cat')===cat) btn.classList.add('active'); else btn.classList.remove('active'); }); }
 const quickActions = [{id:"Todos",label:"Todos",icon:"apps"},{id:"Expediente",label:"Expediente",icon:"description"},{id:"Aula",label:"Aula",icon:"school"},{id:"Higienização",label:"Higienização",icon:"cleaning_services"}]; const wrapper = document.getElementById('quickActionsWrapper'); quickActions.forEach(a=>{ const btn=document.createElement('button'); btn.className='action-btn'; if(a.id==='Todos') btn.classList.add('active'); btn.setAttribute('data-cat',a.id); btn.innerHTML=`<div class="action-circle"><i class="material-icons">${a.icon}</i></div><span class="action-label">${a.label}</span>`; btn.onclick=()=>setFilter(a.id); wrapper.appendChild(btn); }); document.getElementById('searchInputMateriais').addEventListener('input',(e)=>{ currentSearchMat=e.target.value; renderCatalogoModerno(); });
 function checkAguaStatus() { let meuId=localStorage.getItem('almox_db_meu_pedido_agua'); if(meuId){ let posIndex=filaAgua.findIndex(p=>p.id==meuId); if(posIndex!==-1){ document.getElementById('aguaFormCard').style.display='none'; document.getElementById('aguaStatusCard').style.display='block'; document.getElementById('aguaPosicao').innerText=`#${posIndex+1}`; }else{ localStorage.removeItem('almox_db_meu_pedido_agua'); document.getElementById('aguaFormCard').style.display='block'; document.getElementById('aguaStatusCard').style.display='none'; } } else { document.getElementById('aguaFormCard').style.display='block'; document.getElementById('aguaStatusCard').style.display='none'; } }
 function submitAgua() { let setor=document.getElementById('aguaSetor').value, nome=document.getElementById('aguaNome').value, whatsapp=document.getElementById('aguaContato').value, email=document.getElementById('aguaEmail').value, perfil=document.getElementById('aguaPerfil').value, lotacao=document.getElementById('aguaLotacao').value; if(!setor||!nome||!whatsapp||!lotacao||!email) return Swal.fire('Preencha todos os campos'); let id=Date.now(); let pAgua={id, tipo:'Água', data:new Date().toLocaleString(), setor, nome, whatsapp, lotacao, status:'Aguardando'}; filaAgua.push(pAgua); historicoGlobal.unshift(pAgua); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); localStorage.setItem('almox_db_meu_pedido_agua',id); enviarParaGoogleSheets({ tipo:"filaAgua", nome, setor, whatsapp, lotacao }); salvarBackupNuvem(); Swal.fire('Entrou na fila!','Você está na fila da água.','success'); checkAguaStatus(); }
 function cancelarAgua() { let meuId=localStorage.getItem('almox_db_meu_pedido_agua'); filaAgua=filaAgua.filter(f=>f.id!=meuId); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); localStorage.removeItem('almox_db_meu_pedido_agua'); let h=historicoGlobal.find(x=>x.id==meuId); if(h) h.status='Cancelado/Rejeitado'; localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); checkAguaStatus(); }
-function renderHistoricoUsuario() { let cont=document.getElementById('historicoContainer'); if(historicoGlobal.length===0) return cont.innerHTML='<div style="text-align:center;">Nenhum pedido.</div>'; cont.innerHTML=historicoGlobal.map(h=>`<div style="background:white; border-radius:20px; padding:20px; margin-bottom:16px;"><div style="display:flex; justify-content:space-between;"><div><strong>${h.tipo==='Água'?'💧 Água':'📦 Materiais'} - ${h.setor}</strong><br><span style="font-size:0.8rem;">${h.data}</span></div><span style="background:#FEF08A; color:#854D0E; padding:4px 12px; border-radius:20px;">${h.status}</span></div>${h.tipo==='Material'?`<ul>${h.itens.map(i=>`<li>${i.nome} (${i.qtd})</li>`).join('')}</ul>`:''}</div>`).join(''); }
+function renderHistoricoUsuario() { let cont=document.getElementById('historicoContainer'); if(historicoGlobal.length===0) return cont.innerHTML='<div style="text-align:center;">Nenhum pedido.</div>'; cont.innerHTML=historicoGlobal.map(h=>`<div style="background:white; border-radius:20px; padding:20px; margin-bottom:16px; box-shadow:0 4px 12px rgba(0,0,0,0.04);"><div style="display:flex; justify-content:space-between;"><div><strong>${h.tipo==='Água'?'💧 Água':'📦 Materiais'} - ${h.setor}</strong><br><span style="font-size:0.8rem;">${h.data}</span></div><span style="background:#FEF08A; color:#854D0E; padding:4px 12px; border-radius:20px;">${h.status}</span></div>${h.tipo==='Material'?`<ul>${h.itens.map(i=>`<li>${i.nome} (${i.qtd})</li>`).join('')}</ul>`:''}</div>`).join(''); }
 function switchAdminTab(tab) { document.getElementById('admin-tab-cadastrar').style.display='none'; document.getElementById('admin-tab-estoque').style.display='none'; document.getElementById(`admin-tab-${tab}`).style.display='block'; }
 function renderCategoriasAdmin() { let cats=[...new Set(materiaisDB.map(m=>m.categoria))]; let select=document.getElementById('adminNovaCatSelect'); select.innerHTML='<option value="">Selecione...</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('')+'<option value="NOVA">➕ Criar Nova Categoria...</option>'; }
 function checkNovaCat() { let select=document.getElementById('adminNovaCatSelect'); let input=document.getElementById('adminNovaCatInput'); input.style.display=(select.value==='NOVA'?'block':'none'); }
 function adminAdicionarItem() { let cat=document.getElementById('adminNovaCatSelect').value; if(cat==='NOVA') cat=document.getElementById('adminNovaCatInput').value.trim(); let nome=document.getElementById('adminNovoNome').value.trim(); let img=document.getElementById('adminNovaImg').value.trim()||'https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; let est=parseInt(document.getElementById('adminNovoEstoque').value)||0; if(!cat||!nome) return Swal.fire('Erro','Categoria e Nome obrigatórios'); let newId=Date.now().toString(); materiaisDB.push({id:newId,categoria:cat,nome,imagem:img,estoque:est}); localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); if(est>0) registrarHistoricoItem(newId,'Entrada Inicial',est,'Cadastro',est); salvarBackupNuvem(); Swal.fire('Sucesso','Material cadastrado!'); renderCategoriasAdmin(); renderAdminEstoque(); }
-function renderAdminEstoque() { document.getElementById('adminTableBody').innerHTML=materiaisDB.map(m=>`<tr><td>${m.nome}<br><span style="font-size:0.75rem;">${m.categoria}</span></td><td>${m.estoque}</td><td><input type="number" id="entrada-${m.id}" placeholder="+ Qtd"></td><td><input type="text" id="obs-${m.id}" placeholder="Motivo"></td><td><button class="btn-primary" style="padding:6px;" onclick="registrarEntrada('${m.id}')">Adicionar</button> <button class="btn-secondary" style="padding:6px;" onclick="abrirHistoricoItem('${m.id}')">Histórico</button></td></tr>`).join(''); }
+function renderAdminEstoque() { document.getElementById('adminTableBody').innerHTML=materiaisDB.map(m=>`<tr><td>${m.nome}<br><span style="font-size:0.75rem;">${m.categoria}</span></td><td>${m.estoque}</td><td><input type="number" id="entrada-${m.id}" placeholder="+ Qtd" style="width:80px;"></td><td><input type="text" id="obs-${m.id}" placeholder="Motivo" style="width:100px;"></td><td><button class="btn-primary" style="padding:6px 12px; font-size:0.8rem;" onclick="registrarEntrada('${m.id}')">Adicionar</button> <button class="btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="abrirHistoricoItem('${m.id}')">Histórico</button></td></tr>`).join(''); }
 function registrarEntrada(id) { let qtd=parseInt(document.getElementById(`entrada-${id}`).value); let obs=document.getElementById(`obs-${id}`).value.trim()||'Ajuste manual'; if(!qtd||qtd<=0) return Swal.fire('Atenção','Quantidade inválida'); let item=materiaisDB.find(m=>m.id===id); if(item){ item.estoque+=qtd; localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); registrarHistoricoItem(id,'Entrada Manual',qtd,obs,item.estoque); salvarBackupNuvem(); document.getElementById(`entrada-${id}`).value=''; document.getElementById(`obs-${id}`).value=''; Swal.fire({toast:true, icon:'success', title:'Estoque atualizado', timer:1500}); renderAdminEstoque(); } }
 function abrirHistoricoItem(id) { let item=materiaisDB.find(m=>m.id===id); document.getElementById('histItemNomeHeader').innerHTML=`<i class="material-icons">manage_history</i> ${item.nome}`; document.getElementById('histItemIdAtual').value=id; let hist=historicoItens.filter(h=>h.idItem===id); document.getElementById('tabelaHistoricoItemBody').innerHTML=hist.length?hist.map(h=>`<tr><td>${h.data}</td><td>${h.tipo}</td><td>${h.qtd}</td><td>${h.saldo}</td><td>${h.obs}</td></tr>`).join(''):'<tr><td colspan="5">Sem histórico</td></tr>'; document.getElementById('modalHistoricoItem').style.display='flex'; }
 function renderAdminPedidos() { let pendentes=historicoGlobal.filter(h=>h.status==='Aguardando'||h.status==='Aguardando retirada'); let ultimos10=historicoGlobal.filter(h=>h.status!=='Aguardando'&&h.status!=='Aguardando retirada').slice(0,10); document.getElementById('adminPendentesList').innerHTML=pendentes.length?pendentes.map(p=>`<div class="pedido-admin-card"><div><strong>${p.tipo} - ${p.setor}</strong><br>Solicitante: ${p.nome}</div><div><button class="btn-primary" style="padding:6px 12px; width:auto;" onclick="abrirEdicaoPedido('${p.id}')">Gerenciar</button></div></div>`).join(''):'<p>Nenhum pendente.</p>'; document.getElementById('adminUltimosList').innerHTML=ultimos10.map(p=>`<div style="padding:10px; border-bottom:1px solid #EDF2F7;"><strong>${p.tipo}</strong> - ${p.setor} (${p.nome}) <span style="float:right;">${p.status}</span></div>`).join(''); }
@@ -247,7 +337,7 @@ function exportarPDF() { const { jsPDF } = window.jspdf; const doc = new jsPDF()
 function carregarDadosLocaisUsuario() { let prefs=JSON.parse(localStorage.getItem('almox_db_prefs_user')); if(prefs){ if(document.getElementById('reqNome')) document.getElementById('reqNome').value=prefs.nome||''; if(document.getElementById('reqContato')) document.getElementById('reqContato').value=prefs.whatsapp||''; if(document.getElementById('reqEmail')) document.getElementById('reqEmail').value=prefs.email||''; if(document.getElementById('aguaNome')) document.getElementById('aguaNome').value=prefs.nome||''; if(document.getElementById('aguaContato')) document.getElementById('aguaContato').value=prefs.whatsapp||''; if(document.getElementById('aguaEmail')) document.getElementById('aguaEmail').value=prefs.email||''; } }
 document.querySelectorAll('.mask-whatsapp').forEach(inp=>inp.addEventListener('input',function(e){ let v=e.target.value.replace(/\D/g,""); if(v.length>11) v=v.slice(0,11); if(v.length>2) v=`(${v.substring(0,2)}) ${v.substring(2)}`; if(v.length>10) v=`${v.substring(0,10)}-${v.substring(10)}`; e.target.value=v; }));
 
-// ========== FAQ: 20 perguntas e respostas ==========
+// FAQ
 const faqData = [
   { q: "1) O que é o Almoxarifado?", r: "Setor responsável por receber, armazenar, controlar e distribuir materiais do CT." },
   { q: "2) Qual a função do Almoxarifado?", r: "Gerenciar materiais de uso comum e atender demandas gerais dos setores." },
@@ -270,10 +360,9 @@ const faqData = [
   { q: "19) Como funciona a água mineral?", r: "Troca de vasilhame vazio por cheio via intermédio do Almoxarifado." },
   { q: "20) O que acontece em caso de mau uso?", r: "O responsável pode sofrer penalidades administrativas." }
 ];
-function buildFaqScreen() { const container = document.getElementById('faqContainer'); if(!container) return; container.innerHTML = faqData.map(f => `<div class="faq-card"><div class="faq-question"><i class="material-icons" style="font-size:20px;">help_outline</i> ${f.q}</div><div class="faq-answer">${f.r}</div></div>`).join(''); }
-buildFaqScreen();
+function buildFaqScreen() { const container = document.getElementById('faqContainer'); if(container) container.innerHTML = faqData.map(f => `<div class="faq-card"><div class="faq-question"><i class="material-icons" style="font-size:20px;">help_outline</i> ${f.q}</div><div class="faq-answer">${f.r}</div></div>`).join(''); }
 
-// ========== SPLASH + WELCOME ==========
+// Splash & Welcome
 let splashRemoved = false;
 function showWelcomeIfNeeded() {
   if(localStorage.getItem('welcome_dismissed')) return;
@@ -286,12 +375,16 @@ function showWelcomeIfNeeded() {
 }
 setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => { if(splash && splash.parentNode) splash.remove(); showWelcomeIfNeeded(); }, 500); } }, 2800);
 
-// ========== INICIALIZAÇÕES GERAIS ==========
+// Carrossel
 let slideIndex=0; const track=document.getElementById('carouselTrack'); const slides=document.querySelectorAll('.carousel-slide'); if(track && slides.length) { setInterval(() => { slideIndex = (slideIndex+1)%slides.length; track.style.transform = `translateX(-${slideIndex*100}%)`; }, 5000); }
-carregarDadosLocaisUsuario(); atualizarBadges(); renderCatalogoModerno(); renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos();
+
+// Inicializações
+carregarDadosLocaisUsuario(); atualizarBadges(); renderCatalogoModerno(); renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); buildFaqScreen();
 function forcarAtualizacao() { window.location.href = window.location.pathname + '?t=' + new Date().getTime(); }
 function mudarSenha() { Swal.fire({ title: 'Nova Senha', input: 'password', showCancelButton:true }).then(res => { if(res.isConfirmed) localStorage.setItem('senhaAdminCT', res.value); }); }
-window.checkNovaCat = checkNovaCat; window.registrarEntrada = registrarEntrada; window.abrirHistoricoItem = abrirHistoricoItem; window.exportarHistoricoItemXLSX = function(){ let id=document.getElementById('histItemIdAtual').value; let item=materiaisDB.find(m=>m.id===id); let dados=historicoItens.filter(h=>h.idItem===id).map(h=>({Data:h.data,Tipo:h.tipo,Quantidade:h.qtd,Saldo:h.saldo,Observacao:h.obs})); if(!dados.length) return; let ws=XLSX.utils.json_to_sheet(dados); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Hist"); XLSX.writeFile(wb,`Historico_${item.nome.replace(/\s/g,'_')}.xlsx`); }; window.exportarHistoricoItemPDF = function(){ let id=document.getElementById('histItemIdAtual').value; let item=materiaisDB.find(m=>m.id===id); let hist=historicoItens.filter(h=>h.idItem===id); if(!hist.length) return; const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text(`Histórico: ${item.nome}`, 14, 15); doc.autoTable({ startY: 25, head: [['Data','Tipo','Qtd','Saldo','Observação']], body: hist.map(h=>[h.data,h.tipo,h.qtd,h.saldo,h.obs]) }); doc.save(`Historico_${item.nome.replace(/\s/g,'_')}.pdf`); };
+window.checkNovaCat = checkNovaCat; window.registrarEntrada = registrarEntrada; window.abrirHistoricoItem = abrirHistoricoItem;
+window.exportarHistoricoItemXLSX = function(){ let id=document.getElementById('histItemIdAtual').value; let item=materiaisDB.find(m=>m.id===id); let dados=historicoItens.filter(h=>h.idItem===id).map(h=>({Data:h.data,Tipo:h.tipo,Quantidade:h.qtd,Saldo:h.saldo,Observacao:h.obs})); if(!dados.length) return; let ws=XLSX.utils.json_to_sheet(dados); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Hist"); XLSX.writeFile(wb,`Historico_${item.nome.replace(/\s/g,'_')}.xlsx`); };
+window.exportarHistoricoItemPDF = function(){ let id=document.getElementById('histItemIdAtual').value; let item=materiaisDB.find(m=>m.id===id); let hist=historicoItens.filter(h=>h.idItem===id); if(!hist.length) return; const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text(`Histórico: ${item.nome}`, 14, 15); doc.autoTable({ startY: 25, head: [['Data','Tipo','Qtd','Saldo','Observação']], body: hist.map(h=>[h.data,h.tipo,h.qtd,h.saldo,h.obs]) }); doc.save(`Historico_${item.nome.replace(/\s/g,'_')}.pdf`); };
 </script>
 </body>
 </html>
