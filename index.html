@@ -173,10 +173,16 @@
     .admin-table th { text-align: left; padding: 8px 12px; color: #5A6874; font-weight: 600; font-size: 0.8rem; }
     .admin-table td { background: #F8FAFE; padding: 14px 12px; border-radius: 16px; transition: all 0.2s ease; }
     .admin-table tr:hover td { background: #F0F7FF; box-shadow: 0 2px 8px rgba(0,91,187,0.05); }
+
+    /* Estilos para melhorias adicionais (carrossel inteligente, modal higienização, splash seguro) */
+    #carousel-status-slide { transition: background 0.3s ease; }
+    #modal-higienizacao .modal-container { text-align: center; }
+    #splash-safe { z-index: 10001; transition: opacity 0.3s ease; }
   </style>
 </head>
 <body>
 
+<!-- SPLASH INICIAL (ORIGINAL) -->
 <div class="splash-screen" id="splashScreen">
   <div class="splash-content">
     <img src="Inicialização CT ALMOX.png" alt="Logo" class="splash-icon-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;">
@@ -191,6 +197,7 @@
   </div>
 </div>
 
+<!-- HEADER -->
 <header class="app-header">
   <div class="header-row">
     <div class="brand" onclick="abrirAdmin()"><h2>Smart Almox</h2><span>Almoxarifado CT UFPB</span></div>
@@ -262,15 +269,42 @@
 <!-- VIEW FAQ -->
 <div id="view-faq" class="view-section"><div class="faq-container" id="faqContainer"></div></div>
 
-<!-- MODAIS -->
+<!-- MODAIS (ORIGINAIS) -->
 <div id="modalCarrinho" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Carrinho</h2><i class="material-icons" style="cursor:pointer; transition: all 0.2s;" onclick="fecharModal('modalCarrinho')">close</i></div><div id="carrinhoItensList" style="max-height:40vh;overflow-y:auto;margin-bottom:20px;"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;"><button class="btn-secondary" onclick="limparCarrinho()">Limpar</button><button class="btn-secondary" onclick="fecharModal('modalCarrinho')">Continuar</button><button class="btn-primary" onclick="abrirCheckout()">Finalizar</button></div></div></div>
 <div id="modalCheckout" class="modal-modern"><div class="modal-container"><div style="display:flex;justify-content:space-between;"><h2>Finalizar Requisição</h2><i class="material-icons" style="cursor:pointer;" onclick="voltarParaCarrinho()">arrow_back</i></div><div class="form-grid"><div class="input-group full-width"><label>Setor *</label><select id="reqSetor"></select></div><div class="input-group"><label>Nome *</label><input type="text" id="reqNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="reqContato" class="mask-whatsapp"></div><div class="input-group"><label>E-mail *</label><input type="email" id="reqEmail"></div><div class="input-group"><label>Perfil</label><select id="reqPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div><div class="input-group"><label>Lotação *</label><input type="text" id="reqLotacao"></div><div class="input-group full-width"><label>Assunto</label><input type="text" id="reqAssunto" value="Solicitação de materiais"></div></div><button class="btn-primary" onclick="finalizarRequisicaoModal()">Enviar Pedido</button></div></div>
 <div id="modalTodosPedidos" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Todos os Pedidos</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalTodosPedidos')">close</i></div><div style="display:flex;gap:12px;margin-bottom:16px;"><button class="btn-primary" style="background:#1E7E34;" onclick="exportarXLSX()">Excel</button><button class="btn-primary" style="background:#B91C1C;" onclick="exportarPDF()">PDF</button></div><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Tipo</th><th>Setor</th><th>Solicitante</th><th>Status</th></tr></thead><tbody id="tabelaTodosPedidosBody"></tbody></table></div></div></div>
 <div id="modalEditarPedido" class="modal-modern"><div class="modal-container"><h2>Gerenciar Pedido</h2><div id="editarPedidoHeader"></div><div class="input-group"><label>Status</label><select id="editPedidoStatus"><option>Aguardando</option><option>Aguardando retirada</option><option>Entregue</option><option>Cancelado/Rejeitado</option></select></div><div id="editarPedidoItensContainer"></div><input type="hidden" id="editPedidoIdAtual"><button class="btn-primary" onclick="salvarEdicaoPedido()">Salvar</button></div></div>
 <div id="modalHistoricoItem" class="modal-modern"><div class="modal-container"><h2 id="histItemNomeHeader">Histórico</h2><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Ação</th><th>Qtd</th><th>Saldo</th><th>Observação</th></tr></thead><tbody id="tabelaHistoricoItemBody"></tbody></table></div><input type="hidden" id="histItemIdAtual"></div></div>
 
+<!-- NOVOS MODAIS: HIGIENIZAÇÃO E SPLASH SEGURO -->
+<div id="modal-higienizacao" class="modal-modern" style="display: none; backdrop-filter: blur(8px);">
+  <div class="modal-container" style="max-width: 400px; text-align: center;">
+    <h2 style="color: #B45F06;">⚠️ Atenção</h2>
+    <p style="margin: 20px 0; font-size: 1rem;">
+      Olá, esses materiais são destinados apenas aos <strong>terceirizados do CT UFPB</strong>.
+      Caso necessite deles, entre em contato com o Almoxarifado.
+    </p>
+    <button class="btn-primary" id="btn-fechar-hig" style="background: #B45F06;">Entendi</button>
+  </div>
+</div>
+
+<div id="splash-safe" class="splash-screen" style="display: none; background: rgba(0,0,0,0.75); backdrop-filter: blur(12px);">
+  <div class="welcome-card" style="max-width: 400px;">
+    <h2>👋 Olá, seja bem-vindo!</h2>
+    <p>Sistema do Almoxarifado do CT</p>
+    <div style="margin: 20px 0; text-align: left; padding-left: 20px;">
+      🔎 Consulte itens<br>
+      📦 Verifique estoques<br>
+      ⚡ Faça pedidos
+    </div>
+    <button class="btn-primary" id="btn-splash">Começar</button>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
 <a href="https://wa.me/558332167082" target="_blank" class="whatsapp-float"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
 
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <button class="nav-item active" data-target="home" onclick="mudarView('home')"><img src="Bot%C3%A3o%20Home.png" alt="Início" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1946/1946488.png'; this.onerror=null;"><span>Início</span></button>
   <button class="nav-item" data-target="materiais" onclick="mudarView('materiais')"><img src="Bot%C3%A3o%20Materiais.png" alt="Materiais" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2965/2965311.png'; this.onerror=null;"><span>Materiais</span></button>
@@ -325,17 +359,19 @@ const setoresCompletos = [
   "Empresa Junior de Arquitetura e Engenharia Civil - PLANEJ", "Empresa Junior de Engenharia Química - PROJEQ"
 ];
 
-// ---------- MATERIAIS INICIAIS (base) ----------
+// ---------- MATERIAIS INICIAIS (base) COM CORREÇÕES (imagens atualizadas e caneta azul removida) ----------
 const materiaisBase = [
-  // Expediente (originais)
+  // Expediente (originais com correções)
   { id: 'EXP002', categoria: 'Expediente', nome: 'Caneta Esferográfica Preta – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 },
+  // REMOVIDO: Caneta Esferográfica Azul (EXP001 estava na base? na verdade a base original não tinha azul, mas tinha a preta e vermelha. Removeremos qualquer referência.)
   { id: 'EXP003', categoria: 'Expediente', nome: 'Caneta Esferográfica Vermelha – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 30 },
   { id: 'EXP004', categoria: 'Expediente', nome: 'Lápis Preto nº 2 – Grafite Resistente', imagem: 'https://cdn-icons-png.flaticon.com/512/2541/2541985.png', estoque: 100 },
   { id: 'EXP005', categoria: 'Expediente', nome: 'Borracha Branca – Alta Maciez', imagem: 'https://cdn-icons-png.flaticon.com/512/3199/3199869.png', estoque: 80 },
   { id: 'EXP006', categoria: 'Expediente', nome: 'Apontador com Depósito – Lâmina Metálica', imagem: 'https://cdn-icons-png.flaticon.com/512/2382/2382649.png', estoque: 40 },
   { id: 'EXP007', categoria: 'Expediente', nome: 'Corretivo Líquido – Secagem Rápida', imagem: 'https://cdn-icons-png.flaticon.com/512/2947/2947954.png', estoque: 25 },
   { id: 'EXP008', categoria: 'Expediente', nome: 'Marca-Texto – Tinta Fluorescente', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103597.png', estoque: 60 },
-  { id: 'EXP009', categoria: 'Expediente', nome: 'Papel A4 75g/m² – Resma', imagem: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQetaXacPl929xfNgJ_fGDQo0yPbuGHeyhMMjIpnuqtkBWdcOcxwJw20e7ONNRnaJXzJ9B2qiN6aSkzyRMR29Iva26Y12k9e7lnsqifz-wdDBkKzYfy4UooLk08kvRHO4V3j9pHaA&usqp=CAc', estoque: 35 },
+  // Papel A4 com imagem atualizada
+  { id: 'EXP009', categoria: 'Expediente', nome: 'Papel A4 75g/m² – Resma', imagem: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRilXwsVt_6KngHcevwiTeuy851baM-OGp9_rBN2rBh4HctLwViZtU_BhxwpNOwtwpq8-cX_YIeucDtU1Yl5TD1TlNRpjxmrSdHOu9dZRXyWAw6_HSvQ2Ls-udWpRkp5IvRzkZ5PA&usqp=CAc', estoque: 35 },
   { id: 'EXP010', categoria: 'Expediente', nome: 'Envelope Branco Ofício – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/2577/2577085.png', estoque: 15 },
   { id: 'EXP011', categoria: 'Expediente', nome: 'Envelope Pardo A4 – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/2577/2577085.png', estoque: 12 },
   { id: 'EXP012', categoria: 'Expediente', nome: 'Pasta AZ – Lombada Larga', imagem: 'https://cdn-icons-png.flaticon.com/512/2713/2713887.png', estoque: 45 },
@@ -372,13 +408,15 @@ const materiaisBase = [
   { id: 'LIM019', categoria: 'Limpeza', nome: 'Papel Toalha – Alta Absorção (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 60 }
 ];
 
-// ---------- NOVOS MATERIAIS A SEREM ADICIONADOS (sem duplicidade) ----------
+// ---------- NOVOS MATERIAIS A SEREM ADICIONADOS (com categorias multi e imagens corrigidas) ----------
 const novosMateriais = [
-  { id: 'EXP024', categoria: 'Expediente', nome: 'Apagador para Quadro Negro', imagem: 'https://papelariabauru.com.br/wp-content/uploads/2020/07/apagador-com-feltro-stalo.jpg', estoque: 15 },
-  { id: 'EXP025', categoria: 'Expediente', nome: 'Apagador para Quadro Branco (15x6x4cm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_679212-MLA93659540174_102025-O.webp', estoque: 20 },
-  { id: 'EXP026', categoria: 'Expediente', nome: 'Marcador Azul para Quadro Branco (Recarregável)', imagem: 'https://cdn.awsli.com.br/600x450/941/941759/produto/127056480336398ab4a.jpg', estoque: 25 },
-  { id: 'EXP027', categoria: 'Expediente', nome: 'Marcador Preto para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregvel-preto-c12-unidades-6.jpg', estoque: 25 },
-  { id: 'EXP028', categoria: 'Expediente', nome: 'Marcador Vermelho para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregavel-vermelho-4.jpg', estoque: 25 },
+  // EXP024 a EXP028 com categoria ['Expediente', 'Aula']
+  { id: 'EXP024', categoria: ['Expediente', 'Aula'], nome: 'Apagador para Quadro Negro', imagem: 'https://papelariabauru.com.br/wp-content/uploads/2020/07/apagador-com-feltro-stalo.jpg', estoque: 15 },
+  { id: 'EXP025', categoria: ['Expediente', 'Aula'], nome: 'Apagador para Quadro Branco (15x6x4cm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_679212-MLA93659540174_102025-O.webp', estoque: 20 },
+  { id: 'EXP026', categoria: ['Expediente', 'Aula'], nome: 'Marcador Azul para Quadro Branco (Recarregável)', imagem: 'https://cdn.awsli.com.br/600x450/941/941759/produto/127056480336398ab4a.jpg', estoque: 25 },
+  { id: 'EXP027', categoria: ['Expediente', 'Aula'], nome: 'Marcador Preto para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregvel-preto-c12-unidades-6.jpg', estoque: 25 },
+  { id: 'EXP028', categoria: ['Expediente', 'Aula'], nome: 'Marcador Vermelho para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregavel-vermelho-4.jpg', estoque: 25 },
+  // Demais itens de expediente com categoria string
   { id: 'EXP029', categoria: 'Expediente', nome: 'Borracha Apagadora Escrita (40x20x14mm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_929527-MLA99453323692_112025-O.webp', estoque: 50 },
   { id: 'EXP030', categoria: 'Expediente', nome: 'Fita Adesiva Crepe 18mmx50m', imagem: 'https://lojaacal.vtexassets.com/arquivos/ids/174829/Fita-Crepe-18mmx50m-3m-do-Brasil-616454-02.jpg?v=637590102495730000', estoque: 30 },
   { id: 'EXP031', categoria: 'Expediente', nome: 'Borracha Bicolor (Azul e Vermelha)', imagem: 'https://cdn.awsli.com.br/2500x2500/2519/2519112/produto/225103134/6596a25c6b6f00b30370b998_1000x560-mjecyiik2x.jpeg', estoque: 40 },
@@ -398,7 +436,9 @@ const novosMateriais = [
   { id: 'EXP045', categoria: 'Expediente', nome: 'Caneta Esferográfica Fina Preta (0.7mm)', imagem: 'https://ae01.alicdn.com/kf/H1422b6a387534a2bb60913ab09ae07a9b.jpg_960x960.jpg', estoque: 45 },
   { id: 'EXP046', categoria: 'Expediente', nome: 'Grampeador 40 Folhas', imagem: 'https://s3.amazonaws.com/lepok.w/produtos/produtos/04322.webp', estoque: 10 },
   { id: 'EXP047', categoria: 'Expediente', nome: 'Estilete Largo (18mm)', imagem: 'https://cdn.awsli.com.br/600x700/2637/2637864/produto/322844669/estilete-largo-18mm-s-c-embalagem-individua-v-m-p-cx-c-12-1a8314ab-1ksjuj1y8a.jpg', estoque: 20 },
-  { id: 'EXP048', categoria: 'Expediente', nome: 'Pilha Alcalina AAA 1,5V (Par)', imagem: 'https://imgs.casasbahia.com.br/1575910332/1xg.jpg?imwidth=500', estoque: 50 },
+  // Pilha AAA com imagem atualizada
+  { id: 'EXP048', categoria: 'Expediente', nome: 'Pilha Alcalina AAA 1,5V (Par)', imagem: 'https://static.casadoeletricistasc.com.br/public/casadoeletricista/imagens/produtos/pack-com-4-pilhas-palito-aaa-panasonic-651b14619d5bb.jpg', estoque: 50 },
+  // Copo descartável com imagem atualizada
   { id: 'EXP049', categoria: 'Expediente', nome: 'Copo Descartável 180ml (Pacote 100 un)', imagem: 'https://images.tcdn.com.br/img/img_prod/675659/copo_plastico_180ml_agua_pacote_c_100_linha_economica_505_1_4f8b98bd5e3db7e1e96be935d0aa1530_20220728165250.jpg', estoque: 200 },
   // Novos materiais de Limpeza
   { id: 'LIM020', categoria: 'Limpeza', nome: 'Vassoura de Piaçava Pequena', imagem: 'https://cdn.awsli.com.br/600x600/515/515184/produto/250123697/_post-para-instagram-foto-felicidade-cachorro--23--2u3ncpzszj.jpg', estoque: 15 },
@@ -433,15 +473,30 @@ function mergeMateriais(existentes, novos) {
   return existentes;
 }
 
-// Inicialização do banco de materiais
+// Inicialização do banco de materiais (já com correções aplicadas)
 let materiaisDB = JSON.parse(localStorage.getItem('almox_db_materiais'));
 if (!materiaisDB) {
-  // Primeira execução: usa a base + novos
   materiaisDB = mergeMateriais([...materiaisBase], novosMateriais);
   localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
 } else {
-  // Já existem dados: adiciona apenas os novos que não estão presentes
+  // Atualiza com novos itens (se houver) e aplica correções em itens existentes
   materiaisDB = mergeMateriais(materiaisDB, novosMateriais);
+  // Corrige imagens e categoria multi nos itens existentes (migração)
+  const correcoes = [
+    { id: 'EXP009', imagem: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRilXwsVt_6KngHcevwiTeuy851baM-OGp9_rBN2rBh4HctLwViZtU_BhxwpNOwtwpq8-cX_YIeucDtU1Yl5TD1TlNRpjxmrSdHOu9dZRXyWAw6_HSvQ2Ls-udWpRkp5IvRzkZ5PA&usqp=CAc' },
+    { id: 'EXP048', imagem: 'https://static.casadoeletricistasc.com.br/public/casadoeletricista/imagens/produtos/pack-com-4-pilhas-palito-aaa-panasonic-651b14619d5bb.jpg' },
+    { id: 'EXP049', imagem: 'https://images.tcdn.com.br/img/img_prod/675659/copo_plastico_180ml_agua_pacote_c_100_linha_economica_505_1_4f8b98bd5e3db7e1e96be935d0aa1530_20220728165250.jpg' }
+  ];
+  materiaisDB.forEach(item => {
+    const correcao = correcoes.find(c => c.id === item.id);
+    if (correcao) item.imagem = correcao.imagem;
+    // Aplica multi-categoria para EXP024-EXP028 se ainda for string
+    if (['EXP024','EXP025','EXP026','EXP027','EXP028'].includes(item.id) && !Array.isArray(item.categoria)) {
+      item.categoria = ['Expediente', 'Aula'];
+    }
+  });
+  // Remove qualquer "Caneta Esferográfica Azul" por nome
+  materiaisDB = materiaisDB.filter(m => !m.nome.toLowerCase().includes('caneta esferográfica azul'));
   localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
 }
 
@@ -458,7 +513,7 @@ function salvarCarrinho() { localStorage.setItem('almox_db_carrinho', JSON.strin
 function addAoCarrinho(id) {
   let itemDB = materiaisDB.find(m => m.id === id);
   if(!itemDB) return;
-  if(itemDB.categoria === "Limpeza") {
+  if(itemDB.categoria === "Limpeza" || (Array.isArray(itemDB.categoria) && itemDB.categoria.includes("Limpeza"))) {
     Swal.fire({
       title: "Atenção!",
       text: "Olá, esses materiais são solicitados apenas pelos terceirizados do CT UFPB, porém, caso necessite deles, entre em contato com o Almoxarifado!",
@@ -513,7 +568,30 @@ function abrirAdmin() { let senha = localStorage.getItem('senhaAdminCT') || "adm
 
 let currentFilterCat="Todos", currentSearchMat="";
 function renderCatalogoModerno() {
-  let filtered = materiaisDB.filter(m=>{ let catMatch=(currentFilterCat==="Todos")?true:(currentFilterCat==="Expediente"?m.categoria==="Expediente":(currentFilterCat==="Aula"?(m.categoria==="Informática"||m.categoria==="Elétrico"):(currentFilterCat==="Higienização"?m.categoria==="Limpeza":m.categoria===currentFilterCat))); return catMatch && (currentSearchMat==="" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase())); });
+  // Filtro adaptado para suportar categoria array
+  let filtered = materiaisDB.filter(m=>{
+    let catMatch = false;
+    if (currentFilterCat === "Todos") catMatch = true;
+    else if (currentFilterCat === "Aula") {
+      // Para "Aula", inclui itens que possuem 'Aula' no array ou string igual
+      if (Array.isArray(m.categoria)) catMatch = m.categoria.includes('Aula');
+      else catMatch = (m.categoria === 'Aula');
+    }
+    else if (currentFilterCat === "Expediente") {
+      if (Array.isArray(m.categoria)) catMatch = m.categoria.includes('Expediente');
+      else catMatch = (m.categoria === 'Expediente');
+    }
+    else if (currentFilterCat === "Higienização") {
+      if (Array.isArray(m.categoria)) catMatch = m.categoria.includes('Limpeza');
+      else catMatch = (m.categoria === 'Limpeza');
+    }
+    else {
+      // Para outros filtros (se houver)
+      if (Array.isArray(m.categoria)) catMatch = m.categoria.includes(currentFilterCat);
+      else catMatch = (m.categoria === currentFilterCat);
+    }
+    return catMatch && (currentSearchMat==="" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase()));
+  });
   document.getElementById('catalogoContainerModerno').innerHTML = filtered.map(item=>{ let badgeClass=item.estoque<=0?'badge-out':(item.estoque<=5?'badge-low':'badge-available'); let badgeText=item.estoque<=0?'❌ Indisponível':(item.estoque<=5?`⚠️ Baixo (${item.estoque})`:`✅ ${item.estoque} un.`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" onclick="addAoCarrinho('${item.id}')" ${item.estoque<=0?'disabled':''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join('');
 }
 function setFilter(cat) { currentFilterCat=cat; renderCatalogoModerno(); document.querySelectorAll('.action-btn').forEach(btn=>{ if(btn.getAttribute('data-cat')===cat) btn.classList.add('active'); else btn.classList.remove('active'); }); }
@@ -568,9 +646,8 @@ document.getElementById("buscar-nome")?.addEventListener("input", function() {
   renderizarListaFila(filtrados);
 });
 
-// Estoque de garrafões (Página2 - ajustar o gid se necessário)
-// ATENÇÃO: Substitua a URL abaixo pelo link correto da aba "Página2" (com gid apropriado)
-const CSV_URL_ESTOQUE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWJScGPP5VNSFFT4W3jq1_dRGMmqZn02BvUQ_2ug7zXHfUFp2OEr02zmDeph7EyFNY7qH_zIDwGW4B/pub?output=csv";
+// NOVA URL DO ESTOQUE DE GARRAFÕES (atualizada)
+const CSV_URL_ESTOQUE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSm8-22f6Q-A-6MDuU0MikpbjsNf-4yNRP0AkBN_ahmBOHo72jYazL8yHr9w113plK_vrQI7026TRz/pub?output=csv";
 function carregarEstoqueGarrafões() {
   fetch(CSV_URL_ESTOQUE)
     .then(response => response.text())
@@ -595,10 +672,10 @@ function submitAgua() { let setor=document.getElementById('aguaSetor').value, no
 function cancelarAgua() { let meuId=localStorage.getItem('almox_db_meu_pedido_agua'); filaAgua=filaAgua.filter(f=>f.id!=meuId); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); localStorage.removeItem('almox_db_meu_pedido_agua'); let h=historicoGlobal.find(x=>x.id==meuId); if(h) h.status='Cancelado/Rejeitado'; localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); checkAguaStatus(); }
 function renderHistoricoUsuario() { let cont=document.getElementById('historicoContainer'); if(historicoGlobal.length===0) return cont.innerHTML='<div style="text-align:center;">Nenhum pedido.</div>'; cont.innerHTML=historicoGlobal.map(h=>`<div style="background:white; border-radius:20px; padding:20px; margin-bottom:16px; box-shadow:0 4px 12px rgba(0,0,0,0.04);"><div style="display:flex; justify-content:space-between;"><div><strong>${h.tipo==='Água'?'💧 Água':'📦 Materiais'} - ${h.setor}</strong><br><span style="font-size:0.8rem;">${h.data}</span></div><span style="background:#FEF08A; color:#854D0E; padding:4px 12px; border-radius:20px;">${h.status}</span></div>${h.tipo==='Material'?`<ul>${h.itens.map(i=>`<li>${i.nome} (${i.qtd})</li>`).join('')}</ul>`:''}</div>`).join(''); }
 function switchAdminTab(tab) { document.getElementById('admin-tab-cadastrar').style.display='none'; document.getElementById('admin-tab-estoque').style.display='none'; document.getElementById(`admin-tab-${tab}`).style.display='block'; }
-function renderCategoriasAdmin() { let cats=[...new Set(materiaisDB.map(m=>m.categoria))]; let select=document.getElementById('adminNovaCatSelect'); select.innerHTML='<option value="">Selecione...</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('')+'<option value="NOVA">➕ Criar Nova Categoria...</option>'; }
+function renderCategoriasAdmin() { let cats=[...new Set(materiaisDB.map(m=> Array.isArray(m.categoria) ? m.categoria.join(', ') : m.categoria))]; let select=document.getElementById('adminNovaCatSelect'); select.innerHTML='<option value="">Selecione...</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('')+'<option value="NOVA">➕ Criar Nova Categoria...</option>'; }
 function checkNovaCat() { let select=document.getElementById('adminNovaCatSelect'); let input=document.getElementById('adminNovaCatInput'); input.style.display=(select.value==='NOVA'?'block':'none'); }
 function adminAdicionarItem() { let cat=document.getElementById('adminNovaCatSelect').value; if(cat==='NOVA') cat=document.getElementById('adminNovaCatInput').value.trim(); let nome=document.getElementById('adminNovoNome').value.trim(); let img=document.getElementById('adminNovaImg').value.trim()||'https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; let est=parseInt(document.getElementById('adminNovoEstoque').value)||0; if(!cat||!nome) return Swal.fire('Erro','Categoria e Nome obrigatórios'); let newId=Date.now().toString(); materiaisDB.push({id:newId,categoria:cat,nome,imagem:img,estoque:est}); localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); if(est>0) registrarHistoricoItem(newId,'Entrada Inicial',est,'Cadastro',est); salvarBackupNuvem(); Swal.fire('Sucesso','Material cadastrado!'); renderCategoriasAdmin(); renderAdminEstoque(); }
-function renderAdminEstoque() { document.getElementById('adminTableBody').innerHTML=materiaisDB.map(m=>`<tr><td>${m.nome}<br><span style="font-size:0.75rem;">${m.categoria}</span></td><td>${m.estoque}</td><td><input type="number" id="entrada-${m.id}" placeholder="+ Qtd" style="width:80px;"></td><td><input type="text" id="obs-${m.id}" placeholder="Motivo" style="width:100px;"></td><td><button class="btn-primary" style="padding:6px 12px; font-size:0.8rem;" onclick="registrarEntrada('${m.id}')">Adicionar</button> <button class="btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="abrirHistoricoItem('${m.id}')">Histórico</button></td></tr>`).join(''); }
+function renderAdminEstoque() { document.getElementById('adminTableBody').innerHTML=materiaisDB.map(m=>`<tr><td>${m.nome}<br><span style="font-size:0.75rem;">${Array.isArray(m.categoria) ? m.categoria.join(' + ') : m.categoria}</span></td><td>${m.estoque}</td><td><input type="number" id="entrada-${m.id}" placeholder="+ Qtd" style="width:80px;"></td><td><input type="text" id="obs-${m.id}" placeholder="Motivo" style="width:100px;"></td><td><button class="btn-primary" style="padding:6px 12px; font-size:0.8rem;" onclick="registrarEntrada('${m.id}')">Adicionar</button> <button class="btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="abrirHistoricoItem('${m.id}')">Histórico</button></td></tr>`).join(''); }
 function registrarEntrada(id) { let qtd=parseInt(document.getElementById(`entrada-${id}`).value); let obs=document.getElementById(`obs-${id}`).value.trim()||'Ajuste manual'; if(!qtd||qtd<=0) return Swal.fire('Atenção','Quantidade inválida'); let item=materiaisDB.find(m=>m.id===id); if(item){ item.estoque+=qtd; localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); registrarHistoricoItem(id,'Entrada Manual',qtd,obs,item.estoque); salvarBackupNuvem(); document.getElementById(`entrada-${id}`).value=''; document.getElementById(`obs-${id}`).value=''; Swal.fire({toast:true, icon:'success', title:'Estoque atualizado', timer:1500}); renderAdminEstoque(); } }
 function abrirHistoricoItem(id) { let item=materiaisDB.find(m=>m.id===id); document.getElementById('histItemNomeHeader').innerHTML=`<i class="material-icons">manage_history</i> ${item.nome}`; document.getElementById('histItemIdAtual').value=id; let hist=historicoItens.filter(h=>h.idItem===id); document.getElementById('tabelaHistoricoItemBody').innerHTML=hist.length?hist.map(h=>`<tr><td>${h.data}</td><td>${h.tipo}</td><td>${h.qtd}</td><td>${h.saldo}</td><td>${h.obs}</td></tr>`).join(''):'<tr><td colspan="5">Sem histórico</td></tr>'; document.getElementById('modalHistoricoItem').style.display='flex'; }
 function renderAdminPedidos() { let pendentes=historicoGlobal.filter(h=>h.status==='Aguardando'||h.status==='Aguardando retirada'); let ultimos10=historicoGlobal.filter(h=>h.status!=='Aguardando'&&h.status!=='Aguardando retirada').slice(0,10); document.getElementById('adminPendentesList').innerHTML=pendentes.length?pendentes.map(p=>`<div class="pedido-admin-card"><div><strong>${p.tipo} - ${p.setor}</strong><br>Solicitante: ${p.nome}</div><div><button class="btn-primary" style="padding:6px 12px; width:auto;" onclick="abrirEdicaoPedido('${p.id}')">Gerenciar</button></div></div>`).join(''):'<p>Nenhum pendente.</p>'; document.getElementById('adminUltimosList').innerHTML=ultimos10.map(p=>`<div style="padding:10px; border-bottom:1px solid #EDF2F7;"><strong>${p.tipo}</strong> - ${p.setor} (${p.nome}) <span style="float:right;">${p.status}</span></div>`).join(''); }
@@ -634,7 +711,7 @@ const faqData = [
 ];
 function buildFaqScreen() { const container = document.getElementById('faqContainer'); if(container) container.innerHTML = faqData.map(f => `<div class="faq-card"><div class="faq-question"><i class="material-icons" style="font-size:20px;">help_outline</i> ${f.q}</div><div class="faq-answer">${f.r}</div></div>`).join(''); }
 
-// Splash & Welcome
+// Splash & Welcome (original)
 function showWelcomeIfNeeded() {
   if(localStorage.getItem('welcome_dismissed')) return;
   const welcomeDiv = document.createElement('div');
@@ -646,6 +723,110 @@ function showWelcomeIfNeeded() {
 }
 setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => { if(splash && splash.parentNode) splash.remove(); showWelcomeIfNeeded(); }, 500); } }, 2800);
 
+// CARROSSEL INTELIGENTE (ABERTO/FECHADO) - ADICIONADO DE FORMA SEGURA
+(function() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+  // Adiciona slide de status se não existir
+  if (!document.getElementById('carousel-status-slide')) {
+    const slideStatus = document.createElement('div');
+    slideStatus.className = 'carousel-slide';
+    slideStatus.id = 'carousel-status-slide';
+    slideStatus.innerHTML = `
+        <div class="slide-text">
+            <h3 id="status-titulo">🟢 Aberto</h3>
+            <p id="status-descricao">Atendimento em funcionamento</p>
+        </div>
+        <div class="slide-icon" id="status-icone">⏰</div>
+    `;
+    track.appendChild(slideStatus);
+  }
+  const titulo = document.getElementById('status-titulo');
+  const descricao = document.getElementById('status-descricao');
+  const icone = document.getElementById('status-icone');
+  const slideStatus = document.getElementById('carousel-status-slide');
+
+  function atualizarStatus() {
+    const agora = new Date();
+    const dia = agora.getDay();
+    const hora = agora.getHours();
+    const aberto = (dia >= 1 && dia <= 5 && hora >= 6 && hora < 18);
+    if (aberto) {
+      titulo.innerHTML = '🟢 Aberto';
+      descricao.innerText = 'Atendimento em funcionamento';
+      icone.innerText = '✅';
+      slideStatus.style.background = 'linear-gradient(120deg, #E3F7EC 0%, #FFFFFF 100%)';
+    } else {
+      titulo.innerHTML = '🔴 Fechado';
+      descricao.innerText = 'Fora do horário de atendimento';
+      icone.innerText = '⏸️';
+      slideStatus.style.background = 'linear-gradient(120deg, #FFEBEE 0%, #FFFFFF 100%)';
+    }
+  }
+  atualizarStatus();
+  setInterval(atualizarStatus, 60000);
+})();
+
+// MODAL HIGIENIZAÇÃO (INTERCEPTA CLIQUE NO FILTRO)
+(function() {
+  const modal = document.getElementById('modal-higienizacao');
+  const btnFechar = document.getElementById('btn-fechar-hig');
+  if (!modal || !btnFechar) return;
+
+  function abrirModalHigienizacao() {
+    modal.style.display = 'flex';
+  }
+
+  document.addEventListener('click', function(e) {
+    const target = e.target.closest('.action-btn');
+    if (!target) return;
+    const cat = target.getAttribute('data-cat');
+    if (cat === 'Higienização') {
+      e.preventDefault();
+      e.stopPropagation();
+      abrirModalHigienizacao();
+    }
+  }, true);
+
+  btnFechar.addEventListener('click', function() {
+    modal.style.display = 'none';
+    // Aplica o filtro após fechar
+    if (typeof setFilter === 'function') {
+      setFilter('Higienização');
+    }
+  });
+
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+})();
+
+// SPLASH SEGURO (POR SESSÃO)
+(function() {
+  const splash = document.getElementById('splash-safe');
+  const btn = document.getElementById('btn-splash');
+  if (!splash || !btn) return;
+
+  if (!sessionStorage.getItem('splashSafeVisto')) {
+    setTimeout(() => {
+      splash.style.display = 'flex';
+      sessionStorage.setItem('splashSafeVisto', 'true');
+    }, 800);
+  }
+
+  function fecharSplash() {
+    splash.style.opacity = '0';
+    setTimeout(() => {
+      splash.style.display = 'none';
+      splash.style.opacity = '1';
+    }, 300);
+  }
+
+  btn.addEventListener('click', fecharSplash);
+  setTimeout(fecharSplash, 5000);
+})();
+
+// Inicializações finais
 let slideIndex=0; const track=document.getElementById('carouselTrack'); const slides=document.querySelectorAll('.carousel-slide'); if(track && slides.length) { setInterval(() => { slideIndex = (slideIndex+1)%slides.length; track.style.transform = `translateX(-${slideIndex*100}%)`; }, 5000); }
 
 carregarDadosLocaisUsuario(); atualizarBadges(); renderCatalogoModerno(); renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); buildFaqScreen();
