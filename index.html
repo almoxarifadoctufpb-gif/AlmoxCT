@@ -91,9 +91,12 @@
     .search-bar-modern:focus-within { border-color: #005BBB; box-shadow: 0 0 0 3px rgba(0, 91, 187, 0.1); }
     .search-bar-modern input { background: transparent; border: none; font-size: 0.95rem; width: 100%; outline: none; font-weight: 500; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; padding: 16px; }
-    .product-card { background: white; border-radius: 20px; padding: 16px 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); cursor: pointer; transition: all 0.25s ease; border: 1px solid #f0f2f5; animation: fadeSlideUp 0.35s ease-out; }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,91,187,0.08); border-color: #E0EEFF; }
-    .product-card:active { transform: scale(0.98); }
+    
+    /* ===== NOVO EFEITO HOVER PARA CARDS ===== */
+    .product-card { background: white; border-radius: 20px; padding: 16px 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); cursor: pointer; transition: all 0.3s ease; border: 1px solid #f0f2f5; animation: fadeSlideUp 0.35s ease-out; }
+    .product-card:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 12px 25px rgba(0,0,0,0.25); border: 2px solid #ff4d4d; background-color: rgba(255, 77, 77, 0.05); box-shadow: 0 0 15px rgba(255, 77, 77, 0.4); }
+    .product-card:active { transform: scale(0.97); }
+    
     .product-img { background: #F8FAFE; border-radius: 18px; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; transition: all 0.2s ease; }
     .product-card:hover .product-img { background: #F0F7FF; }
     .product-img img { max-width: 80px; max-height: 80px; object-fit: contain; }
@@ -147,6 +150,15 @@
     .whatsapp-float { position: fixed; bottom: 90px; right: 20px; background: #25D366; border-radius: 40px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(37,211,102,0.3); cursor: pointer; z-index: 100; transition: all 0.2s ease; }
     .whatsapp-float:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 12px 24px rgba(37,211,102,0.4); }
     .whatsapp-float:active { transform: scale(0.95); }
+    
+    /* Estilos para a fila e estoque de água */
+    #fila-container, #estoque-garroes { margin-top: 20px; background: white; border-radius: 24px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    #buscar-nome { width: 100%; padding: 12px; margin-bottom: 16px; border: 1px solid #E2E8F0; border-radius: 28px; font-size: 0.9rem; outline: none; transition: 0.2s; }
+    #buscar-nome:focus { border-color: #005BBB; box-shadow: 0 0 0 3px rgba(0,91,187,0.1); }
+    #lista-fila { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
+    #lista-fila li { padding: 12px; border-bottom: 1px solid #EDF2F7; font-weight: 500; }
+    #lista-fila li:hover { background: #F8FAFE; }
+    #quantidade-garroes { font-size: 28px; font-weight: 800; color: #005BBB; }
     
     /* Cart item refinamento */
     .cart-item-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #EDF2F7; transition: all 0.2s ease; }
@@ -207,21 +219,52 @@
 
 <!-- VIEW MATERIAIS -->
 <div id="view-materiais" class="view-section"><div class="quick-actions"><div class="actions-wrapper" id="quickActionsWrapper"></div></div><div class="search-container"><div class="search-bar-modern"><i class="material-icons">search</i><input type="text" id="searchInputMateriais" placeholder="Buscar material..."></div></div><div class="product-grid" id="catalogoContainerModerno"></div></div>
-<!-- VIEW ÁGUA -->
-<div id="view-agua" class="view-section"><div style="max-width:800px;margin:16px auto;padding:0 16px;"><div id="aguaStatusCard" style="display:none;background:white;border-radius:24px;padding:30px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.04);"><i class="material-icons" style="font-size:64px;color:#005BBB;">hourglass_top</i><h2>Sua Posição: <span id="aguaPosicao">#1</span></h2><button class="btn-secondary" onclick="cancelarAgua()">Cancelar Solicitação</button></div><div id="aguaFormCard" style="background:white;border-radius:24px;padding:24px;box-shadow:0 4px 12px rgba(0,0,0,0.04);"><h2><i class="material-icons">local_drink</i> Solicitar Água</h2><div class="form-grid"><div class="input-group full-width"><label>Setor/Unidade *</label><select id="aguaSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="aguaNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="aguaContato" class="mask-whatsapp" placeholder="(83) 90000-0000"></div><div class="input-group"><label>E-mail *</label><input type="email" id="aguaEmail"></div><div class="input-group"><label>Perfil</label><select id="aguaPerfil"><option>Técnico-Administrativo</option><option>Docente</option><option>Discente</option></select></div><div class="input-group"><label>Lotação/Sala *</label><input type="text" id="aguaLotacao"></div></div><button class="btn-primary" onclick="submitAgua()"><i class="material-icons">check_circle</i> Entrar na fila</button></div></div></div>
+
+<!-- VIEW ÁGUA (com fila e estoque integrados) -->
+<div id="view-agua" class="view-section">
+  <div style="max-width:800px;margin:16px auto;padding:0 16px;">
+    <div id="aguaStatusCard" style="display:none;background:white;border-radius:24px;padding:30px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.04);"><i class="material-icons" style="font-size:64px;color:#005BBB;">hourglass_top</i><h2>Sua Posição: <span id="aguaPosicao">#1</span></h2><button class="btn-secondary" onclick="cancelarAgua()">Cancelar Solicitação</button></div>
+    <div id="aguaFormCard" style="background:white;border-radius:24px;padding:24px;box-shadow:0 4px 12px rgba(0,0,0,0.04);">
+      <h2><i class="material-icons">local_drink</i> Solicitar Água</h2>
+      <div class="form-grid">
+        <div class="input-group full-width"><label>Setor/Unidade *</label><select id="aguaSetor"></select></div>
+        <div class="input-group"><label>Nome *</label><input type="text" id="aguaNome"></div>
+        <div class="input-group"><label>WhatsApp *</label><input type="text" id="aguaContato" class="mask-whatsapp" placeholder="(83) 90000-0000"></div>
+        <div class="input-group"><label>E-mail *</label><input type="email" id="aguaEmail"></div>
+        <div class="input-group"><label>Perfil</label><select id="aguaPerfil"><option>Técnico-Administrativo</option><option>Docente</option><option>Discente</option></select></div>
+        <div class="input-group"><label>Lotação/Sala *</label><input type="text" id="aguaLotacao"></div>
+      </div>
+      <button class="btn-primary" onclick="submitAgua()"><i class="material-icons">check_circle</i> Entrar na fila</button>
+    </div>
+    
+    <!-- SEÇÃO: ESTOQUE DE GARRAFÕES -->
+    <div id="estoque-garroes">
+      <h3><i class="material-icons">inventory</i> Estoque de Garrafões 20L</h3>
+      <div id="quantidade-garroes">Carregando...</div>
+    </div>
+    
+    <!-- SEÇÃO: FILA DINÂMICA VIA CSV -->
+    <div id="fila-container">
+      <h3><i class="material-icons">queue</i> Fila de Espera (Online)</h3>
+      <input type="text" id="buscar-nome" placeholder="🔍 Buscar seu nome na fila...">
+      <ul id="lista-fila"><li>Carregando fila...</li></ul>
+      <p style="font-size:0.7rem; color:#6B7A8A; margin-top:8px;">Atualização automática a cada 30 segundos</p>
+    </div>
+  </div>
+</div>
+
 <!-- VIEW MEUS PEDIDOS -->
 <div id="view-orders" class="view-section"><div style="max-width:800px;margin:16px auto;padding:0 16px;" id="historicoContainer"></div></div>
+
 <!-- VIEW ADMIN -->
 <div id="view-admin" class="view-section"><div style="max-width:1400px;margin:16px auto;padding:0 16px;"><div style="display:flex;justify-content:space-between;"><h2><i class="material-icons">admin_panel_settings</i> Painel Gestor</h2><button class="btn-secondary" style="width:auto;" onclick="forcarAtualizacao()">Atualizar</button></div><div class="admin-tabs"><button class="admin-tab-btn" onclick="switchAdminTab('cadastrar')">Cadastrar</button><button class="admin-tab-btn" onclick="switchAdminTab('estoque')">Estoque</button></div><div id="admin-tab-cadastrar" class="admin-card"><h3>Novo Material</h3><div class="form-grid"><div class="input-group"><label>Categoria</label><select id="adminNovaCatSelect" onchange="checkNovaCat()"></select><input type="text" id="adminNovaCatInput" placeholder="Nova categoria" style="display:none;"></div><div class="input-group"><label>Nome</label><input type="text" id="adminNovoNome"></div><div class="input-group"><label>Imagem URL</label><input type="text" id="adminNovaImg"></div><div class="input-group"><label>Estoque</label><input type="number" id="adminNovoEstoque" value="0"></div></div><button class="btn-primary" onclick="adminAdicionarItem()">Salvar</button></div><div id="admin-tab-estoque" class="admin-card"><h3>Gerenciar Estoque</h3><table class="admin-table"><thead><tr><th>Material</th><th>Estoque</th><th>Adicionar</th><th>Obs</th><th>Ações</th></tr></thead><tbody id="adminTableBody"></tbody></table></div><div class="admin-card"><h3>Pendentes / Fila Água</h3><div id="adminPendentesList"></div></div><div class="admin-card"><h3>Últimos Atualizados</h3><div id="adminUltimosList"></div><button class="btn-secondary" onclick="abrirTodosPedidosModal()">Ver todos os pedidos</button></div></div></div>
 
 <!-- VIEW FAQ -->
-<div id="view-faq" class="view-section">
-  <div class="faq-container" id="faqContainer"></div>
-</div>
+<div id="view-faq" class="view-section"><div class="faq-container" id="faqContainer"></div></div>
 
 <!-- MODAIS -->
 <div id="modalCarrinho" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Carrinho</h2><i class="material-icons" style="cursor:pointer; transition: all 0.2s;" onclick="fecharModal('modalCarrinho')">close</i></div><div id="carrinhoItensList" style="max-height:40vh;overflow-y:auto;margin-bottom:20px;"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;"><button class="btn-secondary" onclick="limparCarrinho()">Limpar</button><button class="btn-secondary" onclick="fecharModal('modalCarrinho')">Continuar</button><button class="btn-primary" onclick="abrirCheckout()">Finalizar</button></div></div></div>
-<div id="modalCheckout" class="modal-modern"><div class="modal-container"><div style="display:flex;justify-content:space-between;"><h2>Finalizar Requisição</h2><i class="material-icons" style="cursor:pointer;" onclick="voltarParaCarrinho()">arrow_back</i></div><div class="form-grid"><div class="input-group full-width"><label>Setor *</label><select id="reqSetor"><option>Almoxarifado</option><option>Secretaria do CT</option><option>DEM - Mecânica</option><option>DEA - Alimentos</option><option>DECA - Civil</option></select></div><div class="input-group"><label>Nome *</label><input type="text" id="reqNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="reqContato" class="mask-whatsapp"></div><div class="input-group"><label>E-mail *</label><input type="email" id="reqEmail"></div><div class="input-group"><label>Perfil</label><select id="reqPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div><div class="input-group"><label>Lotação *</label><input type="text" id="reqLotacao"></div><div class="input-group full-width"><label>Assunto</label><input type="text" id="reqAssunto" value="Solicitação de materiais"></div></div><button class="btn-primary" onclick="finalizarRequisicaoModal()">Enviar Pedido</button></div></div>
+<div id="modalCheckout" class="modal-modern"><div class="modal-container"><div style="display:flex;justify-content:space-between;"><h2>Finalizar Requisição</h2><i class="material-icons" style="cursor:pointer;" onclick="voltarParaCarrinho()">arrow_back</i></div><div class="form-grid"><div class="input-group full-width"><label>Setor *</label><select id="reqSetor"></select></div><div class="input-group"><label>Nome *</label><input type="text" id="reqNome"></div><div class="input-group"><label>WhatsApp *</label><input type="text" id="reqContato" class="mask-whatsapp"></div><div class="input-group"><label>E-mail *</label><input type="email" id="reqEmail"></div><div class="input-group"><label>Perfil</label><select id="reqPerfil"><option>Discente</option><option>Docente</option><option>Técnico-Administrativo</option></select></div><div class="input-group"><label>Lotação *</label><input type="text" id="reqLotacao"></div><div class="input-group full-width"><label>Assunto</label><input type="text" id="reqAssunto" value="Solicitação de materiais"></div></div><button class="btn-primary" onclick="finalizarRequisicaoModal()">Enviar Pedido</button></div></div>
 <div id="modalTodosPedidos" class="modal-modern"><div class="modal-container"><div style="display:flex; justify-content:space-between;"><h2>Todos os Pedidos</h2><i class="material-icons" style="cursor:pointer;" onclick="fecharModal('modalTodosPedidos')">close</i></div><div style="display:flex;gap:12px;margin-bottom:16px;"><button class="btn-primary" style="background:#1E7E34;" onclick="exportarXLSX()">Excel</button><button class="btn-primary" style="background:#B91C1C;" onclick="exportarPDF()">PDF</button></div><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Tipo</th><th>Setor</th><th>Solicitante</th><th>Status</th></tr></thead><tbody id="tabelaTodosPedidosBody"></tbody></table></div></div></div>
 <div id="modalEditarPedido" class="modal-modern"><div class="modal-container"><h2>Gerenciar Pedido</h2><div id="editarPedidoHeader"></div><div class="input-group"><label>Status</label><select id="editPedidoStatus"><option>Aguardando</option><option>Aguardando retirada</option><option>Entregue</option><option>Cancelado/Rejeitado</option></select></div><div id="editarPedidoItensContainer"></div><input type="hidden" id="editPedidoIdAtual"><button class="btn-primary" onclick="salvarEdicaoPedido()">Salvar</button></div></div>
 <div id="modalHistoricoItem" class="modal-modern"><div class="modal-container"><h2 id="histItemNomeHeader">Histórico</h2><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Data</th><th>Ação</th><th>Qtd</th><th>Saldo</th><th>Observação</th></tr></thead><tbody id="tabelaHistoricoItemBody"></tbody></table></div><input type="hidden" id="histItemIdAtual"></div></div>
@@ -241,9 +284,50 @@ const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbynotzi-Mu68m
 function enviarParaGoogleSheets(dados) { fetch(GOOGLE_SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados) }).catch(e => console.error); }
 function salvarBackupNuvem() { enviarParaGoogleSheets({ tipo: 'backup_estado_app', materiais: materiaisDB, historico: historicoGlobal, fila: filaAgua, histItens: historicoItens }); }
 
-// INCLUSÃO DOS MATERIAIS DAS TABELAS FORNECIDAS (caso localStorage esteja vazio)
-const materiaisIniciais = [
-  // Expediente
+// ---------- LISTA COMPLETA DE SETORES (CT UFPB) ----------
+const setoresCompletos = [
+  "Almoxarifado", "Secretaria do CT", "DEM - Mecânica", "DEA - Alimentos", "DECA - Civil",
+  "Departamento de Arquitetura e Urbanismo", "Laboratório de Acessibilidade - LACESSE", "Laboratório de Ambiente Urbano e Edificado – LAURBE",
+  "Laboratório de Conforto Ambiental - LABCON", "Laboratório de Estudos sobre Cidade, Cultura e Urbanidade - LECCUR", "Laboratório de Modelos + Prototipagem",
+  "Laboratório de Pesquisa, Projeto e Memória - LPPM", "Departamento de Engenharia de Alimentos", "Laboratório de Análise Sensorial e Desenvolvimento de Novos Produtos - LAS",
+  "Laboratório de Análises de Ácidos Graxos - LAAG", "Laboratório de Análises Químicas de Alimentos - LAQA", "Laboratório de Apoio - LA", "Laboratório de Bioquímica de Alimentos - LBA",
+  "Laboratório de Engenharia de Alimentos - LEA", "Laboratório de Flavor - LAF", "Laboratório de Informática - LI", "Laboratório de Microbiologia de Alimentos - LAMICRO",
+  "Laboratório de Processamento de Derivados de Carnes - LPDC", "Laboratório de Processamento de Derivados do Leite - LPDL", "Laboratório de Processamento de Derivados de Pescado - LABTEC",
+  "Laboratório de Processos Microbianos em Alimentos - LPMA", "Laboratório de Tecnologia de Alimentos - LTA", "Laboratório de Tecnologia de Panificação (Padaria Piloto) - LTP",
+  "Departamento de Engenharia Civil e Ambiental", "Laboratório de Análise Estrutural e Avaliação de Desempenho", "Laboratório de Análises Computacionais em Meio Ambiente",
+  "Laboratório de Eficiência Energética e Hidráulica em Saneamento – LENHS", "Laboratório de Ensaios de Materiais e Estruturas - LABEME", "Laboratório de Geotecnia e Pavimentação – LAPAV",
+  "Laboratório de Hidráulica", "Laboratório de Modelagem da Informação da Construção e Modelagem e Experimentação de Estruturas", "Laboratório de Modelos Físicos Qualitativos e Computacionais - LAMFIC",
+  "Laboratório de Pesquisa em Sistemas Ambientais Urbanos - LPSAU", "Laboratório de Planejamento de Transportes", "Laboratório de Química Ambiental", "Laboratório de Recursos Hídricos e Engenharia Ambiental - LARHENA",
+  "Laboratório de Reologia", "Laboratório de Saneamento Ambiental - LABSAM", "Laboratório de Topografia – LABTOP", "Departamento de Engenharia de Materiais",
+  "Laboratório de Caracterização Microestrutural", "Laboratório de Cristalografia", "Laboratório de Materiais Avançados", "Laboratório de Materiais Cerâmicos", "Laboratório de Materiais e Biossistemas",
+  "Laboratório de Materiais Metálicos", "Laboratório de Materiais Poliméricos", "Laboratório de Modelagem de Materiais", "Laboratório de Propriedades Mecânicas dos Materiais",
+  "Laboratório de Purificação e Aspersão de Minerais Argilosos", "Laboratório de Química dos Materiais", "Laboratório de Siderurgia", "Departamento de Engenharia de Produção",
+  "Laboratório de Análise do Trabalho - LAT", "Laboratório de Desenvolvimento de Produtos e Inovação - LADEPI", "Laboratório de Engenharia de Sustentabilidade e Consumo - LabESC",
+  "Laboratório de Informática - INFOLAB", "Laboratório de Métodos Quantitativos Aplicados - LabMeQA", "Laboratório de Simulação de Processo Discreto - LabSim", "Departamento de Engenharia Mecânica",
+  "Laboratório de Acionamentos e Comandos Hidropneumáticos", "Laboratório de Atividades Meteorológicas", "Laboratório de Automação e Controle", "Laboratório de Carvão Ativado",
+  "Laboratório de Conformação Mecânica", "Laboratório de Controle de Vibração e Ruído", "Laboratório de Dinâmica", "Laboratório de Energia Sustentável", "Laboratório de Engenharia de Precisão",
+  "Laboratório de Ensaios Mecânicos", "Laboratório de Inovação e Conversão Térmica", "Laboratório de Instrumentação e Controle", "Laboratório de Integridade e Inspeção",
+  "Laboratório de Máquinas e Acionamentos Elétricos", "Laboratório de Materiais e Produtos Cerâmicos", "Laboratório de Mecatrônica", "Laboratório de Metalografia",
+  "Laboratório de Metrologia Dimensional – Metromec", "Laboratório de Motores de Combustão Interna", "Laboratório de Oficina Mecânica", "Laboratório de Refrigeração e Ar-condicionado",
+  "Laboratório de Representação Gráfica", "Laboratório de Solidificação Rápida", "Laboratório de Transferência de Calor e Massa", "Laboratório de Tratamento Térmico", "Departamento de Engenharia Química",
+  "Laboratório de Análise e Processamento de Dados", "Laboratório de Análises e Pesquisas de Bebidas Alcoólicas (LBA)", "Laboratório de Bioengenharia - LABIO", "Laboratório de Cromatografia e Quimiometria",
+  "Laboratório de Fenômenos de Transporte - LFT", "Laboratório de Fluidodinâmica e Secagem", "Laboratório de Microbiologia Industrial", "Laboratório de Modelagem e Simulação de Processos",
+  "Laboratório de Operações Unitárias - LOU", "Laboratório de Petróleo - LAPET", "Laboratório de Processamento Mineral", "Laboratório de Produtos Fermentos e Destilados - LPFD",
+  "Laboratório de Reatores Químicos - LRQ", "Laboratório de Tecnologia Cosmética - LTC", "Laboratório de Tecnologia Química - LTQ", "Laboratório de Termodinâmica", "Laboratório Piloto de Química - LAPQ",
+  "Programa de Pós-Graduação em Arquitetura e Urbanismo", "Programa de Pós-Graduação em Ciência e Tecnologia de Alimentos", "Programa de Pós-Graduação em Ciência e Engenharia de Materiais",
+  "Programa de Pós-Graduação em Engenharia Civil e Ambiental", "Programa de Pós-Graduação em Engenharia de Produção e Sistemas", "Programa de Pós-Graduação em Engenharia Mecânica",
+  "Programa de Pós-Graduação em Engenharia Química", "Coordenação do curso de Arquitetura e Urbanismo", "Coordenação do curso de Engenharia Ambiental", "Coordenação do curso de Engenharia Civil",
+  "Coordenação do curso de Engenharia de Alimentos", "Coordenação do curso de Engenharia de Materiais", "Coordenação do curso de Engenharia de Produção", "Coordenação do curso de Engenharia de Produção Mecânica",
+  "Coordenação do curso de Engenharia Mecânica", "Coordenação do curso de Engenharia Química", "Coordenação do curso de Química Industrial", "Divisão de Infraestrutura", "Manutenção da Infraestrutura",
+  "Patrimônio", "Informática", "Serviços Gerais", "Divisão Administrativa", "Aquisições e Contratos", "Documentação e Arquivo", "Gestão de Pessoas", "Logística", "Gabinete da Direção de Centro",
+  "Direção de Centro", "Comunicação Institucional do CT", "Assessorias", "Empresa Junior de Engenharia de Materiais - Caracterizze", "Empresa Junior de Engenharia Ambiental - ECO's",
+  "Empresa Junior de Engenharia de Alimentos - ENGAJA", "Empresa Junior de Engenharia Mecânica - Mottora", "Empresa Junior de Engenharia de Produção - OTIMIZE",
+  "Empresa Junior de Arquitetura e Engenharia Civil - PLANEJ", "Empresa Junior de Engenharia Química - PROJEQ"
+];
+
+// ---------- MATERIAIS INICIAIS (base) ----------
+const materiaisBase = [
+  // Expediente (originais)
   { id: 'EXP001', categoria: 'Expediente', nome: 'Caneta Esferográfica Azul – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 },
   { id: 'EXP002', categoria: 'Expediente', nome: 'Caneta Esferográfica Preta – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 },
   { id: 'EXP003', categoria: 'Expediente', nome: 'Caneta Esferográfica Vermelha – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 30 },
@@ -267,7 +351,7 @@ const materiaisIniciais = [
   { id: 'EXP021', categoria: 'Expediente', nome: 'Fita Adesiva Larga – Rolo', imagem: 'https://cdn-icons-png.flaticon.com/512/2909/2909775.png', estoque: 30 },
   { id: 'EXP022', categoria: 'Expediente', nome: 'Cola Branca Líquida – Base PVA', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135767.png', estoque: 50 },
   { id: 'EXP023', categoria: 'Expediente', nome: 'Bloco Adesivo – Folhas Reposicionáveis (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/2541/2541985.png', estoque: 70 },
-  // Limpeza e Higiene
+  // Limpeza (originais)
   { id: 'LIM001', categoria: 'Limpeza', nome: 'Álcool 70% – Ação Desinfetante (Litro)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 20 },
   { id: 'LIM002', categoria: 'Limpeza', nome: 'Água Sanitária – Base de Hipoclorito (Litro)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 15 },
   { id: 'LIM003', categoria: 'Limpeza', nome: 'Detergente Líquido – Alto Poder Desengordurante (Un)', imagem: 'https://cdn-icons-png.flaticon.com/512/2748/2748519.png', estoque: 25 },
@@ -289,9 +373,76 @@ const materiaisIniciais = [
   { id: 'LIM019', categoria: 'Limpeza', nome: 'Papel Toalha – Alta Absorção (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 60 }
 ];
 
+// ---------- NOVOS MATERIAIS A SEREM ADICIONADOS (sem duplicidade) ----------
+const novosMateriais = [
+  { id: 'EXP024', categoria: 'Expediente', nome: 'Apagador para Quadro Negro', imagem: 'https://papelariabauru.com.br/wp-content/uploads/2020/07/apagador-com-feltro-stalo.jpg', estoque: 15 },
+  { id: 'EXP025', categoria: 'Expediente', nome: 'Apagador para Quadro Branco (15x6x4cm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_679212-MLA93659540174_102025-O.webp', estoque: 20 },
+  { id: 'EXP026', categoria: 'Expediente', nome: 'Marcador Azul para Quadro Branco (Recarregável)', imagem: 'https://cdn.awsli.com.br/600x450/941/941759/produto/127056480336398ab4a.jpg', estoque: 25 },
+  { id: 'EXP027', categoria: 'Expediente', nome: 'Marcador Preto para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregvel-preto-c12-unidades-6.jpg', estoque: 25 },
+  { id: 'EXP028', categoria: 'Expediente', nome: 'Marcador Vermelho para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregavel-vermelho-4.jpg', estoque: 25 },
+  { id: 'EXP029', categoria: 'Expediente', nome: 'Borracha Apagadora Escrita (40x20x14mm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_929527-MLA99453323692_112025-O.webp', estoque: 50 },
+  { id: 'EXP030', categoria: 'Expediente', nome: 'Fita Adesiva Crepe 18mmx50m', imagem: 'https://lojaacal.vtexassets.com/arquivos/ids/174829/Fita-Crepe-18mmx50m-3m-do-Brasil-616454-02.jpg?v=637590102495730000', estoque: 30 },
+  { id: 'EXP031', categoria: 'Expediente', nome: 'Borracha Bicolor (Azul e Vermelha)', imagem: 'https://cdn.awsli.com.br/2500x2500/2519/2519112/produto/225103134/6596a25c6b6f00b30370b998_1000x560-mjecyiik2x.jpeg', estoque: 40 },
+  { id: 'EXP032', categoria: 'Expediente', nome: 'Caneta Marca-Texto Amarela (Ponta Chanfrada)', imagem: 'https://lyke.com.br/resize/imagecache//5577be6b23a52ddfeec629add9a43fe9.jpg', estoque: 35 },
+  { id: 'EXP033', categoria: 'Expediente', nome: 'Clipe nº 2/0 (Caixa 100 un)', imagem: 'https://cdn.sistemawbuy.com.br/arquivos/9e5e7e91a848f7c209e19f8d775f1ee4/produtos/67c03e79607a6/prod_340_1-67c0413ee4777.jpg', estoque: 80 },
+  { id: 'EXP034', categoria: 'Expediente', nome: 'Envelope Kraft Natural 260x360mm (Pct 100 un)', imagem: 'https://images.tcdn.com.br/img/img_prod/1226139/envelope_saco_kraft_natural_260x360_80g_cx_c_100_un_scrity_skn336_2491_1_6f20d263b8ccb6d41156dcba206853dd.jpg', estoque: 10 },
+  { id: 'EXP035', categoria: 'Expediente', nome: 'Fita Adesiva Polipropileno Transparente 48mmx50m', imagem: 'https://cdn.awsli.com.br/600x1000/1279/1279016/produto/155175143/fita-adesiva-polipropileno-48mm-x-100m-transparente---unidade-1_clipped_rev_1-aam79ql1n8.jpeg', estoque: 25 },
+  { id: 'EXP036', categoria: 'Expediente', nome: 'Fita Adesiva Transparente 12mmx30m', imagem: 'https://cdn.awsli.com.br/600x700/2416/2416225/produto/21316655963ce022928.jpg', estoque: 40 },
+  { id: 'EXP037', categoria: 'Expediente', nome: 'Lápis Grafite Preto 6B', imagem: 'https://a-static.mlcdn.com.br/800x800/lapis-preto-grafite-escrever-escola-escritorio-12-unidades-leo-leo/tppastas/5546-12/ff10f7edf816ef4443faf706ff7c55ef.jpeg', estoque: 60 },
+  { id: 'EXP038', categoria: 'Expediente', nome: 'Pasta com Aba e Elástico (Cartão Plastificado) Azul', imagem: 'https://img.kalunga.com.br/fotosdeprodutos/591122z_1.jpg', estoque: 20 },
+  { id: 'EXP039', categoria: 'Expediente', nome: 'Refil de Tinta para Marcador Azul (20ml)', imagem: 'https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_azul_para_marcador_de_quadro_branco_20ml_caixa_c_12_unidades_brw_3285_1_af5e7bcd0abb8140372b64e863b2c991.jpg', estoque: 30 },
+  { id: 'EXP040', categoria: 'Expediente', nome: 'Refil de Tinta para Marcador Preto (20ml)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_639328-MLA99507654276_112025-O.webp', estoque: 30 },
+  { id: 'EXP041', categoria: 'Expediente', nome: 'Refil de Tinta para Marcador Vermelho (20ml)', imagem: 'https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_vermelho_para_marcador_de_quadro_branco_20ml_caixa_c_12_unidades_brw_2579_1_acd634f415db5b2cf105e7d67487778b.jpg', estoque: 30 },
+  { id: 'EXP042', categoria: 'Expediente', nome: 'Régua 30cm em Poliestireno Transparente', imagem: 'https://minipreco.vteximg.com.br/arquivos/ids/185648/89922e64-6309-4b1f-aaee-b92a5fcb2fd5.jpg?v=638282452167700000', estoque: 25 },
+  { id: 'EXP043', categoria: 'Expediente', nome: 'Caneta Esferográfica Fina Azul (0.7mm)', imagem: 'https://ae01.alicdn.com/kf/H1422b6a387534a2bb60913ab09ae07a9b.jpg_960x960.jpg', estoque: 45 },
+  { id: 'EXP044', categoria: 'Expediente', nome: 'Caneta Esferográfica Fina Vermelha (0.7mm)', imagem: 'https://ae01.alicdn.com/kf/H1422b6a387534a2bb60913ab09ae07a9b.jpg_960x960.jpg', estoque: 30 },
+  { id: 'EXP045', categoria: 'Expediente', nome: 'Caneta Esferográfica Fina Preta (0.7mm)', imagem: 'https://ae01.alicdn.com/kf/H1422b6a387534a2bb60913ab09ae07a9b.jpg_960x960.jpg', estoque: 45 },
+  { id: 'EXP046', categoria: 'Expediente', nome: 'Grampeador 40 Folhas', imagem: 'https://s3.amazonaws.com/lepok.w/produtos/produtos/04322.webp', estoque: 10 },
+  { id: 'EXP047', categoria: 'Expediente', nome: 'Estilete Largo (18mm)', imagem: 'https://cdn.awsli.com.br/600x700/2637/2637864/produto/322844669/estilete-largo-18mm-s-c-embalagem-individua-v-m-p-cx-c-12-1a8314ab-1ksjuj1y8a.jpg', estoque: 20 },
+  { id: 'EXP048', categoria: 'Expediente', nome: 'Pilha Alcalina AAA 1,5V (Par)', imagem: 'https://imgs.casasbahia.com.br/1575910332/1xg.jpg?imwidth=500', estoque: 50 },
+  { id: 'EXP049', categoria: 'Expediente', nome: 'Copo Descartável 180ml (Pacote 100 un)', imagem: 'https://images.tcdn.com.br/img/img_prod/675659/copo_plastico_180ml_agua_pacote_c_100_linha_economica_505_1_4f8b98bd5e3db7e1e96be935d0aa1530_20220728165250.jpg', estoque: 200 },
+  // Novos materiais de Limpeza
+  { id: 'LIM020', categoria: 'Limpeza', nome: 'Vassoura de Piaçava Pequena', imagem: 'https://cdn.awsli.com.br/600x600/515/515184/produto/250123697/_post-para-instagram-foto-felicidade-cachorro--23--2u3ncpzszj.jpg', estoque: 15 },
+  { id: 'LIM021', categoria: 'Limpeza', nome: 'Ácido Muriático 1L (30%)', imagem: 'https://cdn.awsli.com.br/800x800/1348/1348138/produto/61691661b86f6297ef.jpg', estoque: 12 },
+  { id: 'LIM022', categoria: 'Limpeza', nome: 'Desinfetante Eucalipto 1L', imagem: 'https://tb0932.vtexassets.com/arquivos/ids/162595-800-auto?v=637705336249670000&width=800&height=auto&aspect=true', estoque: 18 },
+  { id: 'LIM023', categoria: 'Limpeza', nome: 'Desinfetante Lavanda 1L', imagem: 'https://cdn.eloja360.digital/redemac-depauli/2025/09/23195323/img_DF_25754_1.webp', estoque: 18 },
+  { id: 'LIM024', categoria: 'Limpeza', nome: 'Desinfetante Pinho 500ml', imagem: 'https://m.media-amazon.com/images/S/aplus-media/vc/780e8319-9e60-4209-95b9-20c6a384a8e5.__CR0,0,300,400_PT0_SX300_V1___.jpg', estoque: 20 },
+  { id: 'LIM025', categoria: 'Limpeza', nome: 'Esponja Dupla-Face (Pacote 3 un)', imagem: 'https://cdnv2.moovin.com.br/serraquimica/imagens/produtos/det/esponja-dupla-face-scoth-brite-unidade-3m-f2a5df71cbc450a131eb9964bf1e217b.jpg', estoque: 40 },
+  { id: 'LIM026', categoria: 'Limpeza', nome: 'Escova de Mão Oval para Limpeza', imagem: 'https://http2.mlstatic.com/D_NQ_NP_916516-MLB70812750254_082023-O.webp', estoque: 25 },
+  { id: 'LIM027', categoria: 'Limpeza', nome: 'Flanela Alvejada Laranja (38x58cm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_667855-MLA99354439594_112025-O.webp', estoque: 30 },
+  { id: 'LIM028', categoria: 'Limpeza', nome: 'Limpador de Vidros Líquido 500ml', imagem: 'https://img.irroba.com.br/filters:fill(fff):quality(80)/noronhai/catalog/fotos-dos-sites/limpa-vidros-500ml-3.jpg', estoque: 20 },
+  { id: 'LIM029', categoria: 'Limpeza', nome: 'Lixeira Plástica 10L (sem tampa)', imagem: 'https://http2.mlstatic.com/D_616207-MLB83894179649_042025-C.jpg', estoque: 8 },
+  { id: 'LIM030', categoria: 'Limpeza', nome: 'Papel Higiênico Rolão 300m (Pct 8 rolos)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_711857-MLB49463189603_032022-O-papel-higinico-rolo-folha-simples-8-rolos-300-metros.webp', estoque: 50 },
+  { id: 'LIM031', categoria: 'Limpeza', nome: 'Papel Higiênico 4 rolos 30m', imagem: 'https://cdn.awsli.com.br/600x1000/2714/2714296/produto/300554777/design-sem-nome---2024-09-04t181454-642-jz82eth0nc.png', estoque: 60 },
+  { id: 'LIM032', categoria: 'Limpeza', nome: 'Papel Toalha Interfolhada 2000 folhas', imagem: 'https://cdn.iset.io/assets/48768/produtos/1763/2ea75465779ab2ae14141373857f534665e6229343464.png', estoque: 40 },
+  { id: 'LIM033', categoria: 'Limpeza', nome: 'Sabão em Pó 1kg', imagem: 'https://http2.mlstatic.com/D_875967-MLA100500441381_122025-C.jpg', estoque: 35 },
+  { id: 'LIM034', categoria: 'Limpeza', nome: 'Sabonete Líquido Antisséptico 800ml', imagem: 'https://www.lanova.com.br/arquivos/HLSLEXERVAVDML0000-Sabonete-Liquido-Erva-Doce-Cremoso-Exaccta-Refil-700ml-E-700ED-0000-1000X1000.png', estoque: 25 },
+  { id: 'LIM035', categoria: 'Limpeza', nome: 'Saco Plástico para Lixo 40L (100 un)', imagem: 'https://down-br.img.susercontent.com/file/b2d4223acba2a34bd5dabe324fec780f', estoque: 100 },
+  { id: 'LIM036', categoria: 'Limpeza', nome: 'Saco Plástico para Lixo 15L (100 un)', imagem: 'https://down-br.img.susercontent.com/file/b2d4223acba2a34bd5dabe324fec780f', estoque: 80 },
+  { id: 'LIM037', categoria: 'Limpeza', nome: 'Luva para Limpeza Multiuso (Tamanho Médio)', imagem: 'https://a-static.mlcdn.com.br/800x800/luva-latex-impermeavel-multiuso-limpeza-domestica-resistente-vabene-amarela/epissegurancatotal/15918667129/faa0b777739d9b6a085233ef809fe636.jpeg', estoque: 50 }
+];
+
+// Função para fazer merge dos novos materiais com os existentes (evita duplicidade por nome)
+function mergeMateriais(existentes, novos) {
+  const nomesExistentes = new Set(existentes.map(m => m.nome.toLowerCase().trim()));
+  for (const novo of novos) {
+    if (!nomesExistentes.has(novo.nome.toLowerCase().trim())) {
+      existentes.push(novo);
+      nomesExistentes.add(novo.nome.toLowerCase().trim());
+    }
+  }
+  return existentes;
+}
+
+// Inicialização do banco de materiais
 let materiaisDB = JSON.parse(localStorage.getItem('almox_db_materiais'));
-if(!materiaisDB) {
-  materiaisDB = materiaisIniciais;
+if (!materiaisDB) {
+  // Primeira execução: usa a base + novos
+  materiaisDB = mergeMateriais([...materiaisBase], novosMateriais);
+  localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
+} else {
+  // Já existem dados: adiciona apenas os novos que não estão presentes
+  materiaisDB = mergeMateriais(materiaisDB, novosMateriais);
   localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
 }
 
@@ -299,10 +450,30 @@ let carrinho = JSON.parse(localStorage.getItem('almox_db_carrinho')) || [];
 let historicoGlobal = JSON.parse(localStorage.getItem('almox_db_hist_global')) || [];
 let filaAgua = JSON.parse(localStorage.getItem('almox_db_fila_agua')) || [];
 let historicoItens = JSON.parse(localStorage.getItem('almox_db_hist_itens')) || [];
+
 function registrarHistoricoItem(idItem, tipo, qtd, obs, saldo) { historicoItens.unshift({ idItem, data: new Date().toLocaleString(), tipo, qtd, obs, saldo }); localStorage.setItem('almox_db_hist_itens', JSON.stringify(historicoItens)); }
 function atualizarBadges() { document.getElementById('headerCartBadge').innerText = carrinho.reduce((a,c) => a + c.qtd, 0); }
 function salvarCarrinho() { localStorage.setItem('almox_db_carrinho', JSON.stringify(carrinho)); atualizarBadges(); renderCarrinho(); }
-function addAoCarrinho(id) { let itemDB = materiaisDB.find(m => m.id === id); let noCarrinho = carrinho.find(c => c.id === id); if(noCarrinho) { if(noCarrinho.qtd < itemDB.estoque) noCarrinho.qtd++; else return Swal.fire({toast:true, icon:'error', title:'Limite', timer:1500}); } else carrinho.push({ id: itemDB.id, nome: itemDB.nome, imagem: itemDB.imagem, qtd: 1 }); salvarCarrinho(); Swal.fire({toast:true, icon:'success', title:'Adicionado!', timer:1000}); }
+
+// Adicionar ao carrinho com splash para materiais de Limpeza
+function addAoCarrinho(id) {
+  let itemDB = materiaisDB.find(m => m.id === id);
+  if(!itemDB) return;
+  if(itemDB.categoria === "Limpeza") {
+    Swal.fire({
+      title: "Atenção!",
+      text: "Olá, esses materiais são solicitados apenas pelos terceirizados do CT UFPB, porém, caso necessite deles, entre em contato com o Almoxarifado!",
+      icon: "info",
+      confirmButtonText: "OK, entendi"
+    });
+  }
+  let noCarrinho = carrinho.find(c => c.id === id);
+  if(noCarrinho) { if(noCarrinho.qtd < itemDB.estoque) noCarrinho.qtd++; else return Swal.fire({toast:true, icon:'error', title:'Limite', timer:1500}); }
+  else carrinho.push({ id: itemDB.id, nome: itemDB.nome, imagem: itemDB.imagem, qtd: 1 });
+  salvarCarrinho();
+  Swal.fire({toast:true, icon:'success', title:'Adicionado!', timer:1000});
+}
+
 function alterarQtd(id, delta) { let cItem = carrinho.find(c => c.id === id); if(!cItem) return; let dbItem = materiaisDB.find(m => m.id === id); cItem.qtd += delta; if(cItem.qtd > dbItem.estoque) cItem.qtd = dbItem.estoque; if(cItem.qtd <= 0) carrinho = carrinho.filter(c => c.id !== id); salvarCarrinho(); }
 function renderCarrinho() { let container = document.getElementById('carrinhoItensList'); if(carrinho.length===0) return container.innerHTML='<div style="text-align:center;">Vazio.</div>'; container.innerHTML = carrinho.map(c => `<div class="cart-item-row"><img src="${c.imagem}" style="width:40px; border-radius:8px;"><div style="flex:1;">${c.nome}</div><div class="cart-qty-control"><button onclick="alterarQtd('${c.id}',-1)">-</button><span>${c.qtd}</span><button onclick="alterarQtd('${c.id}',1)">+</button></div><button class="cart-remove-btn" onclick="alterarQtd('${c.id}',-999)"><i class="material-icons">delete</i></button></div>`).join(''); }
 function abrirCarrinho() { renderCarrinho(); document.getElementById('modalCarrinho').style.display='flex'; }
@@ -310,13 +481,116 @@ function fecharModal(id) { document.getElementById(id).style.display='none'; }
 function limparCarrinho() { carrinho=[]; salvarCarrinho(); }
 function abrirCheckout() { if(carrinho.length===0) return Swal.fire('Vazio','Adicione itens','warning'); fecharModal('modalCarrinho'); document.getElementById('modalCheckout').style.display='flex'; }
 function voltarParaCarrinho() { fecharModal('modalCheckout'); abrirCarrinho(); }
-function finalizarRequisicaoModal() { const setor=document.getElementById('reqSetor').value, nome=document.getElementById('reqNome').value.trim(), whatsapp=document.getElementById('reqContato').value, email=document.getElementById('reqEmail').value.trim(), perfil=document.getElementById('reqPerfil').value, lotacao=document.getElementById('reqLotacao').value.trim(); if(!setor||!nome||!whatsapp||!email||!lotacao) return Swal.fire('Preencha todos os campos'); carrinho.forEach(c=>{ let dbM=materiaisDB.find(m=>m.id===c.id); if(dbM){ dbM.estoque-=c.qtd; registrarHistoricoItem(c.id,'Saída (Reserva)',c.qtd,`Pedido: ${nome} (${setor})`,dbM.estoque); } }); localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB)); let pedido={id:Date.now(), tipo:'Material', data:new Date().toLocaleString(), setor, nome, whatsapp, email, perfil, lotacao, itens:[...carrinho], status:'Aguardando'}; historicoGlobal.unshift(pedido); localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); enviarParaGoogleSheets({ tipo:"requisicao", nome, setor, whatsapp, email, lotacao, itens:carrinho.map(i=>`${i.nome}(${i.qtd})`).join(', ') }); salvarBackupNuvem(); Swal.fire('✅ Enviada!','Acompanhe na aba Meus Pedidos.','success'); limparCarrinho(); fecharModal('modalCheckout'); mudarView('orders'); }
-function mudarView(viewId) { document.querySelectorAll('.view-section').forEach(el=>el.classList.remove('active')); document.getElementById(`view-${viewId}`).classList.add('active'); document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.querySelector(`.nav-item[data-target="${viewId}"]`)?.classList.add('active'); if(viewId==='materiais') renderCatalogoModerno(); if(viewId==='orders') renderHistoricoUsuario(); if(viewId==='agua') { checkAguaStatus(); carregarDadosLocaisUsuario(); } if(viewId==='admin') { renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); } if(viewId==='faq') { buildFaqScreen(); } window.scrollTo(0,0); }
+function finalizarRequisicaoModal() {
+  const setor=document.getElementById('reqSetor').value, nome=document.getElementById('reqNome').value.trim(), whatsapp=document.getElementById('reqContato').value, email=document.getElementById('reqEmail').value.trim(), perfil=document.getElementById('reqPerfil').value, lotacao=document.getElementById('reqLotacao').value.trim();
+  if(!setor||!nome||!whatsapp||!email||!lotacao) return Swal.fire('Preencha todos os campos');
+  carrinho.forEach(c=>{ let dbM=materiaisDB.find(m=>m.id===c.id); if(dbM){ dbM.estoque-=c.qtd; registrarHistoricoItem(c.id,'Saída (Reserva)',c.qtd,`Pedido: ${nome} (${setor})`,dbM.estoque); } });
+  localStorage.setItem('almox_db_materiais',JSON.stringify(materiaisDB));
+  let pedido={id:Date.now(), tipo:'Material', data:new Date().toLocaleString(), setor, nome, whatsapp, email, perfil, lotacao, itens:[...carrinho], status:'Aguardando'};
+  historicoGlobal.unshift(pedido);
+  localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal));
+  enviarParaGoogleSheets({ tipo:"requisicao", nome, setor, whatsapp, email, lotacao, itens:carrinho.map(i=>`${i.nome}(${i.qtd})`).join(', ') });
+  salvarBackupNuvem();
+  Swal.fire('✅ Enviada!','Acompanhe na aba Meus Pedidos.','success');
+  limparCarrinho();
+  fecharModal('modalCheckout');
+  mudarView('orders');
+}
+
+function mudarView(viewId) {
+  document.querySelectorAll('.view-section').forEach(el=>el.classList.remove('active'));
+  document.getElementById(`view-${viewId}`).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.nav-item[data-target="${viewId}"]`)?.classList.add('active');
+  if(viewId==='materiais') renderCatalogoModerno();
+  if(viewId==='orders') renderHistoricoUsuario();
+  if(viewId==='agua') { checkAguaStatus(); carregarDadosLocaisUsuario(); carregarFilaCSV(); carregarEstoqueGarrafões(); }
+  if(viewId==='admin') { renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); }
+  if(viewId==='faq') buildFaqScreen();
+  window.scrollTo(0,0);
+}
+
 function abrirAdmin() { let senha = localStorage.getItem('senhaAdminCT') || "admin123"; Swal.fire({ title: 'Acesso Restrito', input: 'password', showCancelButton: true }).then(res => { if(res.isConfirmed && res.value === senha) mudarView('admin'); else if(res.isConfirmed) Swal.fire('Erro', 'Senha incorreta', 'error'); }); }
+
 let currentFilterCat="Todos", currentSearchMat="";
-function renderCatalogoModerno() { let filtered = materiaisDB.filter(m=>{ let catMatch=(currentFilterCat==="Todos")?true:(currentFilterCat==="Expediente"?m.categoria==="Expediente":(currentFilterCat==="Aula"?(m.categoria==="Informática"||m.categoria==="Elétrico"):(currentFilterCat==="Higienização"?m.categoria==="Limpeza":m.categoria===currentFilterCat))); return catMatch && (currentSearchMat==="" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase())); }); document.getElementById('catalogoContainerModerno').innerHTML = filtered.map(item=>{ let badgeClass=item.estoque<=0?'badge-out':(item.estoque<=5?'badge-low':'badge-available'); let badgeText=item.estoque<=0?'❌ Indisponível':(item.estoque<=5?`⚠️ Baixo (${item.estoque})`:`✅ ${item.estoque} un.`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" onclick="addAoCarrinho('${item.id}')" ${item.estoque<=0?'disabled':''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join(''); }
+function renderCatalogoModerno() {
+  let filtered = materiaisDB.filter(m=>{ let catMatch=(currentFilterCat==="Todos")?true:(currentFilterCat==="Expediente"?m.categoria==="Expediente":(currentFilterCat==="Aula"?(m.categoria==="Informática"||m.categoria==="Elétrico"):(currentFilterCat==="Higienização"?m.categoria==="Limpeza":m.categoria===currentFilterCat))); return catMatch && (currentSearchMat==="" || m.nome.toLowerCase().includes(currentSearchMat.toLowerCase())); });
+  document.getElementById('catalogoContainerModerno').innerHTML = filtered.map(item=>{ let badgeClass=item.estoque<=0?'badge-out':(item.estoque<=5?'badge-low':'badge-available'); let badgeText=item.estoque<=0?'❌ Indisponível':(item.estoque<=5?`⚠️ Baixo (${item.estoque})`:`✅ ${item.estoque} un.`); return `<div class="product-card"><div class="product-img"><img src="${item.imagem}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;"></div><div class="product-title">${item.nome}</div><div class="badge-stock ${badgeClass}">${badgeText}</div><button class="btn-add-cart" onclick="addAoCarrinho('${item.id}')" ${item.estoque<=0?'disabled':''}><i class="material-icons">add_shopping_cart</i> Adicionar</button></div>`; }).join('');
+}
 function setFilter(cat) { currentFilterCat=cat; renderCatalogoModerno(); document.querySelectorAll('.action-btn').forEach(btn=>{ if(btn.getAttribute('data-cat')===cat) btn.classList.add('active'); else btn.classList.remove('active'); }); }
-const quickActions = [{id:"Todos",label:"Todos",icon:"apps"},{id:"Expediente",label:"Expediente",icon:"description"},{id:"Aula",label:"Aula",icon:"school"},{id:"Higienização",label:"Higienização",icon:"cleaning_services"}]; const wrapper = document.getElementById('quickActionsWrapper'); quickActions.forEach(a=>{ const btn=document.createElement('button'); btn.className='action-btn'; if(a.id==='Todos') btn.classList.add('active'); btn.setAttribute('data-cat',a.id); btn.innerHTML=`<div class="action-circle"><i class="material-icons">${a.icon}</i></div><span class="action-label">${a.label}</span>`; btn.onclick=()=>setFilter(a.id); wrapper.appendChild(btn); }); document.getElementById('searchInputMateriais').addEventListener('input',(e)=>{ currentSearchMat=e.target.value; renderCatalogoModerno(); });
+const quickActions = [{id:"Todos",label:"Todos",icon:"apps"},{id:"Expediente",label:"Expediente",icon:"description"},{id:"Aula",label:"Aula",icon:"school"},{id:"Higienização",label:"Higienização",icon:"cleaning_services"}];
+const wrapper = document.getElementById('quickActionsWrapper');
+quickActions.forEach(a=>{ const btn=document.createElement('button'); btn.className='action-btn'; if(a.id==='Todos') btn.classList.add('active'); btn.setAttribute('data-cat',a.id); btn.innerHTML=`<div class="action-circle"><i class="material-icons">${a.icon}</i></div><span class="action-label">${a.label}</span>`; btn.onclick=()=>setFilter(a.id); wrapper.appendChild(btn); });
+document.getElementById('searchInputMateriais').addEventListener('input',(e)=>{ currentSearchMat=e.target.value; renderCatalogoModerno(); });
+
+function popularSetores() {
+  const selects = ['aguaSetor', 'reqSetor'];
+  selects.forEach(id => {
+    const select = document.getElementById(id);
+    if(select) {
+      select.innerHTML = '';
+      setoresCompletos.forEach(setor => {
+        const option = document.createElement('option');
+        option.value = setor;
+        option.textContent = setor;
+        select.appendChild(option);
+      });
+    }
+  });
+}
+popularSetores();
+
+// Fila de água via CSV
+const CSV_URL_FILA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWJScGPP5VNSFFT4W3jq1_dRGMmqZn02BvUQ_2ug7zXHfUFp2OEr02zmDeph7EyFNY7qH_zIDwGW4B/pub?output=csv";
+let listaFilaOriginal = [];
+
+function carregarFilaCSV() {
+  fetch(CSV_URL_FILA)
+    .then(response => response.text())
+    .then(data => {
+      const linhas = data.split("\n");
+      let nomes = linhas.slice(1).map(linha => linha.split(",")[0]?.trim()).filter(nome => nome && nome !== "");
+      listaFilaOriginal = nomes;
+      renderizarListaFila(listaFilaOriginal);
+    })
+    .catch(err => { console.error("Erro ao carregar fila CSV:", err); document.getElementById("lista-fila").innerHTML = "<li>Erro ao carregar fila. Tente novamente.</li>"; });
+}
+
+function renderizarListaFila(lista) {
+  const ul = document.getElementById("lista-fila");
+  if(!ul) return;
+  if(lista.length === 0) { ul.innerHTML = "<li>Nenhuma pessoa na fila no momento.</li>"; return; }
+  ul.innerHTML = lista.map((nome, idx) => `<li>${idx+1} - ${nome}</li>`).join('');
+}
+
+document.getElementById("buscar-nome")?.addEventListener("input", function() {
+  const termo = this.value.toLowerCase();
+  const filtrados = listaFilaOriginal.filter(nome => nome.toLowerCase().includes(termo));
+  renderizarListaFila(filtrados);
+});
+
+// Estoque de garrafões (Página2 - ajustar o gid se necessário)
+// ATENÇÃO: Substitua a URL abaixo pelo link correto da aba "Página2" (com gid apropriado)
+const CSV_URL_ESTOQUE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWJScGPP5VNSFFT4W3jq1_dRGMmqZn02BvUQ_2ug7zXHfUFp2OEr02zmDeph7EyFNY7qH_zIDwGW4B/pub?output=csv";
+function carregarEstoqueGarrafões() {
+  fetch(CSV_URL_ESTOQUE)
+    .then(response => response.text())
+    .then(data => {
+      const linhas = data.split("\n");
+      let valores = linhas.map(linha => linha.split(",")[0]?.trim()).filter(v => v !== "" && !isNaN(v) && v !== "0");
+      let total = valores.reduce((acc, val) => acc + Number(val), 0);
+      document.getElementById("quantidade-garroes").innerHTML = total + " unidades";
+    })
+    .catch(err => { console.error("Erro ao carregar estoque:", err); document.getElementById("quantidade-garroes").innerHTML = "Indisponível"; });
+}
+
+setInterval(() => {
+  if(document.getElementById("view-agua").classList.contains("active")) {
+    carregarFilaCSV();
+    carregarEstoqueGarrafões();
+  }
+}, 30000);
+
 function checkAguaStatus() { let meuId=localStorage.getItem('almox_db_meu_pedido_agua'); if(meuId){ let posIndex=filaAgua.findIndex(p=>p.id==meuId); if(posIndex!==-1){ document.getElementById('aguaFormCard').style.display='none'; document.getElementById('aguaStatusCard').style.display='block'; document.getElementById('aguaPosicao').innerText=`#${posIndex+1}`; }else{ localStorage.removeItem('almox_db_meu_pedido_agua'); document.getElementById('aguaFormCard').style.display='block'; document.getElementById('aguaStatusCard').style.display='none'; } } else { document.getElementById('aguaFormCard').style.display='block'; document.getElementById('aguaStatusCard').style.display='none'; } }
 function submitAgua() { let setor=document.getElementById('aguaSetor').value, nome=document.getElementById('aguaNome').value, whatsapp=document.getElementById('aguaContato').value, email=document.getElementById('aguaEmail').value, perfil=document.getElementById('aguaPerfil').value, lotacao=document.getElementById('aguaLotacao').value; if(!setor||!nome||!whatsapp||!lotacao||!email) return Swal.fire('Preencha todos os campos'); let id=Date.now(); let pAgua={id, tipo:'Água', data:new Date().toLocaleString(), setor, nome, whatsapp, lotacao, status:'Aguardando'}; filaAgua.push(pAgua); historicoGlobal.unshift(pAgua); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); localStorage.setItem('almox_db_meu_pedido_agua',id); enviarParaGoogleSheets({ tipo:"filaAgua", nome, setor, whatsapp, lotacao }); salvarBackupNuvem(); Swal.fire('Entrou na fila!','Você está na fila da água.','success'); checkAguaStatus(); }
 function cancelarAgua() { let meuId=localStorage.getItem('almox_db_meu_pedido_agua'); filaAgua=filaAgua.filter(f=>f.id!=meuId); localStorage.setItem('almox_db_fila_agua',JSON.stringify(filaAgua)); localStorage.removeItem('almox_db_meu_pedido_agua'); let h=historicoGlobal.find(x=>x.id==meuId); if(h) h.status='Cancelado/Rejeitado'; localStorage.setItem('almox_db_hist_global',JSON.stringify(historicoGlobal)); checkAguaStatus(); }
@@ -337,7 +611,6 @@ function exportarPDF() { const { jsPDF } = window.jspdf; const doc = new jsPDF()
 function carregarDadosLocaisUsuario() { let prefs=JSON.parse(localStorage.getItem('almox_db_prefs_user')); if(prefs){ if(document.getElementById('reqNome')) document.getElementById('reqNome').value=prefs.nome||''; if(document.getElementById('reqContato')) document.getElementById('reqContato').value=prefs.whatsapp||''; if(document.getElementById('reqEmail')) document.getElementById('reqEmail').value=prefs.email||''; if(document.getElementById('aguaNome')) document.getElementById('aguaNome').value=prefs.nome||''; if(document.getElementById('aguaContato')) document.getElementById('aguaContato').value=prefs.whatsapp||''; if(document.getElementById('aguaEmail')) document.getElementById('aguaEmail').value=prefs.email||''; } }
 document.querySelectorAll('.mask-whatsapp').forEach(inp=>inp.addEventListener('input',function(e){ let v=e.target.value.replace(/\D/g,""); if(v.length>11) v=v.slice(0,11); if(v.length>2) v=`(${v.substring(0,2)}) ${v.substring(2)}`; if(v.length>10) v=`${v.substring(0,10)}-${v.substring(10)}`; e.target.value=v; }));
 
-// FAQ
 const faqData = [
   { q: "1) O que é o Almoxarifado?", r: "Setor responsável por receber, armazenar, controlar e distribuir materiais do CT." },
   { q: "2) Qual a função do Almoxarifado?", r: "Gerenciar materiais de uso comum e atender demandas gerais dos setores." },
@@ -363,7 +636,6 @@ const faqData = [
 function buildFaqScreen() { const container = document.getElementById('faqContainer'); if(container) container.innerHTML = faqData.map(f => `<div class="faq-card"><div class="faq-question"><i class="material-icons" style="font-size:20px;">help_outline</i> ${f.q}</div><div class="faq-answer">${f.r}</div></div>`).join(''); }
 
 // Splash & Welcome
-let splashRemoved = false;
 function showWelcomeIfNeeded() {
   if(localStorage.getItem('welcome_dismissed')) return;
   const welcomeDiv = document.createElement('div');
@@ -375,10 +647,8 @@ function showWelcomeIfNeeded() {
 }
 setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => { if(splash && splash.parentNode) splash.remove(); showWelcomeIfNeeded(); }, 500); } }, 2800);
 
-// Carrossel
 let slideIndex=0; const track=document.getElementById('carouselTrack'); const slides=document.querySelectorAll('.carousel-slide'); if(track && slides.length) { setInterval(() => { slideIndex = (slideIndex+1)%slides.length; track.style.transform = `translateX(-${slideIndex*100}%)`; }, 5000); }
 
-// Inicializações
 carregarDadosLocaisUsuario(); atualizarBadges(); renderCatalogoModerno(); renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); buildFaqScreen();
 function forcarAtualizacao() { window.location.href = window.location.pathname + '?t=' + new Date().getTime(); }
 function mudarSenha() { Swal.fire({ title: 'Nova Senha', input: 'password', showCancelButton:true }).then(res => { if(res.isConfirmed) localStorage.setItem('senhaAdminCT', res.value); }); }
