@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
   <title>Smart Almox | Almoxarifado CT UFPB</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Fonte Poppins adicionada para design moderno da splash -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -14,19 +16,115 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background-color: #F5F7FA; font-family: 'Inter', system-ui, sans-serif; color: #1E2A3E; padding-bottom: 90px; scroll-behavior: smooth; overflow-x: hidden; }
     
-    /* ===== SPLASH COM 3 BOLINHAS ANIMADAS ===== */
-    .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #005BBB 0%, #003D7A 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; transition: opacity 0.5s ease-out; opacity: 1; }
-    .splash-content { animation: fadeInUpScale 0.8s ease-out; }
-    .splash-icon-img { width: min(30vw, 140px); max-width: 140px; margin-bottom: 24px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); animation: gentleFloat 2s infinite ease-in-out; }
-    .splash-title { font-size: 2.5rem; font-weight: 800; background: white; background-clip: text; -webkit-background-clip: text; color: transparent; }
-    .dot-loader { display: flex; gap: 14px; justify-content: center; align-items: center; margin-top: 32px; }
-    .dot { width: 16px; height: 16px; background-color: white; border-radius: 50%; display: inline-block; animation: bounce 0.6s ease-in-out infinite alternate; }
+    /* ===== SPLASH SCREEN REDESENHADA (MODERNA, CENTRALIZADA, PROFISSIONAL) ===== */
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;                /* altura exata da viewport */
+      background: linear-gradient(135deg, #0FA3B1 0%, #0B7285 100%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      transition: opacity 0.5s ease-out;
+      opacity: 1;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .splash-screen * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .splash-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+      max-width: 320px;
+      padding: 0 16px;
+      animation: fadeInSmooth 0.8s ease-out forwards;
+    }
+
+    .splash-icon-img {
+      width: 120px;
+      max-width: 60%;
+      height: auto;
+      object-fit: contain;
+      margin: 0;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15));
+    }
+
+    .splash-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: white;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin: 0;
+    }
+
+    /* subtítulo pequeno */
+    .splash-subtitle {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    /* loader de bolinhas (mantido, mas com estilo ajustado) */
+    .dot-loader {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      background-color: white;
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounce 0.6s ease-in-out infinite alternate;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
     .dot:nth-child(1) { animation-delay: 0s; }
     .dot:nth-child(2) { animation-delay: 0.15s; }
     .dot:nth-child(3) { animation-delay: 0.3s; }
-    @keyframes bounce { 0% { transform: translateY(0px); } 100% { transform: translateY(-16px); } }
-    @keyframes fadeInUpScale { from { opacity:0; transform: translateY(20px) scale(0.95); } to { opacity:1; transform: translateY(0) scale(1); } }
-    @keyframes gentleFloat { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
+
+    #splashStatus {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    @keyframes fadeInSmooth {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes bounce {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-12px); }
+    }
+
+    /* Responsividade adicional */
+    @media (max-width: 480px) {
+      .splash-icon-img {
+        max-width: 70%;
+        width: 100px;
+      }
+      .splash-title {
+        font-size: 1.8rem;
+      }
+    }
 
     /* ===== WELCOME OVERLAY (BOAS-VINDAS) ===== */
     .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 24px; transition: all 0.3s ease; }
@@ -174,26 +272,25 @@
     .admin-table td { background: #F8FAFE; padding: 14px 12px; border-radius: 16px; transition: all 0.2s ease; }
     .admin-table tr:hover td { background: #F0F7FF; box-shadow: 0 2px 8px rgba(0,91,187,0.05); }
 
-    /* Estilos para melhorias adicionais (carrossel inteligente, modal higienização, splash seguro) */
-    #carousel-status-slide { transition: background 0.3s ease; }
+    /* Splash segura (welcome extra) e modal higienização */
     #modal-higienizacao .modal-container { text-align: center; }
     #splash-safe { z-index: 10001; transition: opacity 0.3s ease; }
   </style>
 </head>
 <body>
 
-<!-- SPLASH INICIAL (ORIGINAL) -->
+<!-- SPLASH INICIAL (REFORMULADA, TOTALMENTE CENTRALIZADA, GRADIENTE MODERNO) -->
 <div class="splash-screen" id="splashScreen">
   <div class="splash-content">
-    <img src="Inicialização CT ALMOX.png" alt="Logo" class="splash-icon-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;">
-    <div class="splash-title">Smart Almox</div>
-    <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 8px;">Almoxarifado CT UFPB</div>
+    <img src="Inicialização CT ALMOX.png" alt="Logo Smart Almox" class="splash-icon-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3050/3050392.png'; this.onerror=null;">
+    <h1 class="splash-title">Smart Almox</h1>
+    <div class="splash-subtitle">Almoxarifado CT UFPB</div>
     <div class="dot-loader" id="dotLoader">
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
-    <p id="splashStatus" style="margin-top:16px; font-size:0.8rem;">Carregando ambiente...</p>
+    <p id="splashStatus">Carregando ambiente...</p>
   </div>
 </div>
 
@@ -313,7 +410,7 @@
 </div>
 
 <script>
-// ==================== DADOS E CONFIG GLOBAL ====================
+// ==================== DADOS E CONFIG GLOBAL (100% ORIGINAL, INALTERADO) ====================
 const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbynotzi-Mu68mNg3ZWbCgC2KTQp7xwaUxWYJEfLvX3i4M1G8J8qFCj_y8L67Jzj6KtWjg/exec";
 function enviarParaGoogleSheets(dados) { fetch(GOOGLE_SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados) }).catch(e => console.error); }
 function salvarBackupNuvem() { enviarParaGoogleSheets({ tipo: 'backup_estado_app', materiais: materiaisDB, historico: historicoGlobal, fila: filaAgua, histItens: historicoItens }); }
@@ -359,18 +456,15 @@ const setoresCompletos = [
   "Empresa Junior de Arquitetura e Engenharia Civil - PLANEJ", "Empresa Junior de Engenharia Química - PROJEQ"
 ];
 
-// ---------- MATERIAIS INICIAIS (base) COM CORREÇÕES (imagens atualizadas e caneta azul removida) ----------
+// ---------- MATERIAIS INICIAIS (base) COM CORREÇÕES ----------
 const materiaisBase = [
-  // Expediente (originais com correções)
   { id: 'EXP002', categoria: 'Expediente', nome: 'Caneta Esferográfica Preta – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 50 },
-  // REMOVIDO: Caneta Esferográfica Azul (EXP001 estava na base? na verdade a base original não tinha azul, mas tinha a preta e vermelha. Removeremos qualquer referência.)
   { id: 'EXP003', categoria: 'Expediente', nome: 'Caneta Esferográfica Vermelha – Ponta Média 1.0mm', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103554.png', estoque: 30 },
   { id: 'EXP004', categoria: 'Expediente', nome: 'Lápis Preto nº 2 – Grafite Resistente', imagem: 'https://cdn-icons-png.flaticon.com/512/2541/2541985.png', estoque: 100 },
   { id: 'EXP005', categoria: 'Expediente', nome: 'Borracha Branca – Alta Maciez', imagem: 'https://cdn-icons-png.flaticon.com/512/3199/3199869.png', estoque: 80 },
   { id: 'EXP006', categoria: 'Expediente', nome: 'Apontador com Depósito – Lâmina Metálica', imagem: 'https://cdn-icons-png.flaticon.com/512/2382/2382649.png', estoque: 40 },
   { id: 'EXP007', categoria: 'Expediente', nome: 'Corretivo Líquido – Secagem Rápida', imagem: 'https://cdn-icons-png.flaticon.com/512/2947/2947954.png', estoque: 25 },
   { id: 'EXP008', categoria: 'Expediente', nome: 'Marca-Texto – Tinta Fluorescente', imagem: 'https://cdn-icons-png.flaticon.com/512/103/103597.png', estoque: 60 },
-  // Papel A4 com imagem atualizada
   { id: 'EXP009', categoria: 'Expediente', nome: 'Papel A4 75g/m² – Resma', imagem: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRilXwsVt_6KngHcevwiTeuy851baM-OGp9_rBN2rBh4HctLwViZtU_BhxwpNOwtwpq8-cX_YIeucDtU1Yl5TD1TlNRpjxmrSdHOu9dZRXyWAw6_HSvQ2Ls-udWpRkp5IvRzkZ5PA&usqp=CAc', estoque: 35 },
   { id: 'EXP010', categoria: 'Expediente', nome: 'Envelope Branco Ofício – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/2577/2577085.png', estoque: 15 },
   { id: 'EXP011', categoria: 'Expediente', nome: 'Envelope Pardo A4 – Caixa', imagem: 'https://cdn-icons-png.flaticon.com/512/2577/2577085.png', estoque: 12 },
@@ -408,15 +502,13 @@ const materiaisBase = [
   { id: 'LIM019', categoria: 'Limpeza', nome: 'Papel Toalha – Alta Absorção (Pacote)', imagem: 'https://cdn-icons-png.flaticon.com/512/3135/3135791.png', estoque: 60 }
 ];
 
-// ---------- NOVOS MATERIAIS A SEREM ADICIONADOS (com categorias multi e imagens corrigidas) ----------
+// ---------- NOVOS MATERIAIS A SEREM ADICIONADOS ----------
 const novosMateriais = [
-  // EXP024 a EXP028 com categoria ['Expediente', 'Aula']
   { id: 'EXP024', categoria: ['Expediente', 'Aula'], nome: 'Apagador para Quadro Negro', imagem: 'https://papelariabauru.com.br/wp-content/uploads/2020/07/apagador-com-feltro-stalo.jpg', estoque: 15 },
   { id: 'EXP025', categoria: ['Expediente', 'Aula'], nome: 'Apagador para Quadro Branco (15x6x4cm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_679212-MLA93659540174_102025-O.webp', estoque: 20 },
   { id: 'EXP026', categoria: ['Expediente', 'Aula'], nome: 'Marcador Azul para Quadro Branco (Recarregável)', imagem: 'https://cdn.awsli.com.br/600x450/941/941759/produto/127056480336398ab4a.jpg', estoque: 25 },
   { id: 'EXP027', categoria: ['Expediente', 'Aula'], nome: 'Marcador Preto para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregvel-preto-c12-unidades-6.jpg', estoque: 25 },
   { id: 'EXP028', categoria: ['Expediente', 'Aula'], nome: 'Marcador Vermelho para Quadro Branco (Recarregável)', imagem: 'https://papelariacriativa.com.br/wp-content/uploads/pincel-marcador-quadro-branco-pilot-board-master-recarregavel-vermelho-4.jpg', estoque: 25 },
-  // Demais itens de expediente com categoria string
   { id: 'EXP029', categoria: 'Expediente', nome: 'Borracha Apagadora Escrita (40x20x14mm)', imagem: 'https://http2.mlstatic.com/D_NQ_NP_929527-MLA99453323692_112025-O.webp', estoque: 50 },
   { id: 'EXP030', categoria: 'Expediente', nome: 'Fita Adesiva Crepe 18mmx50m', imagem: 'https://lojaacal.vtexassets.com/arquivos/ids/174829/Fita-Crepe-18mmx50m-3m-do-Brasil-616454-02.jpg?v=637590102495730000', estoque: 30 },
   { id: 'EXP031', categoria: 'Expediente', nome: 'Borracha Bicolor (Azul e Vermelha)', imagem: 'https://cdn.awsli.com.br/2500x2500/2519/2519112/produto/225103134/6596a25c6b6f00b30370b998_1000x560-mjecyiik2x.jpeg', estoque: 40 },
@@ -436,11 +528,8 @@ const novosMateriais = [
   { id: 'EXP045', categoria: 'Expediente', nome: 'Caneta Esferográfica Fina Preta (0.7mm)', imagem: 'https://ae01.alicdn.com/kf/H1422b6a387534a2bb60913ab09ae07a9b.jpg_960x960.jpg', estoque: 45 },
   { id: 'EXP046', categoria: 'Expediente', nome: 'Grampeador 40 Folhas', imagem: 'https://s3.amazonaws.com/lepok.w/produtos/produtos/04322.webp', estoque: 10 },
   { id: 'EXP047', categoria: 'Expediente', nome: 'Estilete Largo (18mm)', imagem: 'https://cdn.awsli.com.br/600x700/2637/2637864/produto/322844669/estilete-largo-18mm-s-c-embalagem-individua-v-m-p-cx-c-12-1a8314ab-1ksjuj1y8a.jpg', estoque: 20 },
-  // Pilha AAA com imagem atualizada
   { id: 'EXP048', categoria: 'Expediente', nome: 'Pilha Alcalina AAA 1,5V (Par)', imagem: 'https://static.casadoeletricistasc.com.br/public/casadoeletricista/imagens/produtos/pack-com-4-pilhas-palito-aaa-panasonic-651b14619d5bb.jpg', estoque: 50 },
-  // Copo descartável com imagem atualizada
   { id: 'EXP049', categoria: 'Expediente', nome: 'Copo Descartável 180ml (Pacote 100 un)', imagem: 'https://images.tcdn.com.br/img/img_prod/675659/copo_plastico_180ml_agua_pacote_c_100_linha_economica_505_1_4f8b98bd5e3db7e1e96be935d0aa1530_20220728165250.jpg', estoque: 200 },
-  // Novos materiais de Limpeza
   { id: 'LIM020', categoria: 'Limpeza', nome: 'Vassoura de Piaçava Pequena', imagem: 'https://cdn.awsli.com.br/600x600/515/515184/produto/250123697/_post-para-instagram-foto-felicidade-cachorro--23--2u3ncpzszj.jpg', estoque: 15 },
   { id: 'LIM021', categoria: 'Limpeza', nome: 'Ácido Muriático 1L (30%)', imagem: 'https://cdn.awsli.com.br/800x800/1348/1348138/produto/61691661b86f6297ef.jpg', estoque: 12 },
   { id: 'LIM022', categoria: 'Limpeza', nome: 'Desinfetante Eucalipto 1L', imagem: 'https://tb0932.vtexassets.com/arquivos/ids/162595-800-auto?v=637705336249670000&width=800&height=auto&aspect=true', estoque: 18 },
@@ -461,7 +550,6 @@ const novosMateriais = [
   { id: 'LIM037', categoria: 'Limpeza', nome: 'Luva para Limpeza Multiuso (Tamanho Médio)', imagem: 'https://a-static.mlcdn.com.br/800x800/luva-latex-impermeavel-multiuso-limpeza-domestica-resistente-vabene-amarela/epissegurancatotal/15918667129/faa0b777739d9b6a085233ef809fe636.jpeg', estoque: 50 }
 ];
 
-// Função para fazer merge dos novos materiais com os existentes (evita duplicidade por nome)
 function mergeMateriais(existentes, novos) {
   const nomesExistentes = new Set(existentes.map(m => m.nome.toLowerCase().trim()));
   for (const novo of novos) {
@@ -473,15 +561,12 @@ function mergeMateriais(existentes, novos) {
   return existentes;
 }
 
-// Inicialização do banco de materiais (já com correções aplicadas)
 let materiaisDB = JSON.parse(localStorage.getItem('almox_db_materiais'));
 if (!materiaisDB) {
   materiaisDB = mergeMateriais([...materiaisBase], novosMateriais);
   localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
 } else {
-  // Atualiza com novos itens (se houver) e aplica correções em itens existentes
   materiaisDB = mergeMateriais(materiaisDB, novosMateriais);
-  // Corrige imagens e categoria multi nos itens existentes (migração)
   const correcoes = [
     { id: 'EXP009', imagem: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRilXwsVt_6KngHcevwiTeuy851baM-OGp9_rBN2rBh4HctLwViZtU_BhxwpNOwtwpq8-cX_YIeucDtU1Yl5TD1TlNRpjxmrSdHOu9dZRXyWAw6_HSvQ2Ls-udWpRkp5IvRzkZ5PA&usqp=CAc' },
     { id: 'EXP048', imagem: 'https://static.casadoeletricistasc.com.br/public/casadoeletricista/imagens/produtos/pack-com-4-pilhas-palito-aaa-panasonic-651b14619d5bb.jpg' },
@@ -490,12 +575,10 @@ if (!materiaisDB) {
   materiaisDB.forEach(item => {
     const correcao = correcoes.find(c => c.id === item.id);
     if (correcao) item.imagem = correcao.imagem;
-    // Aplica multi-categoria para EXP024-EXP028 se ainda for string
     if (['EXP024','EXP025','EXP026','EXP027','EXP028'].includes(item.id) && !Array.isArray(item.categoria)) {
       item.categoria = ['Expediente', 'Aula'];
     }
   });
-  // Remove qualquer "Caneta Esferográfica Azul" por nome
   materiaisDB = materiaisDB.filter(m => !m.nome.toLowerCase().includes('caneta esferográfica azul'));
   localStorage.setItem('almox_db_materiais', JSON.stringify(materiaisDB));
 }
@@ -509,17 +592,11 @@ function registrarHistoricoItem(idItem, tipo, qtd, obs, saldo) { historicoItens.
 function atualizarBadges() { document.getElementById('headerCartBadge').innerText = carrinho.reduce((a,c) => a + c.qtd, 0); }
 function salvarCarrinho() { localStorage.setItem('almox_db_carrinho', JSON.stringify(carrinho)); atualizarBadges(); renderCarrinho(); }
 
-// Adicionar ao carrinho com splash para materiais de Limpeza
 function addAoCarrinho(id) {
   let itemDB = materiaisDB.find(m => m.id === id);
   if(!itemDB) return;
   if(itemDB.categoria === "Limpeza" || (Array.isArray(itemDB.categoria) && itemDB.categoria.includes("Limpeza"))) {
-    Swal.fire({
-      title: "Atenção!",
-      text: "Olá, esses materiais são solicitados apenas pelos terceirizados do CT UFPB, porém, caso necessite deles, entre em contato com o Almoxarifado!",
-      icon: "info",
-      confirmButtonText: "OK, entendi"
-    });
+    Swal.fire({ title: "Atenção!", text: "Olá, esses materiais são solicitados apenas pelos terceirizados do CT UFPB, porém, caso necessite deles, entre em contato com o Almoxarifado!", icon: "info", confirmButtonText: "OK, entendi" });
   }
   let noCarrinho = carrinho.find(c => c.id === id);
   if(noCarrinho) { if(noCarrinho.qtd < itemDB.estoque) noCarrinho.qtd++; else return Swal.fire({toast:true, icon:'error', title:'Limite', timer:1500}); }
@@ -568,12 +645,10 @@ function abrirAdmin() { let senha = localStorage.getItem('senhaAdminCT') || "adm
 
 let currentFilterCat="Todos", currentSearchMat="";
 function renderCatalogoModerno() {
-  // Filtro adaptado para suportar categoria array
   let filtered = materiaisDB.filter(m=>{
     let catMatch = false;
     if (currentFilterCat === "Todos") catMatch = true;
     else if (currentFilterCat === "Aula") {
-      // Para "Aula", inclui itens que possuem 'Aula' no array ou string igual
       if (Array.isArray(m.categoria)) catMatch = m.categoria.includes('Aula');
       else catMatch = (m.categoria === 'Aula');
     }
@@ -586,7 +661,6 @@ function renderCatalogoModerno() {
       else catMatch = (m.categoria === 'Limpeza');
     }
     else {
-      // Para outros filtros (se houver)
       if (Array.isArray(m.categoria)) catMatch = m.categoria.includes(currentFilterCat);
       else catMatch = (m.categoria === currentFilterCat);
     }
@@ -617,7 +691,6 @@ function popularSetores() {
 }
 popularSetores();
 
-// Fila de água via CSV
 const CSV_URL_FILA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWJScGPP5VNSFFT4W3jq1_dRGMmqZn02BvUQ_2ug7zXHfUFp2OEr02zmDeph7EyFNY7qH_zIDwGW4B/pub?output=csv";
 let listaFilaOriginal = [];
 
@@ -646,7 +719,6 @@ document.getElementById("buscar-nome")?.addEventListener("input", function() {
   renderizarListaFila(filtrados);
 });
 
-// NOVA URL DO ESTOQUE DE GARRAFÕES (atualizada)
 const CSV_URL_ESTOQUE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSm8-22f6Q-A-6MDuU0MikpbjsNf-4yNRP0AkBN_ahmBOHo72jYazL8yHr9w113plK_vrQI7026TRz/pub?output=csv";
 function carregarEstoqueGarrafões() {
   fetch(CSV_URL_ESTOQUE)
@@ -711,7 +783,6 @@ const faqData = [
 ];
 function buildFaqScreen() { const container = document.getElementById('faqContainer'); if(container) container.innerHTML = faqData.map(f => `<div class="faq-card"><div class="faq-question"><i class="material-icons" style="font-size:20px;">help_outline</i> ${f.q}</div><div class="faq-answer">${f.r}</div></div>`).join(''); }
 
-// Splash & Welcome (original)
 function showWelcomeIfNeeded() {
   if(localStorage.getItem('welcome_dismissed')) return;
   const welcomeDiv = document.createElement('div');
@@ -723,11 +794,10 @@ function showWelcomeIfNeeded() {
 }
 setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => { if(splash && splash.parentNode) splash.remove(); showWelcomeIfNeeded(); }, 500); } }, 2800);
 
-// CARROSSEL INTELIGENTE (ABERTO/FECHADO) - ADICIONADO DE FORMA SEGURA
+// CARROSSEL INTELIGENTE (ABERTO/FECHADO)
 (function() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
-  // Adiciona slide de status se não existir
   if (!document.getElementById('carousel-status-slide')) {
     const slideStatus = document.createElement('div');
     slideStatus.className = 'carousel-slide';
@@ -745,7 +815,6 @@ setTimeout(() => { const splash = document.getElementById('splashScreen'); if(sp
   const descricao = document.getElementById('status-descricao');
   const icone = document.getElementById('status-icone');
   const slideStatus = document.getElementById('carousel-status-slide');
-
   function atualizarStatus() {
     const agora = new Date();
     const dia = agora.getDay();
@@ -767,16 +836,12 @@ setTimeout(() => { const splash = document.getElementById('splashScreen'); if(sp
   setInterval(atualizarStatus, 60000);
 })();
 
-// MODAL HIGIENIZAÇÃO (INTERCEPTA CLIQUE NO FILTRO)
+// MODAL HIGIENIZAÇÃO
 (function() {
   const modal = document.getElementById('modal-higienizacao');
   const btnFechar = document.getElementById('btn-fechar-hig');
   if (!modal || !btnFechar) return;
-
-  function abrirModalHigienizacao() {
-    modal.style.display = 'flex';
-  }
-
+  function abrirModalHigienizacao() { modal.style.display = 'flex'; }
   document.addEventListener('click', function(e) {
     const target = e.target.closest('.action-btn');
     if (!target) return;
@@ -787,47 +852,30 @@ setTimeout(() => { const splash = document.getElementById('splashScreen'); if(sp
       abrirModalHigienizacao();
     }
   }, true);
-
   btnFechar.addEventListener('click', function() {
     modal.style.display = 'none';
-    // Aplica o filtro após fechar
-    if (typeof setFilter === 'function') {
-      setFilter('Higienização');
-    }
+    if (typeof setFilter === 'function') setFilter('Higienização');
   });
-
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) modal.style.display = 'none';
-  });
+  modal.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
 })();
 
-// SPLASH SEGURO (POR SESSÃO)
+// SPLASH SEGURO
 (function() {
   const splash = document.getElementById('splash-safe');
   const btn = document.getElementById('btn-splash');
   if (!splash || !btn) return;
-
   if (!sessionStorage.getItem('splashSafeVisto')) {
     setTimeout(() => {
       splash.style.display = 'flex';
       sessionStorage.setItem('splashSafeVisto', 'true');
     }, 800);
   }
-
-  function fecharSplash() {
-    splash.style.opacity = '0';
-    setTimeout(() => {
-      splash.style.display = 'none';
-      splash.style.opacity = '1';
-    }, 300);
-  }
-
+  function fecharSplash() { splash.style.opacity = '0'; setTimeout(() => { splash.style.display = 'none'; splash.style.opacity = '1'; }, 300); }
   btn.addEventListener('click', fecharSplash);
   setTimeout(fecharSplash, 5000);
 })();
 
-// Inicializações finais
-let slideIndex=0; const track=document.getElementById('carouselTrack'); const slides=document.querySelectorAll('.carousel-slide'); if(track && slides.length) { setInterval(() => { slideIndex = (slideIndex+1)%slides.length; track.style.transform = `translateX(-${slideIndex*100}%)`; }, 5000); }
+let slideIndex=0; const trackCarrossel=document.getElementById('carouselTrack'); const slides=document.querySelectorAll('.carousel-slide'); if(trackCarrossel && slides.length) { setInterval(() => { slideIndex = (slideIndex+1)%slides.length; trackCarrossel.style.transform = `translateX(-${slideIndex*100}%)`; }, 5000); }
 
 carregarDadosLocaisUsuario(); atualizarBadges(); renderCatalogoModerno(); renderAdminEstoque(); renderCategoriasAdmin(); renderAdminPedidos(); buildFaqScreen();
 function forcarAtualizacao() { window.location.href = window.location.pathname + '?t=' + new Date().getTime(); }
