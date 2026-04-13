@@ -651,7 +651,7 @@
     let currentRating = 0;
     let chartInstance = null;
 
-    // ---------- API ----------
+    // ---------- API (CORRIGIDA) ----------
     async function apiGet(sheet) {
       try {
         const res = await fetch(`${API_BASE}?sheet=${sheet}`);
@@ -660,12 +660,16 @@
     }
     async function apiPost(sheet, data) {
       try {
+        const payload = Array.isArray(data) ? data : [data];
+        console.log(`📤 Enviando para ${sheet}:`, payload);
         const res = await fetch(`${API_BASE}?sheet=${sheet}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          body: JSON.stringify(payload)
         });
-        return await res.json();
+        const json = await res.json();
+        console.log(`📥 Resposta de ${sheet}:`, json);
+        return json;
       } catch (e) { console.error(e); return null; }
     }
 
@@ -713,7 +717,7 @@
 
     // ---------- CARRINHO ----------
     window.addToCart = function(produto) {
-      carrinho.push({...produto, id: Date.now() + Math.random()});
+      carrinho.push({...produto});
       updateCartUI();
       showToast(`🛒 ${produto.nome} adicionado`);
     };
@@ -735,20 +739,28 @@
       const setor = document.getElementById('carrinhoSetor').value.trim();
       if (!setor) { showToast('Informe o setor de destinação'); return; }
       if (carrinho.length === 0) { showToast('Carrinho vazio!'); return; }
-      const pedido = {
-        data: new Date().toISOString(),
+
+      // Monta um registro por item (conforme estrutura da planilha)
+      const pedidos = carrinho.map(item => ({
+        codigo: item.cod,
+        descricao: item.nome,
+        quantidade: 1,
         setor: setor,
-        itens: JSON.stringify(carrinho.map(i => ({ cod: i.cod, nome: i.nome }))),
-        status: 'pendente',
-        usuario: 'app'
-      };
-      const resp = await apiPost('pedidos', pedido);
-      if (resp) {
-        showToast('✅ Pedido enviado com sucesso!');
+        localizacao: "Almoxarifado CT",
+        data_hora: new Date().toISOString(),
+        status: "pendente",
+        tipo: "material"
+      }));
+
+      const resp = await apiPost('pedidos', pedidos);
+      if (resp && resp.created) {
+        showToast(`✅ ${resp.created} item(ns) enviado(s) com sucesso!`);
         carrinho = [];
         updateCartUI();
         document.getElementById('cartDrawer').classList.remove('open');
-      } else showToast('Erro ao enviar pedido.');
+      } else {
+        showToast('Erro ao enviar pedido. Verifique o console (F12).');
+      }
     };
 
     // ---------- CATEGORIAS ----------
@@ -776,13 +788,15 @@
       container.style.display = 'block';
     };
 
-    // ---------- ÁGUA ----------
+    // ---------- ÁGUA (CORRIGIDO) ----------
     async function carregarEstoqueAgua() {
       const data = await apiGet('estoque');
-      const agua = data.find(d => d.tipo === 'agua') || { saldo: 0, ultima_entrega: '-' };
-      document.getElementById('saldoGaloes').textContent = agua.saldo || 0;
-      document.getElementById('ultimaEntrega').textContent = agua.ultima_entrega || '--';
+      // Procura um item com codigo = "AGUA" (você pode criar essa linha na planilha para controlar galões)
+      const agua = data.find(d => d.codigo === 'AGUA') || { quantidade_disponivel: 0 };
+      document.getElementById('saldoGaloes').textContent = agua.quantidade_disponivel || 0;
+      document.getElementById('ultimaEntrega').textContent = '--'; // pode adicionar coluna futuramente
     }
+
     window.openAguaSolicitacaoModal = function() {
       openModal(`
         <h3><i class="fas fa-water"></i> Solicitar Água</h3>
@@ -799,28 +813,46 @@
       `);
       setupAutocomplete(document.getElementById('aguaSetor'), document.getElementById('aguaSetorList'));
     };
+
     window.enviarSolicitacaoAgua = async function() {
-      const nome = document.getElementById('aguaNome')?.value;
-      const setor = document.getElementById('aguaSetor')?.value;
-      if(!nome || !setor) { alert('Nome e Setor obrigatórios'); return; }
+      const nome = document.getElementById('aguaNome')?.value.trim();
+      const setor = document.getElementById('aguaSetor')?.value.trim();
+      if(!nome || !setor) { showToast('Nome e Setor são obrigatórios'); return; }
+
       const solicitacao = {
-        nome, setor, local: document.getElementById('aguaLocal')?.value || '',
+        nome: nome,
+        setor: setor,
+        localizacao: document.getElementById('aguaLocal')?.value || '',
         whatsapp: document.getElementById('aguaWhats')?.value || '',
-        validade: document.getElementById('aguaValidade')?.value || '',
-        data: new Date().toISOString(),
+        email: '', // pode ser preenchido futuramente
+        data_solicitacao: new Date().toISOString(),
+        validade_garrafao: document.getElementById('aguaValidade')?.value || '',
         status: 'pendente'
       };
-      await apiPost('agua_solicitacoes', solicitacao);
-      showToast('💧 Solicitação enviada!');
-      closeModal();
+
+      const resp = await apiPost('agua_solicitacoes', solicitacao);
+      if (resp && resp.created) {
+        showToast('💧 Solicitação de água enviada!');
+        closeModal();
+      } else {
+        showToast('Erro ao enviar solicitação. Veja o console.');
+      }
     };
+
     window.consultarFilaAgua = async function() {
       const data = await apiGet('agua_solicitacoes');
       const pendentes = data.filter(d => d.status === 'pendente');
-      openModal(`<h3>Fila de Água</h3>${pendentes.length ? pendentes.map(p => `<p>${p.setor} - ${p.data}</p>`).join('') : '<p>Nenhuma pendência.</p>'}<button class="btn" onclick="closeModal()">Fechar</button>`);
+      let html = `<h3>Fila de Água</h3>`;
+      if (pendentes.length) {
+        html += pendentes.map(p => `<p><strong>${p.setor}</strong> - ${p.nome} - ${new Date(p.data_solicitacao).toLocaleDateString()}</p>`).join('');
+      } else {
+        html += '<p>Nenhuma solicitação pendente.</p>';
+      }
+      html += `<button class="btn" onclick="closeModal()">Fechar</button>`;
+      openModal(html);
     };
 
-    // ---------- PUBLICIDADE / DASHBOARD ----------
+    // ---------- PUBLICIDADE / DASHBOARD (ADAPTADO PARA NOVA ESTRUTURA) ----------
     window.atualizarDashboard = async function() {
       const pedidos = await apiGet('pedidos');
       const total = pedidos.length;
@@ -831,6 +863,7 @@
       document.getElementById('pedidosEntregues').textContent = entregues;
       document.getElementById('consumoMedio').textContent = (total / 30).toFixed(1);
 
+      // Contagem por setor
       const setores = {};
       pedidos.forEach(p => { setores[p.setor] = (setores[p.setor] || 0) + 1; });
       const labels = Object.keys(setores).slice(0,5);
@@ -839,12 +872,14 @@
       const ctx = document.getElementById('consumoChart').getContext('2d');
       chartInstance = new Chart(ctx, { type: 'bar', data: { labels, datasets: [{ label: 'Pedidos por setor', data: values, backgroundColor: '#0B3B60' }] } });
 
+      // Itens mais solicitados (baseado em descrição)
       const itensCount = {};
       pedidos.forEach(p => {
-        try { JSON.parse(p.itens || '[]').forEach(i => itensCount[i.cod] = (itensCount[i.cod] || 0) + 1); } catch(e){}
+        const desc = p.descricao || '';
+        if (desc) itensCount[desc] = (itensCount[desc] || 0) + (parseInt(p.quantidade) || 1);
       });
       const top = Object.entries(itensCount).sort((a,b) => b[1]-a[1]).slice(0,5);
-      document.getElementById('topItensList').innerHTML = top.map(([cod, qtd]) => `<li>${cod} - ${qtd} un.</li>`).join('');
+      document.getElementById('topItensList').innerHTML = top.map(([desc, qtd]) => `<li>${desc} - ${qtd} un.</li>`).join('');
     };
 
     window.gerarRelatorioCompleto = async function() {
@@ -866,11 +901,12 @@
       csv += "ITENS MAIS SOLICITADOS\n";
       const itensCount = {};
       pedidos.forEach(p => {
-        try { JSON.parse(p.itens || '[]').forEach(i => itensCount[i.cod] = (itensCount[i.cod] || 0) + 1); } catch(e){}
+        const desc = p.descricao || 'Item sem descrição';
+        itensCount[desc] = (itensCount[desc] || 0) + (parseInt(p.quantidade) || 1);
       });
       const top = Object.entries(itensCount).sort((a,b) => b[1]-a[1]).slice(0,10);
-      csv += "Código;Quantidade\n";
-      top.forEach(([cod, qtd]) => csv += `${cod};${qtd}\n`);
+      csv += "Descrição;Quantidade\n";
+      top.forEach(([desc, qtd]) => csv += `"${desc}";${qtd}\n`);
       
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement("a");
@@ -883,20 +919,29 @@
       showToast('📊 Relatório gerado com sucesso!');
     };
 
-    // ---------- OUVIDORIA ----------
+    // ---------- OUVIDORIA (LOG CORRIGIDO) ----------
     window.enviarOuvidoria = async function() {
-      const desc = document.getElementById('ouvDesc')?.value;
-      if(!desc) { alert('Descrição obrigatória'); return; }
-      const manifestacao = {
-        nome: document.getElementById('ouvNome')?.value || 'Anônimo',
-        setor: document.getElementById('ouvSetor')?.value,
-        data: document.getElementById('ouvData')?.value || new Date().toISOString().split('T')[0],
-        descricao: desc,
-        rating: currentRating,
-        tipo: 'ouvidoria'
+      const desc = document.getElementById('ouvDesc')?.value.trim();
+      if(!desc) { showToast('Descrição obrigatória'); return; }
+      
+      const nome = document.getElementById('ouvNome')?.value.trim() || 'Anônimo';
+      const setor = document.getElementById('ouvSetor')?.value.trim() || '';
+      
+      const logEntry = {
+        acao: 'ouvidoria',
+        data_hora: new Date().toISOString(),
+        usuario: nome,
+        detalhes: `Setor: ${setor} | Rating: ${currentRating} | ${desc}`
       };
-      await apiPost('log', manifestacao);
-      showToast('📨 Manifestação enviada.');
+      
+      const resp = await apiPost('log', logEntry);
+      if (resp && resp.created) {
+        showToast('📨 Manifestação enviada com sucesso!');
+        // Limpa formulário (opcional)
+        document.getElementById('ouvDesc').value = '';
+      } else {
+        showToast('Erro ao enviar manifestação.');
+      }
     };
 
     // ---------- INICIALIZAÇÃO ----------
