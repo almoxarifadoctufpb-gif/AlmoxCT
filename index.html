@@ -328,7 +328,7 @@
         <div class="carousel-slides" id="carouselSlides">
           <div class="slide"><i class="fas fa-clock" style="font-size: 32px;"></i><div><strong>Das 7:00 às 17:00</strong><br>Segunda a Sexta<br><span id="statusAtendimento"></span></div></div>
           <div class="slide"><i class="fas fa-download" style="font-size: 32px;"></i><div><strong>Cartilha do Almoxarifado</strong><br><a href="#" onclick="window.open('https://drive.google.com/file/d/1JLq8a4Ukitz-20H8m-TjdF6EJ8ZDV9VG/view?usp=sharing','_blank')" style="color:white; text-decoration:underline;">Baixar PDF</a></div></div>
-          <div class="slide"><i class="fas fa-chart-line" style="font-size: 32px;"></i><div><strong>Novo horário em breve</strong><br>Das 7:00 às 17:00</div></div>
+          <div class="slide"><i class="fas fa-chart-line" style="font-size: 32px;"></i><div><strong>Novo horário em breve</strong><br>Das 6:00 às 18:00</div></div>
           <div class="slide"><i class="fas fa-search" style="font-size: 32px;"></i><div><strong>Transparência ativa</strong><br>Informações claras e confiáveis</div></div>
           <div class="slide"><i class="fas fa-boxes" style="font-size: 32px;"></i><div><strong>Almoxarifado CT</strong><br>Agilidade, transparência e eficiência</div></div>
         </div>
@@ -921,7 +921,7 @@
       const d = new Date(); const dia = d.getDay(); const h = d.getHours();
       const aberto = (dia>=1 && dia<=5 && h>=7 && h<17);
       const span = document.getElementById('statusAtendimento');
-      if(span) span.innerHTML = aberto ? '<span style="background:#1E7A44; padding:4px 12px; border-radius:40px;">🟢 Aberto</span>' : '<span style="background:#B91C1C; padding:4px 12px; border-radius:40px;">🔴 Fechado</span>';
+      if(span) span.innerHTML = aberto ? '<span style="background:#1E7A44; padding:4px 12px; border-radius:40px;"> Aberto</span>' : '<span style="background:#B91C1C; padding:4px 12px; border-radius:40px;"> Fechado</span>';
     }
     let carouselIndex = 0;
     function initCarousel() {
