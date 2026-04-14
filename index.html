@@ -38,9 +38,12 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      /* Fundo mais vibrante e transparente - harmonia com azuis do app */
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: radial-gradient(ellipse at 20% 30%, #C2E0F5, #A8CCE8);
-      position: relative;
     }
     /* Camada adicional de suavidade */
     body::before {
@@ -103,10 +106,15 @@
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     @keyframes soft-float { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
 
+    /* APP CONTAINER - FIXED FULL HEIGHT WITH SAFE AREAS */
     #app {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       max-width: 480px;
       width: 100%;
-      height: 100vh;
       margin: 0 auto;
       background: rgba(255,255,255,0.75);
       backdrop-filter: blur(20px);
@@ -117,6 +125,11 @@
       flex-direction: column;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.5);
+      /* Safe area insets for modern phones */
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
     }
     .app-header {
       position: sticky;
@@ -129,6 +142,7 @@
       gap: 14px;
       border-radius: 0 0 28px 28px;
       box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      flex-shrink: 0;
     }
     .header-logo {
       width: 48px; height: 48px; background: white;
@@ -145,6 +159,7 @@
       overflow-y: auto;
       padding: 16px 16px 24px;
       scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
     }
     main::-webkit-scrollbar {
       width: 5px;
@@ -158,6 +173,7 @@
       border-radius: 10px;
     }
     .bottom-nav {
+      flex-shrink: 0;
       background: rgba(255,255,255,0.7);
       backdrop-filter: blur(16px);
       border-top: 1px solid rgba(255,255,255,0.8);
@@ -166,6 +182,7 @@
       justify-content: space-around;
       flex-wrap: wrap;
       border-radius: 32px 32px 0 0;
+      margin-bottom: env(safe-area-inset-bottom, 0px);
     }
     .nav-item {
       display: flex; flex-direction: column; align-items: center;
@@ -233,7 +250,7 @@
       box-sizing: border-box;
       border-radius: 28px;
     }
-    /* Dots completamente removidos - sem CSS e sem elementos */
+    /* Dots completamente removidos */
 
     .cart-drawer {
       position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 400px;
@@ -357,7 +374,6 @@
     <div id="view-home" class="view active">
       <div class="carousel-container">
         <div class="carousel-slides" id="carouselSlides"></div>
-        <!-- DOTS REMOVIDOS: nenhum elemento de dots -->
       </div>
       <div class="card" style="display: flex; flex-direction: column; gap: 14px;">
         <button class="btn" onclick="switchView('materiais')"><i class="fas fa-box"></i> Solicitar Materiais</button>
@@ -394,8 +410,7 @@
     window.addToCart = function(p) { carrinho.push({...p}); updateCartUI(); showToast(`🛒 ${p.nome} adicionado`); };
     window.removerDoCarrinho = function(i) { carrinho.splice(i,1); updateCartUI(); };
     function updateCartUI() { document.getElementById('cartCountBadge').textContent=carrinho.length; const container=document.getElementById('cartItemsList'); if(!carrinho.length) container.innerHTML='<p style="padding:20px;text-align:center;">Carrinho vazio</p>'; else container.innerHTML=carrinho.map((item,i)=>`<div style="display:flex;justify-content:space-between;padding:12px;background:rgba(255,255,255,0.6);border-radius:20px;margin-bottom:8px;"><div><strong>${item.nome}</strong><br><small>${item.cod}</small></div><button onclick="removerDoCarrinho(${i})" style="background:none;border:none;color:#B91C1C;"><i class="fas fa-trash-alt"></i></button></div>`).join(''); }
-    // Função para enviar cópia via WhatsApp
-    async function enviarWhatsAppAlmoxarifado(nome, telefone, email, vinculo, setor, itens) {
+    function enviarWhatsAppAlmoxarifado(nome, telefone, email, vinculo, setor, itens) {
       const itensTexto = itens.map(i => `- ${i.nome} (${i.cod})`).join('\n');
       const mensagem = `🆕 *NOVO PEDIDO DE MATERIAIS - CT ALMOX* 🆕\n\n👤 *Solicitante:* ${nome}\n📞 *Telefone:* ${telefone}\n📧 *E-mail:* ${email}\n🎓 *Vínculo:* ${vinculo}\n📍 *Setor:* ${setor}\n\n📦 *Itens solicitados:*\n${itensTexto}\n\n✅ Pedido registrado no sistema. Favor entrar em contato com o solicitante.`;
       const url = `https://wa.me/558332167082?text=${encodeURIComponent(mensagem)}`;
@@ -414,7 +429,6 @@
       if(resp && resp.created){ 
         await apiPost('almoxarifado_copias',{ data_hora:new Date().toISOString(), solicitante:nome, telefone, email, vinculo, setor, itens:JSON.stringify(carrinho.map(i=>i.nome)), mensagem:"Olá, seu pedido foi registrado com sucesso, brevemente entraremos em contato com você! Obrigado(a)!" }); 
         showToast('✅ Pedido enviado! Olá, seu pedido foi registrado com sucesso, brevemente entraremos em contato com você! Obrigado(a)!'); 
-        // Envia cópia para o WhatsApp do almoxarifado
         enviarWhatsAppAlmoxarifado(nome, telefone, email, vinculo, setor, carrinho);
         carrinho=[]; updateCartUI(); document.getElementById('cartDrawer').classList.remove('open'); 
       } else showToast('Erro ao enviar pedido.'); 
