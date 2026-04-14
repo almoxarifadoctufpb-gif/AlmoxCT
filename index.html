@@ -152,6 +152,29 @@
     .header-title h1 { font-size: 1.6rem; font-weight: 700; color: white; letter-spacing: -0.02em; }
     .header-title span { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
 
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+    .icon-btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 40px;
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+      position: relative;
+      transition: 0.2s;
+    }
+    .icon-btn:active { transform: scale(0.96); }
+
     main {
       flex: 1;
       overflow-y: auto;
@@ -229,7 +252,7 @@
       background: linear-gradient(145deg, rgba(11,59,96,0.05) 0%, rgba(30,90,141,0.1) 100%);
     }
 
-    /* NOVO CARROSSEL ESTILO APP BANCÁRIO */
+    /* CARROSSEL EDUCATIVO */
     .edu-carousel-container {
       position: relative;
       margin-bottom: 24px;
@@ -290,7 +313,6 @@
     .edu-saiba-mais:hover {
       background: rgba(11,59,96,0.05);
     }
-    /* Indicadores (bolinhas) */
     .edu-carousel-dots {
       display: flex;
       justify-content: center;
@@ -310,33 +332,81 @@
       width: 24px;
       background: var(--ufpb-primary);
     }
-    /* Modal para conteúdo completo */
-    .full-content-modal {
-      max-width: 380px;
+
+    /* MODAL DE AJUDA (MANUAL) */
+    .help-modal {
+      max-width: 420px;
       width: 90%;
       background: white;
       border-radius: 32px;
-      padding: 0;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 85vh;
     }
-    .full-content-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
+    .help-header {
+      background: var(--ufpb-primary);
+      padding: 20px;
+      color: white;
+      text-align: center;
     }
-    .full-content-body {
-      padding: 24px;
-    }
-    .full-content-body h3 {
+    .help-header h3 {
       font-size: 1.5rem;
-      margin-bottom: 16px;
-      color: var(--ufpb-deep);
+      margin-bottom: 4px;
     }
-    .full-content-body p {
+    .help-header p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+    .help-content {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .help-section {
+      margin-bottom: 28px;
+    }
+    .help-section h4 {
+      font-size: 1.2rem;
+      color: var(--ufpb-deep);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-left: 4px solid var(--ufpb-accent);
+      padding-left: 12px;
+    }
+    .help-section p, .help-section li {
+      font-size: 0.9rem;
       color: var(--gray-700);
       line-height: 1.5;
-      margin-bottom: 24px;
+      margin-bottom: 8px;
     }
+    .help-section ul {
+      padding-left: 24px;
+      margin: 8px 0;
+    }
+    .help-section li {
+      margin-bottom: 6px;
+    }
+    .help-step {
+      background: var(--gray-100);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .close-help-btn {
+      background: var(--ufpb-primary);
+      color: white;
+      border: none;
+      width: calc(100% - 40px);
+      margin: 0 20px 20px 20px;
+      padding: 14px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
     .cart-drawer {
       position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 400px;
       background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(24px);
@@ -352,6 +422,7 @@
     .cart-badge {
       background: var(--success); color: white; border-radius: 40px;
       padding: 3px 10px; font-size: 12px; margin-left: 6px;
+      position: absolute; top: -2px; right: -2px;
     }
     #toast-container { position: fixed; bottom: 100px; left: 20px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
     .toast {
@@ -374,10 +445,7 @@
       visibility: hidden; opacity:0; transition: 0.2s;
     }
     .modal-overlay.active { visibility: visible; opacity:1; }
-    .modal { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); border-radius: 40px; padding: 28px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; }
-    .star-rating { display: flex; gap: 8px; font-size: 30px; cursor: pointer; }
-    .star { color: #d1d5db; transition: 0.1s; }
-    .star.selected { color: #FBBF24; }
+    .modal { background: transparent; max-width: 100%; width: auto; }
     .product-grid { display: flex; flex-direction: column; gap: 12px; max-height: 400px; overflow-y: auto; padding-right: 4px; }
     .product-card {
       display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,0.6);
@@ -441,23 +509,23 @@
   <header class="app-header">
     <div class="header-logo"><img src="https://static.vecteezy.com/ti/vetor-gratis/p1/9845152-inventario-controle-linha-circulo-gratis-vetor.jpg" alt="logo"></div>
     <div class="header-title"><h1>CT Almox</h1><span>Universidade Federal da Paraíba</span></div>
-    <button id="cartToggleBtn" style="margin-left: auto; background: rgba(255,255,255,0.15); border: none; font-size: 26px; color: white; width: 48px; height: 48px; border-radius: 40px; backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative;">
-      <i class="fas fa-shopping-cart"></i>
-      <span id="cartCountBadge" class="cart-badge" style="position: absolute; top: -2px; right: -2px;">0</span>
-    </button>
+    <div class="header-actions">
+      <button id="helpBtn" class="icon-btn"><i class="fas fa-question"></i></button>
+      <button id="cartToggleBtn" class="icon-btn" style="position: relative;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCountBadge" class="cart-badge">0</span>
+      </button>
+    </div>
   </header>
 
   <main>
     <div id="view-home" class="view active">
-      <!-- Botões de ação principal (inclui Rastrear Material) -->
       <div class="card" style="display: flex; flex-direction: column; gap: 14px;">
         <button class="btn" onclick="switchView('materiais')"><i class="fas fa-box"></i> Solicitar Materiais</button>
         <button class="btn btn-outline" onclick="switchView('agua')"><i class="fas fa-water"></i> Solicitar Água</button>
         <button class="btn btn-outline" onclick="switchView('publicidade')"><i class="fas fa-bullhorn"></i> Publicidade</button>
         <button class="btn btn-outline" onclick="alert('🔍 Rastrear Material Permanente (em breve)')"><i class="fas fa-truck"></i> Rastrear Material</button>
       </div>
-
-      <!-- NOVO CARROSSEL EDUCATIVO (posicionado abaixo do botão Rastrear Material e acima do bottom-nav) -->
       <div class="edu-carousel-container">
         <div class="edu-carousel-slides" id="eduCarouselSlides"></div>
         <div class="edu-carousel-dots" id="eduCarouselDots"></div>
@@ -479,7 +547,7 @@
 <script>
   (function(){
     const API_BASE = 'https://sheetdb.io/api/v1/z99orh1tqpetj';
-    const SETORES = [ /* lista extensa omitida por brevidade, mas mantida no original */ "Laboratório de Acessibilidade - LACESSE", "Laboratório de Ambiente Urbano e Edificado – LAURBE", "Laboratório de Conforto Ambiental - LABCON", "Laboratório de Estudos sobre Cidade, Cultura e Urbanidade - LECCUR", "Laboratório de Modelos e Prototipagem", "Laboratório de Pesquisa, Projeto e Memória - LPPM", "Laboratório de Análise Sensorial e Desenvolvimento de Novos Produtos - LAS", "Laboratório de Análises de Ácidos Graxos - LAAG", "Laboratório de Análises Químicas de Alimentos - LAQA", "Laboratório de Apoio - LA", "Laboratório de Bioquímica de Alimentos - LBA", "Laboratório de Engenharia de Alimentos - LEA", "Laboratório de Flavor - LAF", "Laboratório de Informática - LI", "Laboratório de Microbiologia de Alimentos - LAMICRO", "Laboratório de Processamento de Derivados de Carnes - LPDC", "Laboratório de Processamento de Derivados do Leite - LPDL", "Laboratório de Processamento de Derivados de Pescado - LABTEC", "Laboratório de Processos Microbianos em Alimentos - LPMA", "Laboratório de Tecnologia de Alimentos - LTA", "Laboratório de Tecnologia de Panificação (Padaria Piloto) - LTP", "Laboratório de Análise Estrutural e Avaliação de Desempenho", "Laboratório de Análises Computacionais em Meio Ambiente", "Laboratório de Eficiência Energética e Hidráulica em Saneamento – LENHS", "Laboratório de Ensaios de Materiais e Estruturas - LABEME", "Laboratório de Geotecnia e Pavimentação – LAPAV", "Laboratório de Hidráulica", "Laboratório de Modelagem da Informação da Construção e Experimentação de Estruturas", "Laboratório de Modelos Físicos Qualitativos e Computacionais - LAMFIC", "Laboratório de Pesquisa em Sistemas Ambientais Urbanos - LPSAU", "Laboratório de Planejamento de Transportes", "Laboratório de Química Ambiental", "Laboratório de Recursos Hídricos e Engenharia Ambiental - LARHENA", "Laboratório de Reologia", "Laboratório de Saneamento Ambiental - LABSAM", "Laboratório de Topografia – LABTOP", "Laboratório de Caracterização Microestrutural", "Laboratório de Cristalografia", "Laboratório de Materiais Avançados", "Laboratório de Materiais Cerâmicos", "Laboratório de Materiais e Biossistemas", "Laboratório de Materiais Metálicos", "Laboratório de Materiais Poliméricos", "Laboratório de Modelagem de Materiais", "Laboratório de Propriedades Mecânicas dos Materiais", "Laboratório de Purificação e Aspersão de Minerais Argilosos", "Laboratório de Química dos Materiais", "Laboratório de Siderurgia", "Laboratório de Análise do Trabalho - LAT", "Laboratório de Desenvolvimento de Produtos e Inovação - LADEPI", "Laboratório de Engenharia de Sustentabilidade e Consumo - LabESC", "Laboratório de Informática - INFOLAB", "Laboratório de Métodos Quantitativos Aplicados - LabMeQA", "Laboratório de Simulação de Processo Discreto - LabSim", "Laboratório de Acionamentos e Comandos Hidropneumáticos", "Laboratório de Atividades Meteorológicas", "Laboratório de Automação e Controle", "Laboratório de Carvão Ativado", "Laboratório de Conformação Mecânica", "Laboratório de Controle de Vibração e Ruído", "Laboratório de Dinâmica", "Laboratório de Energia Sustentável", "Laboratório de Engenharia de Precisão", "Laboratório de Ensaios Mecânicos", "Laboratório de Inovação e Conversão Térmica", "Laboratório de Instrumentação e Controle", "Laboratório de Integridade e Inspeção", "Laboratório de Máquinas e Acionamentos Elétricos", "Laboratório de Materiais e Produtos Cerâmicos", "Laboratório de Mecatrônica", "Laboratório de Metalografia", "Laboratório de Metrologia Dimensional – Metromec", "Laboratório de Motores de Combustão Interna", "Laboratório de Oficina Mecânica", "Laboratório de Refrigeração e Ar-condicionado", "Laboratório de Representação Gráfica", "Laboratório de Solidificação Rápida", "Laboratório de Transferência de Calor e Massa", "Laboratório de Tratamento Térmico", "Laboratório de Análise e Processamento de Dados", "Laboratório de Análises e Pesquisas de Bebidas Alcoólicas - LBA", "Laboratório de Bioengenharia - LABIO", "Laboratório de Cromatografia e Quimiometria", "Laboratório de Fenômenos de Transporte - LFT", "Laboratório de Fluidodinâmica e Secagem", "Laboratório de Microbiologia Industrial", "Laboratório de Modelagem e Simulação de Processos", "Laboratório de Operações Unitárias - LOU", "Laboratório de Petróleo - LAPET", "Laboratório de Processamento Mineral", "Laboratório de Produtos Fermentados e Destilados - LPFD", "Laboratório de Reatores Químicos - LRQ", "Laboratório de Tecnologia Cosmética - LTC", "Laboratório de Tecnologia Química - LTQ", "Laboratório de Termodinâmica", "Laboratório Piloto de Química - LAPQ", "Arquitetura e Urbanismo - PPGAU", "Ciência e Tecnologia de Alimentos - PPGCTA", "Ciência e Engenharia de Materiais - PPCEM", "Engenharia Civil e Ambiental - PPGECAM", "Engenharia de Produção e Sistemas - PPGEPS", "Engenharia Mecânica - PPGEM", "Engenharia Química - PPGEQ", "Arquitetura e Urbanismo - CCAU", "Engenharia Ambiental - CCEAM", "Engenharia Civil - CCGEC", "Engenharia de Alimentos - CGCEA", "Engenharia de Materiais - CGEMAT", "Engenharia de Produção - CGEP", "Engenharia de Produção Mecânica - CGEPM", "Engenharia Mecânica - CCGEM", "Engenharia Química - CGCEQ", "Química Industrial - CGCQI", "Manutenção da Infraestrutura", "Patrimônio", "Informática", "Serviços Gerais", "Almoxarifado", "Aquisições e Contratos", "Documentação e Arquivo", "Gestão de Pessoas", "Logística", "Direção de Centro", "Secretaria do CT", "Comunicação Institucional", "Assessorias", "Empresa Júnior de Engenharia de Materiais - Caracterizze", "Empresa Júnior de Engenharia Ambiental - ECO’s", "Empresa Júnior de Engenharia de Alimentos - ENGAJA", "Empresa Júnior de Engenharia Mecânica - Mottora", "Empresa Júnior de Engenharia de Produção - OTIMIZE", "Empresa Júnior de Arquitetura e Engenharia Civil - PLANEJ", "Empresa Júnior de Engenharia Química - PROJEQ" ];
+    const SETORES = [ "Laboratório de Acessibilidade - LACESSE", "Laboratório de Ambiente Urbano e Edificado – LAURBE", "Laboratório de Conforto Ambiental - LABCON", "Laboratório de Estudos sobre Cidade, Cultura e Urbanidade - LECCUR", "Laboratório de Modelos e Prototipagem", "Laboratório de Pesquisa, Projeto e Memória - LPPM", "Laboratório de Análise Sensorial e Desenvolvimento de Novos Produtos - LAS", "Laboratório de Análises de Ácidos Graxos - LAAG", "Laboratório de Análises Químicas de Alimentos - LAQA", "Laboratório de Apoio - LA", "Laboratório de Bioquímica de Alimentos - LBA", "Laboratório de Engenharia de Alimentos - LEA", "Laboratório de Flavor - LAF", "Laboratório de Informática - LI", "Laboratório de Microbiologia de Alimentos - LAMICRO", "Laboratório de Processamento de Derivados de Carnes - LPDC", "Laboratório de Processamento de Derivados do Leite - LPDL", "Laboratório de Processamento de Derivados de Pescado - LABTEC", "Laboratório de Processos Microbianos em Alimentos - LPMA", "Laboratório de Tecnologia de Alimentos - LTA", "Laboratório de Tecnologia de Panificação (Padaria Piloto) - LTP", "Laboratório de Análise Estrutural e Avaliação de Desempenho", "Laboratório de Análises Computacionais em Meio Ambiente", "Laboratório de Eficiência Energética e Hidráulica em Saneamento – LENHS", "Laboratório de Ensaios de Materiais e Estruturas - LABEME", "Laboratório de Geotecnia e Pavimentação – LAPAV", "Laboratório de Hidráulica", "Laboratório de Modelagem da Informação da Construção e Experimentação de Estruturas", "Laboratório de Modelos Físicos Qualitativos e Computacionais - LAMFIC", "Laboratório de Pesquisa em Sistemas Ambientais Urbanos - LPSAU", "Laboratório de Planejamento de Transportes", "Laboratório de Química Ambiental", "Laboratório de Recursos Hídricos e Engenharia Ambiental - LARHENA", "Laboratório de Reologia", "Laboratório de Saneamento Ambiental - LABSAM", "Laboratório de Topografia – LABTOP", "Laboratório de Caracterização Microestrutural", "Laboratório de Cristalografia", "Laboratório de Materiais Avançados", "Laboratório de Materiais Cerâmicos", "Laboratório de Materiais e Biossistemas", "Laboratório de Materiais Metálicos", "Laboratório de Materiais Poliméricos", "Laboratório de Modelagem de Materiais", "Laboratório de Propriedades Mecânicas dos Materiais", "Laboratório de Purificação e Aspersão de Minerais Argilosos", "Laboratório de Química dos Materiais", "Laboratório de Siderurgia", "Laboratório de Análise do Trabalho - LAT", "Laboratório de Desenvolvimento de Produtos e Inovação - LADEPI", "Laboratório de Engenharia de Sustentabilidade e Consumo - LabESC", "Laboratório de Informática - INFOLAB", "Laboratório de Métodos Quantitativos Aplicados - LabMeQA", "Laboratório de Simulação de Processo Discreto - LabSim", "Laboratório de Acionamentos e Comandos Hidropneumáticos", "Laboratório de Atividades Meteorológicas", "Laboratório de Automação e Controle", "Laboratório de Carvão Ativado", "Laboratório de Conformação Mecânica", "Laboratório de Controle de Vibração e Ruído", "Laboratório de Dinâmica", "Laboratório de Energia Sustentável", "Laboratório de Engenharia de Precisão", "Laboratório de Ensaios Mecânicos", "Laboratório de Inovação e Conversão Térmica", "Laboratório de Instrumentação e Controle", "Laboratório de Integridade e Inspeção", "Laboratório de Máquinas e Acionamentos Elétricos", "Laboratório de Materiais e Produtos Cerâmicos", "Laboratório de Mecatrônica", "Laboratório de Metalografia", "Laboratório de Metrologia Dimensional – Metromec", "Laboratório de Motores de Combustão Interna", "Laboratório de Oficina Mecânica", "Laboratório de Refrigeração e Ar-condicionado", "Laboratório de Representação Gráfica", "Laboratório de Solidificação Rápida", "Laboratório de Transferência de Calor e Massa", "Laboratório de Tratamento Térmico", "Laboratório de Análise e Processamento de Dados", "Laboratório de Análises e Pesquisas de Bebidas Alcoólicas - LBA", "Laboratório de Bioengenharia - LABIO", "Laboratório de Cromatografia e Quimiometria", "Laboratório de Fenômenos de Transporte - LFT", "Laboratório de Fluidodinâmica e Secagem", "Laboratório de Microbiologia Industrial", "Laboratório de Modelagem e Simulação de Processos", "Laboratório de Operações Unitárias - LOU", "Laboratório de Petróleo - LAPET", "Laboratório de Processamento Mineral", "Laboratório de Produtos Fermentados e Destilados - LPFD", "Laboratório de Reatores Químicos - LRQ", "Laboratório de Tecnologia Cosmética - LTC", "Laboratório de Tecnologia Química - LTQ", "Laboratório de Termodinâmica", "Laboratório Piloto de Química - LAPQ", "Arquitetura e Urbanismo - PPGAU", "Ciência e Tecnologia de Alimentos - PPGCTA", "Ciência e Engenharia de Materiais - PPCEM", "Engenharia Civil e Ambiental - PPGECAM", "Engenharia de Produção e Sistemas - PPGEPS", "Engenharia Mecânica - PPGEM", "Engenharia Química - PPGEQ", "Arquitetura e Urbanismo - CCAU", "Engenharia Ambiental - CCEAM", "Engenharia Civil - CCGEC", "Engenharia de Alimentos - CGCEA", "Engenharia de Materiais - CGEMAT", "Engenharia de Produção - CGEP", "Engenharia de Produção Mecânica - CGEPM", "Engenharia Mecânica - CCGEM", "Engenharia Química - CGCEQ", "Química Industrial - CGCQI", "Manutenção da Infraestrutura", "Patrimônio", "Informática", "Serviços Gerais", "Almoxarifado", "Aquisições e Contratos", "Documentação e Arquivo", "Gestão de Pessoas", "Logística", "Direção de Centro", "Secretaria do CT", "Comunicação Institucional", "Assessorias", "Empresa Júnior de Engenharia de Materiais - Caracterizze", "Empresa Júnior de Engenharia Ambiental - ECO’s", "Empresa Júnior de Engenharia de Alimentos - ENGAJA", "Empresa Júnior de Engenharia Mecânica - Mottora", "Empresa Júnior de Engenharia de Produção - OTIMIZE", "Empresa Júnior de Arquitetura e Engenharia Civil - PLANEJ", "Empresa Júnior de Engenharia Química - PROJEQ" ];
     const produtosData = { aula: [ { nome: "APAGADOR PARA QUADRO BRANCO, BASE DE PLÁSTICO, 15X6X4 CM", cod: "3016000006065", img: "https://http2.mlstatic.com/D_NQ_NP_679212-MLA93659540174_102025-O.webp" }, { nome: "APAGADOR PARA QUADRO NEGRO", cod: "3016000005858", img: "https://http2.mlstatic.com/D_NQ_NP_870950-MLA100111327049_122025-O.webp" }, { nome: "MARCADOR AZUL PARA QUADRO BRANCO, RECARREGÁVEL", cod: "3016000005795", img: "https://framepapelaria.cdn.magazord.com.br/img/2024/05/produto/22700/marcador-quadro-branco-recarregavel-com-refil-brw-azul-2.png" }, { nome: "MARCADOR PRETO PARA QUADRO BRANCO, RECARREGÁVEL", cod: "3016000005771", img: "https://framepapelaria.cdn.magazord.com.br/img/2024/05/produto/22701/marcador-quadro-branco-recarregavel-com-refil-brw-pretos-2.png" }, { nome: "MARCADOR VERMELHO PARA QUADRO BRANCO, RECARREGÁVEL", cod: "3016000005783", img: "https://framepapelaria.cdn.magazord.com.br/img/2024/05/produto/22702/marcador-quadro-branco-recarregavel-com-refil-brw-vermelho-2.png" }, { nome: "PAPEL A4 (USO DIÁRIO) 75G/M COR BRANCA, (RESMA)", cod: "3016000006035", img: "https://http2.mlstatic.com/D_Q_NP_2X_752559-MLB78302167532_082024-P.webp" }, { nome: "REFIL DE TINTA AZUL P/ MARCADOR QUADRO BRANCO", cod: "3016000006159", img: "https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_para_marcador_de_quadro_branco_20ml_brw_2575_1_7c293183935c4cbd3fe76c17742e6501.jpg" }, { nome: "REFIL DE TINTA PRETO P/ MARCADOR QUADRO BRANCO", cod: "3016000006161", img: "https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_para_marcador_de_quadro_branco_20ml_brw_2575_1_7c293183935c4cbd3fe76c17742e6501.jpg" }, { nome: "REFIL DE TINTA VERMELHO P/ MARCADOR QUADRO BRANCO", cod: "3016000006162", img: "https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_para_marcador_de_quadro_branco_20ml_brw_2575_1_7c293183935c4cbd3fe76c17742e6501.jpg" } ], expediente: [ { nome: "CANETA ESFEROGRÁFICA AZUL ESCRITA FINA", cod: "3016000006355", img: "https://images.tcdn.com.br/img/img_prod/1249456/180_kit_3_canetas_esferograficas_azul_preta_vermelha_0_7mm_compactor_13157_1_5a74f695d92df58e1848333baf491de8.png" }, { nome: "CANETA ESFEROGRÁFICA PRETA ESCRITA FINA", cod: "3016000006151", img: "https://images.tcdn.com.br/img/img_prod/1249456/180_kit_3_canetas_esferograficas_azul_preta_vermelha_0_7mm_compactor_13157_1_5a74f695d92df58e1848333baf491de8.png" }, { nome: "CANETA ESFEROGRÁFICA VERMELHA ESCRITA FINA", cod: "3016000006155", img: "https://images.tcdn.com.br/img/img_prod/1249456/180_kit_3_canetas_esferograficas_azul_preta_vermelha_0_7mm_compactor_13157_1_5a74f695d92df58e1848333baf491de8.png" }, { nome: "COPO DESCARTÁVEL 180 ML", cod: "3021000001835", img: "https://static.clickembalagens.com.br/product_images/1280x1280/a/249/157390-20-02-2025-anuncio-20copo-20transparente-20180ml-20cx-201-20-36852.png" }, { nome: "RÉGUA EM POLIESTIRENO TRANSPARENTE 30 CM", cod: "3016000005861", img: "https://images.tcdn.com.br/img/img_prod/1055332/kit_03_reguas_30cm_poliestireno_transparente_cristal_acrimet_6057_1_fdb741d943f68b6de8cf94c58014d728.jpg" }, { nome: "PASTA COM ABA E ELÁSTICO AZUL", cod: "3016000006331", img: "https://img.kalunga.com.br/fotosdeproduto/591122z_1.jpg" }, { nome: "LÁPIS GRAFITE PRETO 6B", cod: "3016000005991", img: "https://http2.mlstatic.com/D_NQ_NP_991319-MLB89538300971_082025-O.webp" }, { nome: "FITA ADESIVA 48MM X 50M TRANSPARENTE", cod: "3016000006465", img: "https://cdn.awsli.com.br/600x1000/1279/1279016/produto/155175143/fita-adesiva-polipropileno-48mm-x-100m-transparente---unidade-1_clipped_rev_1-aam79ql1n8.jpeg" }, { nome: "FITA ADESIVA TRANSPARENTE 12MM X 30M", cod: "3016000005712", img: "https://www.papelariaartnova.com.br/img/products/1624/001624-01.webp" }, { nome: "GRAMPO 26/6", cod: "3016000006465", img: "https://cdn.awsli.com.br/800x800/2296/2296124/produto/189853573aef4990073.jpg" }, { nome: "ENVELOPE KRAFT 260X360 (PACOTE 100)", cod: "3016000006221", img: "https://images.tcdn.com.br/img/img_prod/1226139/envelope_saco_kraft_natural_260x360_80g_cx_c_100_un_scrity_skn336_2491_1_6f20d263b8ccb6d41156dcba206853dd.jpg" }, { nome: "CLIPE 6/0 CAIXA 50 UNIDADES", cod: "3016000005722", img: "https://images.tcdn.com.br/img/img_prod/1247900/clips_galvanizador_6_0_acc_cx_100_unidades_819_1_d76c21bbc48c7106f29678d81e742570.jpg" }, { nome: "COLA BRANCA 90G", cod: "3016000005751", img: "https://http2.mlstatic.com/D_855934-MLB44588073766_012021-C.jpg" }, { nome: "MARCA-TEXTO AMARELO", cod: "3016000006194", img: "https://http2.mlstatic.com/D_NQ_NP_2X_847809-MLU73000892446_112023-T.webp" }, { nome: "BORRACHA BRANCA C/ CAPA", cod: "3016000005703", img: "https://s3.amazonaws.com/lepok.w/produtos/produtos/04319_3.webp" }, { nome: "GUARDANAPO FOLHA SIMPLES PCT 50", cod: "3019000001239", img: "https://d2b87uj3x7g67r.cloudfront.net/Custom/Content/Products/46/74/46745_guardanapo-folha-simples-ripz-22x20-com-50-folhas_m2_638877942219209609.webp" }, { nome: "PILHA AA CARTELA 2UN", cod: "3026000006943", img: "https://bravalumi.cdn.magazord.com.br/img/2022/11/produto/6545/pilha-alcalina-elgin-aa-1-5v-cartela-com-2-unidades.png" }, { nome: "PILHA AAA CARTELA 2UN", cod: "3026000006943", img: "https://carrefourbr.vtexassets.com/arquivos/ids/197871627/image-0.jpg" }, { nome: "FÓSFORO PALITOS LONGOS CX 200", cod: "3021000001901", img: "https://cdn.irmaospatrocinio.com.br/img/p/1/7/5/7/2/0/175720-large_default.jpg" } ], limpeza: [ { nome: "VASSOURA DE PIAÇAVA PEQUENA", cod: "3022000002025", img: "https://http2.mlstatic.com/D_NQ_NP_863010-MLB90360069906_082025-O.webp" }, { nome: "ÁCIDO MURIÁTICO 1L", cod: "3022000002193", img: "https://images.tcdn.com.br/img/img_prod/945332/180_acido_muriatico_ph_menos_1_lt_6669_1_1ad1345a875248c4af79f1574f315cfa.png" }, { nome: "DESINFETANTE EUCALIPTO 1L", cod: "3022000002076", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdvv-lz0jw916cotmf8" }, { nome: "DISPENSER PAPEL TOALHA", cod: "3022000002194", img: "https://http2.mlstatic.com/D_658608-MLA100116120875_122025-C.jpg" }, { nome: "DISPENSER SABONETE/ÁLCOOL", cod: "3022000002075", img: "https://cdn.awsli.com.br/1539/1539771/produto/57897677/a117723c73.jpg" }, { nome: "ESCOVA DE MÃO OVAL", cod: "3022000002010", img: "https://http2.mlstatic.com/D_NQ_NP_861811-MLA99404882146_112025-O.webp" }, { nome: "ESPONJA DUPLA FACE PCT 3UN", cod: "3022000002014", img: "https://superprobettanin.com.br/wp-content/uploads/2022/06/Esponja-300x277.webp" }, { nome: "FLANELA ALVEJADA LARANJA", cod: "3022000002103", img: "https://http2.mlstatic.com/D_NQ_NP_667855-MLA99354439594_112025-O.webp" }, { nome: "LIMPADOR DE VIDROS 500ML", cod: "3022000002256", img: "https://www.papelplasticoecia.com.br/product_images/p/456/4536-09160-21920_zoom.jpg" }, { nome: "LIXEIRA PLÁSTICA 10L", cod: "3022000002168", img: "https://http2.mlstatic.com/D_NQ_NP_887965-MLA99874014347_112025-O.webp" }, { nome: "PANO DE CHÃO ALGODÃO CRU", cod: "3022000002269", img: "https://cdn.awsli.com.br/300x300/2732/2732782/produto/264038724/pano-de-chao-30-batidas-9rwoni86cx.jpg" }, { nome: "PAPEL HIGIÊNICO 300M PCT 8", cod: "3022000002048", img: "https://static.clickembalagens.com.br/product_images/292x284/b/068/135911-19-02-2025-anuncio-20papel-20hig-20rolao-20luxo-201-20-23241.png" }, { nome: "PAPEL HIGIÊNICO PCT 4 ROLOS 30M", cod: "3022000002332", img: "https://cdn.awsli.com.br/600x1000/2714/2714296/produto/300554777/design-sem-nome---2024-09-04t181454-642-jz82eth0nc.png" }, { nome: "SABÃO EM PÓ 1KG", cod: "3022000002065", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rbka-m5ecuxrbv7ta3a" }, { nome: "SOLUÇÃO LIMPEZA MULTIUSO 500ML", cod: "3022000002056", img: "https://imgs.casasbahia.com.br/1580234225/3xg.jpg?imwidth=500" }, { nome: "SACO PLÁSTICO 100L PRETO", cod: "3022000002030", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "SACO PLÁSTICO 30L PRETO", cod: "3022000002031", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "SACO PLÁSTICO 200L PRETO", cod: "3022000002032", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "SACO PLÁSTICO 15L PRETO", cod: "3022000002030", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "LUVA LIMPEZA CANO CURTO M", cod: "3028000001058", img: "https://http2.mlstatic.com/D_NQ_NP_726579-MLB53878690909_022023-O.webp" } ] };
     let carrinho = [], currentRating = 0, chartInstance = null;
     async function apiGet(sheet) { const res = await fetch(`${API_BASE}?sheet=${sheet}`); return res.json(); }
@@ -523,137 +591,93 @@
     window.gerarRelatorioPDF = async function(){ const {jsPDF}=window.jspdf; const doc=new jsPDF(); const pedidos=await apiGet('pedidos'); const agua=await apiGet('agua_solicitacoes'); doc.setFontSize(16); doc.text('Relatório Gerencial - Almoxarifado CT/UFPB',14,20); doc.setFontSize(10); doc.text(`Gerado em: ${new Date().toLocaleString()}`,14,30); doc.autoTable({ startY:40, head:[['Indicador','Valor']], body:[['Total Pedidos',pedidos.length],['Pendentes',pedidos.filter(p=>p.status==='pendente').length],['Entregues',pedidos.filter(p=>p.status==='entregue').length],['Solicitações Água',agua.length],['Água Pendentes',agua.filter(a=>a.status==='pendente').length]] }); const itensCount={}; pedidos.forEach(p=>{ const desc=p.descricao||'Item'; itensCount[desc]=(itensCount[desc]||0)+(parseInt(p.quantidade)||1); }); const top=Object.entries(itensCount).sort((a,b)=>b[1]-a[1]).slice(0,10); doc.autoTable({ startY:doc.lastAutoTable.finalY+10, head:[['Item mais solicitado','Quantidade']], body:top.map(([desc,qtd])=>[desc,qtd]) }); doc.save(`relatorio_almox_${new Date().toISOString().slice(0,10)}.pdf`); showToast('📄 PDF gerado com sucesso!'); };
     window.enviarOuvidoria = async function(){ const desc=document.getElementById('ouvDesc')?.value.trim(); if(!desc){ showToast('Descrição obrigatória'); return; } const nome=document.getElementById('ouvNome')?.value.trim()||'Anônimo'; const setor=document.getElementById('ouvSetor')?.value.trim()||''; const logEntry={ acao:'ouvidoria', data_hora:new Date().toISOString(), usuario:nome, detalhes:`Setor: ${setor} | Rating: ${currentRating} | ${desc}` }; const resp=await apiPost('log',logEntry); if(resp?.created){ showToast('📨 Manifestação enviada com sucesso!'); document.getElementById('ouvDesc').value=''; } else showToast('Erro ao enviar.'); };
     
-    // NOVO CARROSSEL EDUCATIVO
+    // CARROSSEL EDUCATIVO
     function initEduCarousel() {
       const slidesData = [
-        {
-          img: "https://www.letswork.com.br/wp-content/uploads/2022/09/logistica.png",
-          title: "Como os materiais chegam até você?",
-          short: "Existe todo um processo até o material chegar no seu setor.",
-          full: "Antes de um material chegar até você, ele passa por várias etapas importantes. Tudo começa com a compra feita pela instituição. Depois disso, o material é entregue ao almoxarifado, onde passa por uma conferência cuidadosa.\n\nNessa etapa, a equipe verifica se a quantidade está correta, se os itens estão em bom estado e se tudo está de acordo com o que foi solicitado. Só depois dessa verificação o material é registrado no sistema e armazenado.\n\nEsse processo garante que a instituição receba exatamente o que foi comprado e evita problemas futuros."
-        },
-        {
-          img: "https://www.audilink.com.br/media/resize/1920x1920/blogpost/74/61df0ecf0ab82.jpg",
-          title: "Por que os materiais são conferidos antes de serem guardados?",
-          short: "A conferência evita erros e garante que tudo esteja correto.",
-          full: "Quando um material chega ao almoxarifado, ele não é guardado imediatamente. Antes disso, é feita uma conferência detalhada.\n\nSão verificados pontos como quantidade, qualidade e se os itens correspondem ao pedido realizado. Esse cuidado evita problemas como produtos danificados ou itens incorretos.\n\nDepois de conferido, o material é registrado e armazenado de forma organizada."
-        },
-        {
-          img: "https://www.laboneconsultoria.com.br/wp-content/uploads/2021/09/Gest%C3%A3o-de-estoque-Saiba-o-que-%C3%A9-e-como-implementar.jpg",
-          title: "Nem todo material é igual, sabia?",
-          short: "Alguns itens têm um tipo de controle diferente.",
-          full: "Nem todos os materiais são tratados da mesma forma. Existem materiais de consumo, como papel e caneta, e materiais permanentes, como mesas e computadores.\n\nOs materiais permanentes têm um controle diferente porque duram mais tempo e precisam ser acompanhados ao longo dos anos.\n\nPor isso, eles são controlados por outro setor, chamado patrimônio."
-        },
-        {
-          img: "https://img.odcdn.com.br/wp-content/uploads/2025/01/no-deve-fazer-celular-1920x1080.png",
-          title: "O que acontece depois que você faz um pedido?",
-          short: "Seu pedido passa por algumas etapas antes da entrega.",
-          full: "Depois que você faz uma solicitação, o almoxarifado analisa o pedido e verifica se os itens estão disponíveis.\n\nEm seguida, os materiais são separados e a saída é registrada no sistema.\n\nPor fim, o material é entregue ao setor solicitante, garantindo organização e controle."
-        },
-        {
-          img: "https://st3.depositphotos.com/12982378/18499/i/450/depositphotos_184997244-stock-photo-man-delivering-large-bottles-drinking.jpg",
-          title: "Já reparou que a água tem controle?",
-          short: "A distribuição de água é controlada para atender todos.",
-          full: "A água mineral é um item muito utilizado, por isso existe controle na distribuição.\n\nA quantidade pode variar por setor ou por regras internas, garantindo que todos sejam atendidos.\n\nEsse controle evita desperdício e ajuda no uso consciente dos recursos públicos."
-        }
+        { img: "https://www.letswork.com.br/wp-content/uploads/2022/09/logistica.png", title: "Como os materiais chegam até você?", short: "Existe todo um processo até o material chegar no seu setor.", full: "Antes de um material chegar até você, ele passa por várias etapas importantes. Tudo começa com a compra feita pela instituição. Depois disso, o material é entregue ao almoxarifado, onde passa por uma conferência cuidadosa.\n\nNessa etapa, a equipe verifica se a quantidade está correta, se os itens estão em bom estado e se tudo está de acordo com o que foi solicitado. Só depois dessa verificação o material é registrado no sistema e armazenado.\n\nEsse processo garante que a instituição receba exatamente o que foi comprado e evita problemas futuros." },
+        { img: "https://www.audilink.com.br/media/resize/1920x1920/blogpost/74/61df0ecf0ab82.jpg", title: "Por que os materiais são conferidos antes de serem guardados?", short: "A conferência evita erros e garante que tudo esteja correto.", full: "Quando um material chega ao almoxarifado, ele não é guardado imediatamente. Antes disso, é feita uma conferência detalhada.\n\nSão verificados pontos como quantidade, qualidade e se os itens correspondem ao pedido realizado. Esse cuidado evita problemas como produtos danificados ou itens incorretos.\n\nDepois de conferido, o material é registrado e armazenado de forma organizada." },
+        { img: "https://www.laboneconsultoria.com.br/wp-content/uploads/2021/09/Gest%C3%A3o-de-estoque-Saiba-o-que-%C3%A9-e-como-implementar.jpg", title: "Nem todo material é igual, sabia?", short: "Alguns itens têm um tipo de controle diferente.", full: "Nem todos os materiais são tratados da mesma forma. Existem materiais de consumo, como papel e caneta, e materiais permanentes, como mesas e computadores.\n\nOs materiais permanentes têm um controle diferente porque duram mais tempo e precisam ser acompanhados ao longo dos anos.\n\nPor isso, eles são controlados por outro setor, chamado patrimônio." },
+        { img: "https://img.odcdn.com.br/wp-content/uploads/2025/01/no-deve-fazer-celular-1920x1080.png", title: "O que acontece depois que você faz um pedido?", short: "Seu pedido passa por algumas etapas antes da entrega.", full: "Depois que você faz uma solicitação, o almoxarifado analisa o pedido e verifica se os itens estão disponíveis.\n\nEm seguida, os materiais são separados e a saída é registrada no sistema.\n\nPor fim, o material é entregue ao setor solicitante, garantindo organização e controle." },
+        { img: "https://st3.depositphotos.com/12982378/18499/i/450/depositphotos_184997244-stock-photo-man-delivering-large-bottles-drinking.jpg", title: "Já reparou que a água tem controle?", short: "A distribuição de água é controlada para atender todos.", full: "A água mineral é um item muito utilizado, por isso existe controle na distribuição.\n\nA quantidade pode variar por setor ou por regras internas, garantindo que todos sejam atendidos.\n\nEsse controle evita desperdício e ajuda no uso consciente dos recursos públicos." }
       ];
-
       const slidesContainer = document.getElementById('eduCarouselSlides');
       const dotsContainer = document.getElementById('eduCarouselDots');
       let currentIndex = 0;
       let autoTimer = null;
       let touchStartX = 0;
-
       function buildSlides() {
-        slidesContainer.innerHTML = slidesData.map((slide, idx) => `
-          <div class="edu-carousel-slide" data-idx="${idx}">
-            <img class="edu-carousel-img" src="${slide.img}" alt="ilustração" loading="lazy" onerror="this.src='https://placehold.co/400x200?text=Imagem+ilustrativa'">
-            <div class="edu-carousel-content">
-              <div class="edu-carousel-title">${slide.title}</div>
-              <div class="edu-carousel-text">${slide.short}</div>
-              <button class="edu-saiba-mais" data-idx="${idx}"><i class="fas fa-search"></i> Saiba mais</button>
-            </div>
-          </div>
-        `).join('');
-        // dots
+        slidesContainer.innerHTML = slidesData.map((slide, idx) => `<div class="edu-carousel-slide" data-idx="${idx}"><img class="edu-carousel-img" src="${slide.img}" alt="ilustração" loading="lazy" onerror="this.src='https://placehold.co/400x200?text=Imagem+ilustrativa'"><div class="edu-carousel-content"><div class="edu-carousel-title">${slide.title}</div><div class="edu-carousel-text">${slide.short}</div><button class="edu-saiba-mais" data-idx="${idx}"><i class="fas fa-search"></i> Saiba mais</button></div></div>`).join('');
         dotsContainer.innerHTML = slidesData.map((_, i) => `<div class="edu-dot ${i === currentIndex ? 'active' : ''}" data-dot="${i}"></div>`).join('');
         attachEvents();
       }
-
       function attachEvents() {
-        document.querySelectorAll('.edu-saiba-mais').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const idx = parseInt(btn.dataset.idx);
-            const slide = slidesData[idx];
-            openFullContentModal(slide);
-            pauseAutoPlay();
-            resumeAutoPlayLater();
-          });
-        });
-        document.querySelectorAll('.edu-dot').forEach(dot => {
-          dot.addEventListener('click', (e) => {
-            const idx = parseInt(dot.dataset.dot);
-            goToSlide(idx);
-            resetAutoPlay();
-          });
-        });
-        // touch events
+        document.querySelectorAll('.edu-saiba-mais').forEach(btn => { btn.addEventListener('click', (e) => { e.stopPropagation(); const idx = parseInt(btn.dataset.idx); openFullContentModal(slidesData[idx]); pauseAutoPlay(); resumeAutoPlayLater(); }); });
+        document.querySelectorAll('.edu-dot').forEach(dot => { dot.addEventListener('click', (e) => { const idx = parseInt(dot.dataset.dot); goToSlide(idx); resetAutoPlay(); }); });
         const container = document.querySelector('.edu-carousel-container');
         container.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; pauseAutoPlay(); });
         container.addEventListener('touchend', (e) => { resumeAutoPlayLater(); });
-        container.addEventListener('touchmove', (e) => {
-          if (!touchStartX) return;
-          const diff = e.touches[0].clientX - touchStartX;
-          if (Math.abs(diff) > 40) {
-            if (diff > 0 && currentIndex > 0) goToSlide(currentIndex - 1);
-            else if (diff < 0 && currentIndex < slidesData.length - 1) goToSlide(currentIndex + 1);
-            touchStartX = 0;
-            resetAutoPlay();
-          }
-        });
+        container.addEventListener('touchmove', (e) => { if (!touchStartX) return; const diff = e.touches[0].clientX - touchStartX; if (Math.abs(diff) > 40) { if (diff > 0 && currentIndex > 0) goToSlide(currentIndex - 1); else if (diff < 0 && currentIndex < slidesData.length - 1) goToSlide(currentIndex + 1); touchStartX = 0; resetAutoPlay(); } });
       }
-
-      function goToSlide(index) {
-        if (index < 0) index = 0;
-        if (index >= slidesData.length) index = slidesData.length - 1;
-        currentIndex = index;
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        document.querySelectorAll('.edu-dot').forEach((dot, i) => {
-          if (i === currentIndex) dot.classList.add('active');
-          else dot.classList.remove('active');
-        });
-      }
-
-      function openFullContentModal(slide) {
-        const modalHtml = `
-          <div class="full-content-modal" style="max-width: 380px; background: white; border-radius: 32px; overflow: hidden;">
-            <img src="${slide.img}" style="width:100%; height:200px; object-fit:cover;" onerror="this.src='https://placehold.co/400x200?text=Imagem+ilustrativa'">
-            <div class="full-content-body">
-              <h3>${slide.title}</h3>
-              <p style="white-space: pre-line;">${slide.full}</p>
-              <button class="btn close-modal-btn" style="background:#0B3B60; width:100%;">Fechar</button>
-            </div>
-          </div>
-        `;
-        openModal(modalHtml);
-        document.querySelector('.close-modal-btn')?.addEventListener('click', closeModal);
-      }
-
-      function startAutoPlay() {
-        if (autoTimer) clearInterval(autoTimer);
-        autoTimer = setInterval(() => {
-          let next = (currentIndex + 1) % slidesData.length;
-          goToSlide(next);
-        }, 6000);
-      }
+      function goToSlide(index) { if (index < 0) index = 0; if (index >= slidesData.length) index = slidesData.length - 1; currentIndex = index; slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`; document.querySelectorAll('.edu-dot').forEach((dot, i) => { if (i === currentIndex) dot.classList.add('active'); else dot.classList.remove('active'); }); }
+      function openFullContentModal(slide) { openModal(`<div style="max-width:380px; background:white; border-radius:32px; overflow:hidden;"><img src="${slide.img}" style="width:100%; height:200px; object-fit:cover;" onerror="this.src='https://placehold.co/400x200?text=Imagem+ilustrativa'"><div style="padding:24px;"><h3>${slide.title}</h3><p style="white-space:pre-line;">${slide.full}</p><button class="btn close-modal-btn" style="background:#0B3B60; width:100%;">Fechar</button></div></div>`); document.querySelector('.close-modal-btn')?.addEventListener('click', closeModal); }
+      function startAutoPlay() { if (autoTimer) clearInterval(autoTimer); autoTimer = setInterval(() => { goToSlide((currentIndex + 1) % slidesData.length); }, 6000); }
       function pauseAutoPlay() { if (autoTimer) clearInterval(autoTimer); autoTimer = null; }
       function resumeAutoPlayLater() { if (autoTimer) clearInterval(autoTimer); autoTimer = setTimeout(() => startAutoPlay(), 5000); }
       function resetAutoPlay() { pauseAutoPlay(); startAutoPlay(); }
+      buildSlides(); startAutoPlay(); goToSlide(0);
+    }
 
-      buildSlides();
-      startAutoPlay();
-      goToSlide(0);
+    // MANUAL DO USUÁRIO (AJUDA)
+    function openHelpModal() {
+      const helpHtml = `
+        <div class="help-modal">
+          <div class="help-header">
+            <h3><i class="fas fa-life-ring"></i> Manual do Usuário</h3>
+            <p>Dúvidas? Aqui você aprende a usar o app</p>
+          </div>
+          <div class="help-content">
+            <div class="help-section">
+              <h4><i class="fas fa-compass"></i> Para que serve cada tela?</h4>
+              <p><strong>Início:</strong> Acesso rápido às principais funções (solicitar materiais, água, relatórios) e carrossel educativo.</p>
+              <p><strong>Água:</strong> Veja o saldo de galões, faça uma solicitação de água e consulte a fila de pedidos.</p>
+              <p><strong>Materiais:</strong> Escolha a categoria (Aula, Expediente, Limpeza) e adicione itens ao carrinho.</p>
+              <p><strong>Publicidade:</strong> Acompanhe estatísticas de pedidos, gere relatórios em PDF e veja os itens mais solicitados.</p>
+              <p><strong>Ouvidoria:</strong> Envie sua opinião, sugestão ou reclamação de forma anônima ou identificada.</p>
+            </div>
+            <div class="help-section">
+              <h4><i class="fas fa-box-open"></i> Como solicitar materiais?</h4>
+              <div class="help-step">1. Na tela inicial, toque em <strong>"Solicitar Materiais"</strong>.</div>
+              <div class="help-step">2. Escolha uma categoria: Aula, Expediente ou Limpeza.</div>
+              <div class="help-step">3. Clique no botão <strong>"+"</strong> ao lado do item desejado para adicionar ao carrinho.</div>
+              <div class="help-step">4. Toque no ícone do carrinho (🛒) no topo da tela.</div>
+              <div class="help-step">5. Preencha seus dados (setor, nome, telefone, e-mail, vínculo).</div>
+              <div class="help-step">6. Clique em <strong>"Finalizar Pedido"</strong> – você receberá uma confirmação.</div>
+            </div>
+            <div class="help-section">
+              <h4><i class="fas fa-tint"></i> Como solicitar água?</h4>
+              <div class="help-step">1. Na tela inicial, toque em <strong>"Solicitar Água"</strong>.</div>
+              <div class="help-step">2. Preencha o formulário com seus dados e o setor de destino.</div>
+              <div class="help-step">3. Toque em <strong>"Enviar"</strong>. O almoxarifado receberá a solicitação.</div>
+              <div class="help-step">4. Para ver a fila de pedidos pendentes, use o botão <strong>"Consultar fila"</strong>.</div>
+            </div>
+            <div class="help-section">
+              <h4><i class="fas fa-chalkboard"></i> Carrossel educativo</h4>
+              <p>Deslize para o lado ou toque nas bolinhas para navegar pelos conteúdos. Clique em <strong>"Saiba mais"</strong> para ler a explicação completa sobre o funcionamento do almoxarifado.</p>
+            </div>
+            <div class="help-section">
+              <h4><i class="fas fa-chart-line"></i> Relatórios e estatísticas</h4>
+              <p>Na tela <strong>Publicidade</strong>, você pode ver o total de pedidos, pendentes, entregues e o consumo médio. Clique em <strong>"Baixar Relatório PDF"</strong> para gerar um documento completo.</p>
+            </div>
+            <div class="help-section">
+              <h4><i class="fas fa-headset"></i> Ouvidoria</h4>
+              <p>Preencha o formulário (opcionalmente anônimo), dê uma nota de 1 a 5 estrelas e envie sua mensagem. Sua manifestação será registrada para melhoria dos serviços.</p>
+            </div>
+          </div>
+          <button class="close-help-btn close-modal-btn">Entendi, fechar</button>
+        </div>
+      `;
+      openModal(helpHtml);
+      document.querySelector('.close-modal-btn')?.addEventListener('click', closeModal);
     }
 
     function checkSessionAndClear(){ const last=localStorage.getItem('last_active'); const now=Date.now(); if(last && (now-parseInt(last))>60000){ localStorage.clear(); sessionStorage.clear(); carrinho=[]; updateCartUI(); document.getElementById('splash').style.display='flex'; document.getElementById('splash').classList.remove('fade-out'); setTimeout(()=>{ document.getElementById('splash').classList.add('fade-out'); setTimeout(()=>document.getElementById('splash').style.display='none',600); },2000); } localStorage.setItem('last_active',now); }
@@ -661,7 +685,7 @@
     function init(){ 
       checkSessionAndClear(); 
       setTimeout(()=>{ document.getElementById('splash').classList.add('fade-out'); setTimeout(()=>document.getElementById('splash').style.display='none',600); },2000); 
-      initEduCarousel();  // carrossel educativo
+      initEduCarousel(); 
       document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view))); 
       document.getElementById('cartToggleBtn').addEventListener('click',()=>document.getElementById('cartDrawer').classList.add('open')); 
       document.getElementById('closeCartBtn').addEventListener('click',()=>document.getElementById('cartDrawer').classList.remove('open')); 
@@ -672,6 +696,7 @@
       document.querySelectorAll('.star').forEach(s=>s.addEventListener('click',function(){ const val=this.dataset.value; currentRating=val; document.querySelectorAll('.star').forEach((st,i)=>{ st.textContent=i<val?'★':'☆'; st.classList.toggle('selected',i<val); }); })); 
       window.addEventListener('focus',()=>checkSessionAndClear()); 
       carregarEstoqueAgua(); 
+      document.getElementById('helpBtn').addEventListener('click', openHelpModal);
     }
     window.onload=init;
   })();
