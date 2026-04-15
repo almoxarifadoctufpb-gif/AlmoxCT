@@ -548,6 +548,115 @@
     }
     .cart-item-qty button:active { transform: scale(0.9); }
     .cart-item-qty button:hover { background: var(--orange-primary); color: white; }
+
+    /* ===== ESTILOS PARA TABELA DE RASTREAMENTO ===== */
+    .rastreio-filtro {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 60px;
+      border: 1px solid var(--gray-200);
+      background: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      transition: 0.2s;
+    }
+    .rastreio-filtro:focus {
+      outline: none;
+      border-color: var(--orange-primary);
+      box-shadow: 0 0 0 2px rgba(255,122,0,0.2);
+    }
+    .tabela-planilha-container {
+      overflow-x: auto;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+    .tabela-planilha {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 500px;
+    }
+    .tabela-planilha th {
+      background: linear-gradient(145deg, var(--ufpb-primary), var(--ufpb-secondary));
+      color: white;
+      padding: 12px 12px;
+      font-weight: 600;
+      text-align: left;
+      font-size: 0.8rem;
+      position: sticky;
+      top: 0;
+    }
+    .tabela-planilha td {
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      background: rgba(255,255,255,0.6);
+      word-wrap: break-word;
+      max-width: 250px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .tabela-planilha tr:hover td {
+      background: rgba(255,122,0,0.15);
+    }
+    .loading-spinner-small {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(0,0,0,0.1);
+      border-top: 3px solid var(--orange-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .mensagem-erro {
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 16px;
+      border-radius: 24px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .sem-resultados {
+      text-align: center;
+      padding: 32px;
+      color: var(--gray-600);
+      font-style: italic;
+    }
+    .modal-detalhes {
+      background: white;
+      border-radius: 32px;
+      max-width: 360px;
+      width: 90%;
+      overflow: hidden;
+    }
+    .modal-detalhes-header {
+      background: linear-gradient(145deg, var(--ufpb-primary), var(--ufpb-secondary));
+      padding: 20px;
+      color: white;
+    }
+    .modal-detalhes-header h3 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+    .modal-detalhes-body {
+      padding: 24px;
+    }
+    .detalhe-item {
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 12px;
+    }
+    .detalhe-label {
+      font-weight: 700;
+      color: var(--ufpb-deep);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .detalhe-valor {
+      color: var(--gray-700);
+      word-break: break-word;
+    }
   </style>
 </head>
 <body>
@@ -576,7 +685,7 @@
         <button class="btn" onclick="switchView('materiais')"><i class="fas fa-box"></i> Solicitar Materiais</button>
         <button class="btn btn-outline" onclick="switchView('agua')"><i class="fas fa-water"></i> Solicitar Água</button>
         <button class="btn btn-outline" onclick="switchView('publicidade')"><i class="fas fa-bullhorn"></i> Publicidade</button>
-        <button class="btn btn-outline" onclick="alert('🔍 Rastrear Material Permanente (em breve)')"><i class="fas fa-truck"></i> Rastrear Material</button>
+        <button class="btn btn-outline" onclick="switchView('rastrear')"><i class="fas fa-truck"></i> Rastrear Material Permanente</button>
       </div>
       <div class="edu-carousel-container">
         <div class="edu-carousel-slides" id="eduCarouselSlides"></div>
@@ -588,8 +697,27 @@
     <div id="view-materiais" class="view"><div class="card"><h3><i class="fas fa-cube"></i> Categorias</h3><div class="category-grid"><div class="cat-circle-btn" onclick="showCategory('aula')"><i class="fas fa-chalkboard"></i><span>Aula</span></div><div class="cat-circle-btn" onclick="showCategory('expediente')"><i class="fas fa-pencil-alt"></i><span>Expediente</span></div><div class="cat-circle-btn" onclick="showCategory('limpeza')"><i class="fas fa-broom"></i><span>Limpeza</span></div></div></div><div id="categoryContainer" class="card" style="display: none;"><div style="display: flex; justify-content: space-between;"><h3 id="catTitle">Itens</h3><button id="closeCatBtn" style="background:none; border:none; font-size:28px; cursor:pointer;">&times;</button></div><div id="avisoLimpezaContainer"></div><div id="productList" class="product-grid"></div></div></div>
     <div id="view-publicidade" class="view"><div class="card"><h2><i class="fas fa-chart-line"></i> Publicidade e Relatórios</h2><p style="margin-bottom:16px;">Acompanhe os indicadores e baixe relatórios gerenciais em PDF.</p><div class="dashboard-grid" id="dashboardStats"><div class="stat-card"><div class="stat-value" id="totalPedidos">0</div><div class="stat-label">Total Pedidos</div></div><div class="stat-card"><div class="stat-value" id="pedidosPendentes">0</div><div class="stat-label">Pendentes</div></div><div class="stat-card"><div class="stat-value" id="pedidosEntregues">0</div><div class="stat-label">Entregues</div></div><div class="stat-card"><div class="stat-value" id="consumoMedio">0</div><div class="stat-label">Consumo médio/dia</div></div></div><canvas id="consumoChart" width="400" height="200" style="max-height:200px; width:100%;"></canvas><h4 style="margin-top:20px;">Itens mais solicitados</h4><ul id="topItensList" style="list-style:none; padding:0;"></ul><button class="btn" style="margin-top:20px; width:100%;" onclick="gerarRelatorioPDF()"><i class="fas fa-file-pdf"></i> Baixar Relatório PDF</button><button class="btn btn-outline" style="margin-top:12px; width:100%;" onclick="atualizarDashboard()"><i class="fas fa-sync-alt"></i> Atualizar Dados</button></div></div>
     <div id="view-ouvidoria" class="view"><div class="card"><h2><i class="fas fa-bullhorn"></i> Ouvidoria</h2><p>Envie sua manifestação</p><form onsubmit="return false;"><input type="text" id="ouvNome" placeholder="Nome (opcional)" style="width:100%; padding:14px; border-radius:40px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"><div class="autocomplete-wrapper"><input type="text" id="ouvSetor" placeholder="Setor / Local" autocomplete="off" style="width:100%; padding:14px; border-radius:40px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"><div id="setorAutocompleteList" class="autocomplete-items" style="display:none;"></div></div><input type="date" id="ouvData" style="width:100%; padding:14px; border-radius:40px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"><textarea id="ouvDesc" placeholder="Descrição (obrigatório)" rows="3" style="width:100%; padding:14px; border-radius:28px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"></textarea><div class="star-rating" id="starRatingWidget"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div><label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="ouvInfoTrue"> Declaro que as informações são verdadeiras</label><label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="ouvAnonimo"> Aceito envio anônimo</label><button type="button" class="btn" style="margin-top:20px; width:100%;" onclick="enviarOuvidoria()"><i class="fas fa-paper-plane"></i> Enviar</button></form></div></div>
+
+    <!-- VIEW: RASTREAR MATERIAL PERMANENTE -->
+    <div id="view-rastrear" class="view">
+      <div class="card">
+        <h2><i class="fas fa-truck"></i> Rastrear Material Permanente</h2>
+        <p style="margin-bottom: 12px; color: var(--gray-600);">Consulte a planilha oficial de materiais permanentes do CT. Clique em qualquer linha para ver detalhes.</p>
+        <input type="text" id="filtroPlanilha" class="rastreio-filtro" placeholder="🔍 Buscar por qualquer informação (descrição, tombo, local...)">
+        <div id="tabelaPlanilhaContainer" class="tabela-planilha-container">
+          <div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-pulse"></i> Carregando dados...</div>
+        </div>
+      </div>
+    </div>
   </main>
-  <nav class="bottom-nav"><button class="nav-item active" data-view="home"><i class="fas fa-home"></i><span>Início</span></button><button class="nav-item" data-view="agua"><i class="fas fa-water"></i><span>Água</span></button><button class="nav-item" data-view="materiais"><i class="fas fa-cube"></i><span>Materiais</span></button><button class="nav-item" data-view="publicidade"><i class="fas fa-bullhorn"></i><span>Publicidade</span></button><button class="nav-item" data-view="ouvidoria"><i class="fas fa-headset"></i><span>Ouvidoria</span></button></nav>
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-view="home"><i class="fas fa-home"></i><span>Início</span></button>
+    <button class="nav-item" data-view="agua"><i class="fas fa-water"></i><span>Água</span></button>
+    <button class="nav-item" data-view="materiais"><i class="fas fa-cube"></i><span>Materiais</span></button>
+    <button class="nav-item" data-view="publicidade"><i class="fas fa-bullhorn"></i><span>Publicidade</span></button>
+    <button class="nav-item" data-view="rastrear"><i class="fas fa-truck"></i><span>R. Perm.</span></button>
+    <button class="nav-item" data-view="ouvidoria"><i class="fas fa-headset"></i><span>Ouvidoria</span></button>
+  </nav>
 </div>
 <a href="https://wa.me/558332167082" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 <div id="cartDrawer" class="cart-drawer"><div class="cart-header"><span><i class="fas fa-shopping-cart"></i> Carrinho</span><button id="closeCartBtn" style="background:none; border:none; font-size:28px; cursor:pointer;">&times;</button></div><div class="cart-items" id="cartItemsList"></div><div class="cart-footer"><div class="autocomplete-wrapper" style="margin-bottom:12px;"><input type="text" id="carrinhoSetor" placeholder="Setor de Destinação *" autocomplete="off" style="width:100%; padding:14px; border-radius:40px;"><div id="carrinhoSetorAutocomplete" class="autocomplete-items"></div></div><input type="text" id="solicitanteNome" placeholder="Nome completo *" style="width:100%; padding:14px; border-radius:40px; margin-bottom:10px;"><input type="tel" id="solicitanteTelefone" placeholder="Telefone/WhatsApp *" style="width:100%; padding:14px; border-radius:40px; margin-bottom:10px;"><input type="email" id="solicitanteEmail" placeholder="E-mail *" style="width:100%; padding:14px; border-radius:40px; margin-bottom:10px;"><select id="solicitanteVinculo" style="width:100%; padding:14px; border-radius:40px; margin-bottom:15px;"><option value="">Vínculo *</option><option>Aluno</option><option>Professor</option><option>Técnico-Administrativo</option></select><button class="btn btn-primary" style="width:100%;" onclick="finalizarPedido()"><i class="fas fa-check-circle"></i> Finalizar Pedido</button></div></div>
@@ -599,26 +727,201 @@
 <script>
   (function(){
     const API_BASE = 'https://sheetdb.io/api/v1/z99orh1tqpetj';
-    const SETORES = [ "Laboratório de Acessibilidade - LACESSE", "Laboratório de Ambiente Urbano e Edificado – LAURBE", "Laboratório de Conforto Ambiental - LABCON", "Laboratório de Estudos sobre Cidade, Cultura e Urbanidade - LECCUR", "Laboratório de Modelos e Prototipagem", "Laboratório de Pesquisa, Projeto e Memória - LPPM", "Laboratório de Análise Sensorial e Desenvolvimento de Novos Produtos - LAS", "Laboratório de Análises de Ácidos Graxos - LAAG", "Laboratório de Análises Químicas de Alimentos - LAQA", "Laboratório de Apoio - LA", "Laboratório de Bioquímica de Alimentos - LBA", "Laboratório de Engenharia de Alimentos - LEA", "Laboratório de Flavor - LAF", "Laboratório de Informática - LI", "Laboratório de Microbiologia de Alimentos - LAMICRO", "Laboratório de Processamento de Derivados de Carnes - LPDC", "Laboratório de Processamento de Derivados do Leite - LPDL", "Laboratório de Processamento de Derivados de Pescado - LABTEC", "Laboratório de Processos Microbianos em Alimentos - LPMA", "Laboratório de Tecnologia de Alimentos - LTA", "Laboratório de Tecnologia de Panificação (Padaria Piloto) - LTP", "Laboratório de Análise Estrutural e Avaliação de Desempenho", "Laboratório de Análises Computacionais em Meio Ambiente", "Laboratório de Eficiência Energética e Hidráulica em Saneamento – LENHS", "Laboratório de Ensaios de Materiais e Estruturas - LABEME", "Laboratório de Geotecnia e Pavimentação – LAPAV", "Laboratório de Hidráulica", "Laboratório de Modelagem da Informação da Construção e Experimentação de Estruturas", "Laboratório de Modelos Físicos Qualitativos e Computacionais - LAMFIC", "Laboratório de Pesquisa em Sistemas Ambientais Urbanos - LPSAU", "Laboratório de Planejamento de Transportes", "Laboratório de Química Ambiental", "Laboratório de Recursos Hídricos e Engenharia Ambiental - LARHENA", "Laboratório de Reologia", "Laboratório de Saneamento Ambiental - LABSAM", "Laboratório de Topografia – LABTOP", "Laboratório de Caracterização Microestrutural", "Laboratório de Cristalografia", "Laboratório de Materiais Avançados", "Laboratório de Materiais Cerâmicos", "Laboratório de Materiais e Biossistemas", "Laboratório de Materiais Metálicos", "Laboratório de Materiais Poliméricos", "Laboratório de Modelagem de Materiais", "Laboratório de Propriedades Mecânicas dos Materiais", "Laboratório de Purificação e Aspersão de Minerais Argilosos", "Laboratório de Química dos Materiais", "Laboratório de Siderurgia", "Laboratório de Análise do Trabalho - LAT", "Laboratório de Desenvolvimento de Produtos e Inovação - LADEPI", "Laboratório de Engenharia de Sustentabilidade e Consumo - LabESC", "Laboratório de Informática - INFOLAB", "Laboratório de Métodos Quantitativos Aplicados - LabMeQA", "Laboratório de Simulação de Processo Discreto - LabSim", "Laboratório de Acionamentos e Comandos Hidropneumáticos", "Laboratório de Atividades Meteorológicas", "Laboratório de Automação e Controle", "Laboratório de Carvão Ativado", "Laboratório de Conformação Mecânica", "Laboratório de Controle de Vibração e Ruído", "Laboratório de Dinâmica", "Laboratório de Energia Sustentável", "Laboratório de Engenharia de Precisão", "Laboratório de Ensaios Mecânicos", "Laboratório de Inovação e Conversão Térmica", "Laboratório de Instrumentação e Controle", "Laboratório de Integridade e Inspeção", "Laboratório de Máquinas e Acionamentos Elétricos", "Laboratório de Materiais e Produtos Cerâmicos", "Laboratório de Mecatrônica", "Laboratório de Metalografia", "Laboratório de Metrologia Dimensional – Metromec", "Laboratório de Motores de Combustão Interna", "Laboratório de Oficina Mecânica", "Laboratório de Refrigeração e Ar-condicionado", "Laboratório de Representação Gráfica", "Laboratório de Solidificação Rápida", "Laboratório de Transferência de Calor e Massa", "Laboratório de Tratamento Térmico", "Laboratório de Análise e Processamento de Dados", "Laboratório de Análises e Pesquisas de Bebidas Alcoólicas - LBA", "Laboratório de Bioengenharia - LABIO", "Laboratório de Cromatografia e Quimiometria", "Laboratório de Fenômenos de Transporte - LFT", "Laboratório de Fluidodinâmica e Secagem", "Laboratório de Microbiologia Industrial", "Laboratório de Modelagem e Simulação de Processos", "Laboratório de Operações Unitárias - LOU", "Laboratório de Petróleo - LAPET", "Laboratório de Processamento Mineral", "Laboratório de Produtos Fermentados e Destilados - LPFD", "Laboratório de Reatores Químicos - LRQ", "Laboratório de Tecnologia Cosmética - LTC", "Laboratório de Tecnologia Química - LTQ", "Laboratório de Termodinâmica", "Laboratório Piloto de Química - LAPQ", "Arquitetura e Urbanismo - PPGAU", "Ciência e Tecnologia de Alimentos - PPGCTA", "Ciência e Engenharia de Materiais - PPCEM", "Engenharia Civil e Ambiental - PPGECAM", "Engenharia de Produção e Sistemas - PPGEPS", "Engenharia Mecânica - PPGEM", "Engenharia Química - PPGEQ", "Arquitetura e Urbanismo - CCAU", "Engenharia Ambiental - CCEAM", "Engenharia Civil - CCGEC", "Engenharia de Alimentos - CGCEA", "Engenharia de Materiais - CGEMAT", "Engenharia de Produção - CGEP", "Engenharia de Produção Mecânica - CGEPM", "Engenharia Mecânica - CCGEM", "Engenharia Química - CGCEQ", "Química Industrial - CGCQI", "Manutenção da Infraestrutura", "Patrimônio", "Informática", "Serviços Gerais", "Almoxarifado", "Aquisições e Contratos", "Documentação e Arquivo", "Gestão de Pessoas", "Logística", "Direção de Centro", "Secretaria do CT", "Comunicação Institucional", "Assessorias", "Empresa Júnior de Engenharia de Materiais - Caracterizze", "Empresa Júnior de Engenharia Ambiental - ECO’s", "Empresa Júnior de Engenharia de Alimentos - ENGAJA", "Empresa Júnior de Engenharia Mecânica - Mottora", "Empresa Júnior de Engenharia de Produção - OTIMIZE", "Empresa Júnior de Arquitetura e Engenharia Civil - PLANEJ", "Empresa Júnior de Engenharia Química - PROJEQ" ];
+    const SETORES = [ "Laboratório de Acessibilidade - LACESSE", "Laboratório de Ambiente Urbano e Edificado – LAURBE", "Laboratório de Conforto Ambiental - LABCON", "Laboratório de Estudos sobre Cidade, Cultura e Urbanidade - LECCUR", "Laboratório de Modelos e Prototipagem", "Laboratório de Pesquisa, Projeto e Memória - LPPM", "Laboratório de Análise Sensorial e Desenvolvimento de Novos Produtos - LAS", "Laboratório de Análises de Ácidos Graxos - LAAG", "Laboratório de Análises Químicas de Alimentos - LAQA", "Laboratório de Apoio - LA", "Laboratório de Bioquímica de Alimentos - LBA", "Laboratório de Engenharia de Alimentos - LEA", "Laboratório de Flavor - LAF", "Laboratório de Informática - LI", "Laboratório de Microbiologia de Alimentos - LAMICRO", "Laboratório de Processamento de Derivados de Carnes - LPDC", "Laboratório de Processamento de Derivados do Leite - LPDL", "Laboratório de Processamento de Derivados de Pescado - LABTEC", "Laboratório de Processos Microbianos em Alimentos - LPMA", "Laboratório de Tecnologia de Alimentos - LTA", "Laboratório de Tecnologia de Panificação (Padaria Piloto) - LTP", "Laboratório de Análise Estrutural e Avaliação de Desempenho", "Laboratório de Análises Computacionais em Meio Ambiente", "Laboratório de Eficiência Energética e Hidráulica em Saneamento – LENHS", "Laboratório de Ensaios de Materiais e Estruturas - LABEME", "Laboratório de Geotecnia e Pavimentação – LAPAV", "Laboratório de Hidráulica", "Laboratório de Modelagem da Informação da Construção e Experimentação de Estruturas", "Laboratório de Modelos Físicos Qualitativos e Computacionais - LAMFIC", "Laboratório de Pesquisa em Sistemas Ambientais Urbanos - LPSAU", "Laboratório de Planejamento de Transportes", "Laboratório de Química Ambiental", "Laboratório de Recursos Hídricos e Engenharia Ambiental - LARHENA", "Laboratório de Reologia", "Laboratório de Saneamento Ambiental - LABSAM", "Laboratório de Topografia – LABTOP", "Laboratório de Caracterização Microestrutural", "Laboratório de Cristalografia", "Laboratório de Materiais Avançados", "Laboratório de Materiais Cerâmicos", "Laboratório de Materiais e Biossistemas", "Laboratório de Materiais Metálicos", "Laboratório de Modelagem de Materiais", "Laboratório de Propriedades Mecânicas dos Materiais", "Laboratório de Purificação e Aspersão de Minerais Argilosos", "Laboratório de Química dos Materiais", "Laboratório de Siderurgia", "Laboratório de Análise do Trabalho - LAT", "Laboratório de Desenvolvimento de Produtos e Inovação - LADEPI", "Laboratório de Engenharia de Sustentabilidade e Consumo - LabESC", "Laboratório de Informática - INFOLAB", "Laboratório de Métodos Quantitativos Aplicados - LabMeQA", "Laboratório de Simulação de Processo Discreto - LabSim", "Laboratório de Acionamentos e Comandos Hidropneumáticos", "Laboratório de Atividades Meteorológicas", "Laboratório de Automação e Controle", "Laboratório de Carvão Ativado", "Laboratório de Conformação Mecânica", "Laboratório de Controle de Vibração e Ruído", "Laboratório de Dinâmica", "Laboratório de Energia Sustentável", "Laboratório de Engenharia de Precisão", "Laboratório de Ensaios Mecânicos", "Laboratório de Inovação e Conversão Térmica", "Laboratório de Instrumentação e Controle", "Laboratório de Integridade e Inspeção", "Laboratório de Máquinas e Acionamentos Elétricos", "Laboratório de Materiais e Produtos Cerâmicos", "Laboratório de Mecatrônica", "Laboratório de Metalografia", "Laboratório de Metrologia Dimensional – Metromec", "Laboratório de Motores de Combustão Interna", "Laboratório de Oficina Mecânica", "Laboratório de Refrigeração e Ar-condicionado", "Laboratório de Representação Gráfica", "Laboratório de Solidificação Rápida", "Laboratório de Transferência de Calor e Massa", "Laboratório de Tratamento Térmico", "Laboratório de Análise e Processamento de Dados", "Laboratório de Análises e Pesquisas de Bebidas Alcoólicas - LBA", "Laboratório de Bioengenharia - LABIO", "Laboratório de Cromatografia e Quimiometria", "Laboratório de Fenômenos de Transporte - LFT", "Laboratório de Fluidodinâmica e Secagem", "Laboratório de Microbiologia Industrial", "Laboratório de Modelagem e Simulação de Processos", "Laboratório de Operações Unitárias - LOU", "Laboratório de Petróleo - LAPET", "Laboratório de Processamento Mineral", "Laboratório de Produtos Fermentados e Destilados - LPFD", "Laboratório de Reatores Químicos - LRQ", "Laboratório de Tecnologia Cosmética - LTC", "Laboratório de Tecnologia Química - LTQ", "Laboratório de Termodinâmica", "Laboratório Piloto de Química - LAPQ", "Arquitetura e Urbanismo - PPGAU", "Ciência e Tecnologia de Alimentos - PPGCTA", "Ciência e Engenharia de Materiais - PPCEM", "Engenharia Civil e Ambiental - PPGECAM", "Engenharia de Produção e Sistemas - PPGEPS", "Engenharia Mecânica - PPGEM", "Engenharia Química - PPGEQ", "Arquitetura e Urbanismo - CCAU", "Engenharia Ambiental - CCEAM", "Engenharia Civil - CCGEC", "Engenharia de Alimentos - CGCEA", "Engenharia de Materiais - CGEMAT", "Engenharia de Produção - CGEP", "Engenharia de Produção Mecânica - CGEPM", "Engenharia Mecânica - CCGEM", "Engenharia Química - CGCEQ", "Química Industrial - CGCQI", "Manutenção da Infraestrutura", "Patrimônio", "Informática", "Serviços Gerais", "Almoxarifado", "Aquisições e Contratos", "Documentação e Arquivo", "Gestão de Pessoas", "Logística", "Direção de Centro", "Secretaria do CT", "Comunicação Institucional", "Assessorias", "Empresa Júnior de Engenharia de Materiais - Caracterizze", "Empresa Júnior de Engenharia Ambiental - ECO’s", "Empresa Júnior de Engenharia de Alimentos - ENGAJA", "Empresa Júnior de Engenharia Mecânica - Mottora", "Empresa Júnior de Engenharia de Produção - OTIMIZE", "Empresa Júnior de Arquitetura e Engenharia Civil - PLANEJ", "Empresa Júnior de Engenharia Química - PROJEQ" ];
     const produtosData = { aula: [ { nome: "APAGADOR PARA QUADRO BRANCO, BASE DE PLÁSTICO, 15X6X4 CM", cod: "3016000006065", img: "https://http2.mlstatic.com/D_NQ_NP_679212-MLA93659540174_102025-O.webp" }, { nome: "APAGADOR PARA QUADRO NEGRO", cod: "3016000005858", img: "https://http2.mlstatic.com/D_NQ_NP_870950-MLA100111327049_122025-O.webp" }, { nome: "MARCADOR AZUL PARA QUADRO BRANCO, RECARREGÁVEL", cod: "3016000005795", img: "https://framepapelaria.cdn.magazord.com.br/img/2024/05/produto/22700/marcador-quadro-branco-recarregavel-com-refil-brw-azul-2.png" }, { nome: "MARCADOR PRETO PARA QUADRO BRANCO, RECARREGÁVEL", cod: "3016000005771", img: "https://framepapelaria.cdn.magazord.com.br/img/2024/05/produto/22701/marcador-quadro-branco-recarregavel-com-refil-brw-pretos-2.png" }, { nome: "MARCADOR VERMELHO PARA QUADRO BRANCO, RECARREGÁVEL", cod: "3016000005783", img: "https://framepapelaria.cdn.magazord.com.br/img/2024/05/produto/22702/marcador-quadro-branco-recarregavel-com-refil-brw-vermelho-2.png" }, { nome: "PAPEL A4 (USO DIÁRIO) 75G/M COR BRANCA, (RESMA)", cod: "3016000006035", img: "https://http2.mlstatic.com/D_Q_NP_2X_752559-MLB78302167532_082024-P.webp" }, { nome: "REFIL DE TINTA AZUL P/ MARCADOR QUADRO BRANCO", cod: "3016000006159", img: "https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_para_marcador_de_quadro_branco_20ml_brw_2575_1_7c293183935c4cbd3fe76c17742e6501.jpg" }, { nome: "REFIL DE TINTA PRETO P/ MARCADOR QUADRO BRANCO", cod: "3016000006161", img: "https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_para_marcador_de_quadro_branco_20ml_brw_2575_1_7c293183935c4cbd3fe76c17742e6501.jpg" }, { nome: "REFIL DE TINTA VERMELHO P/ MARCADOR QUADRO BRANCO", cod: "3016000006162", img: "https://images.tcdn.com.br/img/img_prod/1130048/tinta_refil_para_marcador_de_quadro_branco_20ml_brw_2575_1_7c293183935c4cbd3fe76c17742e6501.jpg" } ], expediente: [ { nome: "CANETA ESFEROGRÁFICA AZUL ESCRITA FINA", cod: "3016000006355", img: "https://images.tcdn.com.br/img/img_prod/1249456/180_kit_3_canetas_esferograficas_azul_preta_vermelha_0_7mm_compactor_13157_1_5a74f695d92df58e1848333baf491de8.png" }, { nome: "CANETA ESFEROGRÁFICA PRETA ESCRITA FINA", cod: "3016000006151", img: "https://images.tcdn.com.br/img/img_prod/1249456/180_kit_3_canetas_esferograficas_azul_preta_vermelha_0_7mm_compactor_13157_1_5a74f695d92df58e1848333baf491de8.png" }, { nome: "CANETA ESFEROGRÁFICA VERMELHA ESCRITA FINA", cod: "3016000006155", img: "https://images.tcdn.com.br/img/img_prod/1249456/180_kit_3_canetas_esferograficas_azul_preta_vermelha_0_7mm_compactor_13157_1_5a74f695d92df58e1848333baf491de8.png" }, { nome: "COPO DESCARTÁVEL 180 ML", cod: "3021000001835", img: "https://static.clickembalagens.com.br/product_images/1280x1280/a/249/157390-20-02-2025-anuncio-20copo-20transparente-20180ml-20cx-201-20-36852.png" }, { nome: "RÉGUA EM POLIESTIRENO TRANSPARENTE 30 CM", cod: "3016000005861", img: "https://images.tcdn.com.br/img/img_prod/1055332/kit_03_reguas_30cm_poliestireno_transparente_cristal_acrimet_6057_1_fdb741d943f68b6de8cf94c58014d728.jpg" }, { nome: "PASTA COM ABA E ELÁSTICO AZUL", cod: "3016000006331", img: "https://img.kalunga.com.br/fotosdeproduto/591122z_1.jpg" }, { nome: "LÁPIS GRAFITE PRETO 6B", cod: "3016000005991", img: "https://http2.mlstatic.com/D_NQ_NP_991319-MLB89538300971_082025-O.webp" }, { nome: "FITA ADESIVA 48MM X 50M TRANSPARENTE", cod: "3016000006465", img: "https://cdn.awsli.com.br/600x1000/1279/1279016/produto/155175143/fita-adesiva-polipropileno-48mm-x-100m-transparente---unidade-1_clipped_rev_1-aam79ql1n8.jpeg" }, { nome: "FITA ADESIVA TRANSPARENTE 12MM X 30M", cod: "3016000005712", img: "https://www.papelariaartnova.com.br/img/products/1624/001624-01.webp" }, { nome: "GRAMPO 26/6", cod: "3016000006465", img: "https://cdn.awsli.com.br/800x800/2296/2296124/produto/189853573aef4990073.jpg" }, { nome: "ENVELOPE KRAFT 260X360 (PACOTE 100)", cod: "3016000006221", img: "https://images.tcdn.com.br/img/img_prod/1226139/envelope_saco_kraft_natural_260x360_80g_cx_c_100_un_scrity_skn336_2491_1_6f20d263b8ccb6d41156dcba206853dd.jpg" }, { nome: "CLIPE 6/0 CAIXA 50 UNIDADES", cod: "3016000005722", img: "https://images.tcdn.com.br/img/img_prod/1247900/clips_galvanizador_6_0_acc_cx_100_unidades_819_1_d76c21bbc48c7106f29678d81e742570.jpg" }, { nome: "COLA BRANCA 90G", cod: "3016000005751", img: "https://http2.mlstatic.com/D_855934-MLB44588073766_012021-C.jpg" }, { nome: "MARCA-TEXTO AMARELO", cod: "3016000006194", img: "https://http2.mlstatic.com/D_NQ_NP_2X_847809-MLU73000892446_112023-T.webp" }, { nome: "BORRACHA BRANCA C/ CAPA", cod: "3016000005703", img: "https://s3.amazonaws.com/lepok.w/produtos/produtos/04319_3.webp" }, { nome: "GUARDANAPO FOLHA SIMPLES PCT 50", cod: "3019000001239", img: "https://d2b87uj3x7g67r.cloudfront.net/Custom/Content/Products/46/74/46745_guardanapo-folha-simples-ripz-22x20-com-50-folhas_m2_638877942219209609.webp" }, { nome: "PILHA AA CARTELA 2UN", cod: "3026000006943", img: "https://bravalumi.cdn.magazord.com.br/img/2022/11/produto/6545/pilha-alcalina-elgin-aa-1-5v-cartela-com-2-unidades.png" }, { nome: "PILHA AAA CARTELA 2UN", cod: "3026000006943", img: "https://carrefourbr.vtexassets.com/arquivos/ids/197871627/image-0.jpg" }, { nome: "FÓSFORO PALITOS LONGOS CX 200", cod: "3021000001901", img: "https://cdn.irmaospatrocinio.com.br/img/p/1/7/5/7/2/0/175720-large_default.jpg" } ], limpeza: [ { nome: "VASSOURA DE PIAÇAVA PEQUENA", cod: "3022000002025", img: "https://http2.mlstatic.com/D_NQ_NP_863010-MLB90360069906_082025-O.webp" }, { nome: "ÁCIDO MURIÁTICO 1L", cod: "3022000002193", img: "https://images.tcdn.com.br/img/img_prod/945332/180_acido_muriatico_ph_menos_1_lt_6669_1_1ad1345a875248c4af79f1574f315cfa.png" }, { nome: "DESINFETANTE EUCALIPTO 1L", cod: "3022000002076", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdvv-lz0jw916cotmf8" }, { nome: "DISPENSER PAPEL TOALHA", cod: "3022000002194", img: "https://http2.mlstatic.com/D_658608-MLA100116120875_122025-C.jpg" }, { nome: "DISPENSER SABONETE/ÁLCOOL", cod: "3022000002075", img: "https://cdn.awsli.com.br/1539/1539771/produto/57897677/a117723c73.jpg" }, { nome: "ESCOVA DE MÃO OVAL", cod: "3022000002010", img: "https://http2.mlstatic.com/D_NQ_NP_861811-MLA99404882146_112025-O.webp" }, { nome: "ESPONJA DUPLA FACE PCT 3UN", cod: "3022000002014", img: "https://superprobettanin.com.br/wp-content/uploads/2022/06/Esponja-300x277.webp" }, { nome: "FLANELA ALVEJADA LARANJA", cod: "3022000002103", img: "https://http2.mlstatic.com/D_NQ_NP_667855-MLA99354439594_112025-O.webp" }, { nome: "LIMPADOR DE VIDROS 500ML", cod: "3022000002256", img: "https://www.papelplasticoecia.com.br/product_images/p/456/4536-09160-21920_zoom.jpg" }, { nome: "LIXEIRA PLÁSTICA 10L", cod: "3022000002168", img: "https://http2.mlstatic.com/D_NQ_NP_887965-MLA99874014347_112025-O.webp" }, { nome: "PANO DE CHÃO ALGODÃO CRU", cod: "3022000002269", img: "https://cdn.awsli.com.br/300x300/2732/2732782/produto/264038724/pano-de-chao-30-batidas-9rwoni86cx.jpg" }, { nome: "PAPEL HIGIÊNICO 300M PCT 8", cod: "3022000002048", img: "https://static.clickembalagens.com.br/product_images/292x284/b/068/135911-19-02-2025-anuncio-20papel-20hig-20rolao-20luxo-201-20-23241.png" }, { nome: "PAPEL HIGIÊNICO PCT 4 ROLOS 30M", cod: "3022000002332", img: "https://cdn.awsli.com.br/600x1000/2714/2714296/produto/300554777/design-sem-nome---2024-09-04t181454-642-jz82eth0nc.png" }, { nome: "SABÃO EM PÓ 1KG", cod: "3022000002065", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rbka-m5ecuxrbv7ta3a" }, { nome: "SOLUÇÃO LIMPEZA MULTIUSO 500ML", cod: "3022000002056", img: "https://imgs.casasbahia.com.br/1580234225/3xg.jpg?imwidth=500" }, { nome: "SACO PLÁSTICO 100L PRETO", cod: "3022000002030", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "SACO PLÁSTICO 30L PRETO", cod: "3022000002031", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "SACO PLÁSTICO 200L PRETO", cod: "3022000002032", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "SACO PLÁSTICO 15L PRETO", cod: "3022000002030", img: "https://cdn.awsli.com.br/600x450/1131/1131299/produto/231389072/saco-lixo-leve-hsupmlgb5c.jpg" }, { nome: "LUVA LIMPEZA CANO CURTO M", cod: "3028000001058", img: "https://http2.mlstatic.com/D_NQ_NP_726579-MLB53878690909_022023-O.webp" } ] };
-    let carrinho = []; // cada item: { nome, cod, img, quantidade }
+    let carrinho = [];
     let currentRating = 0, chartInstance = null;
+    
+    // ========== VARIÁVEIS PLANILHA ==========
+    let dadosPlanilhaBrutos = [];      // apenas linhas com conteúdo (já sem linhas vazias)
+    let cabecalhosPlanilha = [];
+    let planilhaCarregada = false;
+    let carregandoPlanilha = false;
+    
     async function apiGet(sheet) { const res = await fetch(`${API_BASE}?sheet=${sheet}`); return res.json(); }
     async function apiPost(sheet, data) { const payload = Array.isArray(data) ? data : [data]; return await fetch(`${API_BASE}?sheet=${sheet}`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) }).then(r=>r.json()); }
     function showToast(msg) { const toast = document.createElement('div'); toast.className='toast'; toast.innerHTML=msg; document.getElementById('toast-container').appendChild(toast); setTimeout(()=>toast.remove(),3500); }
     function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
     function openModal(html) { document.getElementById('modalContent').innerHTML = html; document.getElementById('modalOverlay').classList.add('active'); document.querySelector('#modalContent .close-modal-btn')?.addEventListener('click', closeModal); }
     function setupAutocomplete(input, list) { if(!input) return; input.addEventListener('input',()=>{ let val=input.value.toLowerCase(); let filtered=SETORES.filter(s=>s.toLowerCase().includes(val)); list.innerHTML=filtered.map(s=>`<div class="autocomplete-item">${s}</div>`).join(''); list.style.display=filtered.length&&val?'block':'none'; list.querySelectorAll('.autocomplete-item').forEach(el=>el.addEventListener('click',()=>{ input.value=el.textContent; list.style.display='none'; })); }); document.addEventListener('click',(e)=>{ if(!input.contains(e.target)) list.style.display='none'; }); }
-    window.switchView = function(v) { document.querySelectorAll('.view').forEach(el=>el.classList.remove('active')); document.getElementById(`view-${v}`).classList.add('active'); document.querySelectorAll('.nav-item').forEach(btn=>btn.classList.toggle('active', btn.dataset.view===v)); if(v==='publicidade') atualizarDashboard(); if(v==='agua') carregarEstoqueAgua(); };
     
-    // Adicionar ao carrinho com quantidade 1, se já existir incrementa
+    window.switchView = function(v) { 
+      document.querySelectorAll('.view').forEach(el=>el.classList.remove('active')); 
+      document.getElementById(`view-${v}`).classList.add('active'); 
+      document.querySelectorAll('.nav-item').forEach(btn=>btn.classList.toggle('active', btn.dataset.view===v)); 
+      if(v==='publicidade') atualizarDashboard(); 
+      if(v==='agua') carregarEstoqueAgua();
+      if(v==='rastrear') {
+        if(!planilhaCarregada && !carregandoPlanilha) {
+          carregarDadosPlanilha();
+        } else if(planilhaCarregada) {
+          renderizarTabelaPlanilha();
+        }
+      }
+    };
+    
+    // Parse CSV simples
+    function parseCSV(csvTexto) {
+      const linhas = csvTexto.split(/\r?\n/);
+      if(linhas.length < 2) return { cabecalho: [], dados: [] };
+      const cabecalho = linhas[0].split(',').map(c => c.trim().replace(/^"|"$/g, ''));
+      const dados = [];
+      for(let i = 1; i < linhas.length; i++) {
+        if(!linhas[i].trim()) continue;
+        const linha = linhas[i];
+        const valores = [];
+        let dentroAspas = false;
+        let valorAtual = '';
+        for(let char of linha) {
+          if(char === '"') {
+            dentroAspas = !dentroAspas;
+          } else if(char === ',' && !dentroAspas) {
+            valores.push(valorAtual);
+            valorAtual = '';
+          } else {
+            valorAtual += char;
+          }
+        }
+        valores.push(valorAtual);
+        if(valores.length >= cabecalho.length) {
+          const obj = {};
+          cabecalho.forEach((chave, idx) => {
+            let val = (valores[idx] || '').trim().replace(/^"|"$/g, '');
+            obj[chave] = val;
+          });
+          dados.push(obj);
+        }
+      }
+      return { cabecalho, dados };
+    }
+    
+    // Função que verifica se uma linha é "vazia" (todos os campos vazios ou só espaços)
+    function isLinhaVazia(obj) {
+      return Object.values(obj).every(valor => !valor || valor.trim() === '');
+    }
+    
+    async function carregarDadosPlanilha() {
+      const container = document.getElementById('tabelaPlanilhaContainer');
+      if(!container) return;
+      carregandoPlanilha = true;
+      container.innerHTML = `<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-pulse"></i> Carregando materiais permanentes...</div>`;
+      try {
+        const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-AKI_Bc7wstMKPRF4kv_F3pw73amu96S91vCKkBkRSPmpWICX4NYmVxYfensvcg/pub?gid=1177243728&single=true&output=csv';
+        const resposta = await fetch(url);
+        if(!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+        const csvTexto = await resposta.text();
+        const { cabecalho, dados } = parseCSV(csvTexto);
+        if(dados.length === 0) throw new Error('Planilha vazia ou formato inválido');
+        cabecalhosPlanilha = cabecalho;
+        // Remove linhas completamente vazias
+        const dadosFiltrados = dados.filter(linha => !isLinhaVazia(linha));
+        if(dadosFiltrados.length === 0) throw new Error('Nenhuma linha com conteúdo relevante');
+        // Inverte a ordem: do mais recente (último adicionado) para o mais antigo
+        dadosPlanilhaBrutos = dadosFiltrados.reverse();
+        planilhaCarregada = true;
+        renderizarTabelaPlanilha();
+      } catch (erro) {
+        console.error(erro);
+        container.innerHTML = `<div class="mensagem-erro"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar os dados. Tente novamente mais tarde.</div>`;
+        planilhaCarregada = false;
+      } finally {
+        carregandoPlanilha = false;
+      }
+    }
+    
+    function exibirDetalhesMaterial(linha) {
+      // Tenta encontrar colunas relevantes para Destinatário, Empenho e Data de Entrada
+      const colDestinatario = cabecalhosPlanilha.find(c => c.toLowerCase().includes('destinat') || c.toLowerCase().includes('responsavel') || c === 'Destinatário' || c === 'Localização') || cabecalhosPlanilha[2];
+      const colEmpenho = cabecalhosPlanilha.find(c => c.toLowerCase().includes('empenho') || c === 'Empenho' || c === 'Nota Fiscal') || cabecalhosPlanilha[3];
+      const colDataEntrada = cabecalhosPlanilha.find(c => c.toLowerCase().includes('data') || c === 'Data de Entrada' || c === 'Data') || cabecalhosPlanilha[4];
+      
+      const destinatario = linha[colDestinatario] || 'Não informado';
+      const empenho = linha[colEmpenho] || 'Não informado';
+      const dataEntrada = linha[colDataEntrada] || 'Não informada';
+      const descricao = linha[cabecalhosPlanilha[0]] || 'Material';
+      
+      const modalHtml = `
+        <div class="modal-detalhes">
+          <div class="modal-detalhes-header">
+            <h3><i class="fas fa-box"></i> Detalhes do Material</h3>
+            <p>${descricao.substring(0, 80)}</p>
+          </div>
+          <div class="modal-detalhes-body">
+            <div class="detalhe-item">
+              <span class="detalhe-label"><i class="fas fa-user"></i> Destinatário / Local</span>
+              <div class="detalhe-valor">${destinatario}</div>
+            </div>
+            <div class="detalhe-item">
+              <span class="detalhe-label"><i class="fas fa-file-invoice"></i> Empenho / Nota</span>
+              <div class="detalhe-valor">${empenho}</div>
+            </div>
+            <div class="detalhe-item">
+              <span class="detalhe-label"><i class="fas fa-calendar-alt"></i> Data de Entrada</span>
+              <div class="detalhe-valor">${dataEntrada}</div>
+            </div>
+          </div>
+          <button class="btn close-modal-btn" style="margin: 0 20px 20px 20px; width: calc(100% - 40px); background: var(--orange-primary);">Fechar</button>
+        </div>
+      `;
+      openModal(modalHtml);
+      document.querySelector('.close-modal-btn')?.addEventListener('click', closeModal);
+    }
+    
+    function renderizarTabelaPlanilha() {
+      const container = document.getElementById('tabelaPlanilhaContainer');
+      const filtroInput = document.getElementById('filtroPlanilha');
+      if(!container) return;
+      if(!planilhaCarregada || dadosPlanilhaBrutos.length === 0) {
+        if(!carregandoPlanilha && !planilhaCarregada) container.innerHTML = `<div class="mensagem-erro"><i class="fas fa-database"></i> Nenhum dado disponível.</div>`;
+        return;
+      }
+      const termoBusca = filtroInput ? filtroInput.value.trim().toLowerCase() : '';
+      let dadosFiltrados = dadosPlanilhaBrutos;
+      if(termoBusca !== '') {
+        dadosFiltrados = dadosPlanilhaBrutos.filter(linha => {
+          return Object.values(linha).some(valor => 
+            String(valor).toLowerCase().includes(termoBusca)
+          );
+        });
+      }
+      
+      if(dadosFiltrados.length === 0) {
+        container.innerHTML = `<div class="sem-resultados"><i class="fas fa-search"></i> Nenhum resultado encontrado</div>`;
+        return;
+      }
+      
+      let html = `<div class="tabela-planilha-container"><table class="tabela-planilha"><thead><tr>`;
+      cabecalhosPlanilha.forEach(cab => {
+        html += `<th>${cab}</th>`;
+      });
+      html += `<tr></thead><tbody>`;
+      dadosFiltrados.forEach((linha, idx) => {
+        html += `<tr data-row-idx="${idx}">`;
+        cabecalhosPlanilha.forEach(cab => {
+          let celula = linha[cab] || '';
+          html += `<td title="${celula.replace(/"/g, '&quot;')}">${celula}</td>`;
+        });
+        html += `</tr>`;
+      });
+      html += `</tbody></table></div>`;
+      container.innerHTML = html;
+      
+      // Evento de clique nas linhas
+      document.querySelectorAll('#tabelaPlanilhaContainer tbody tr').forEach(tr => {
+        tr.addEventListener('click', (e) => {
+          const rowIdx = tr.getAttribute('data-row-idx');
+          if(rowIdx !== null && dadosFiltrados[parseInt(rowIdx)]) {
+            exibirDetalhesMaterial(dadosFiltrados[parseInt(rowIdx)]);
+          }
+        });
+      });
+    }
+    
+    // --- Funções existentes do sistema (sem alterações) ---
     window.addToCart = function(p) {
       const existing = carrinho.find(item => item.cod === p.cod);
-      if(existing) {
-        existing.quantidade += 1;
-      } else {
-        carrinho.push({ ...p, quantidade: 1 });
-      }
+      if(existing) { existing.quantidade += 1; } 
+      else { carrinho.push({ ...p, quantidade: 1 }); }
       updateCartUI();
       showToast(`🛒 ${p.nome} adicionado (quantidade total: ${existing ? existing.quantidade : 1})`);
     };
@@ -679,7 +982,7 @@
     window.gerarRelatorioPDF = async function(){ const {jsPDF}=window.jspdf; const doc=new jsPDF(); const pedidos=await apiGet('pedidos'); const agua=await apiGet('agua_solicitacoes'); doc.setFontSize(16); doc.text('Relatório Gerencial - Almoxarifado CT/UFPB',14,20); doc.setFontSize(10); doc.text(`Gerado em: ${new Date().toLocaleString()}`,14,30); doc.autoTable({ startY:40, head:[['Indicador','Valor']], body:[['Total Pedidos',pedidos.length],['Pendentes',pedidos.filter(p=>p.status==='pendente').length],['Entregues',pedidos.filter(p=>p.status==='entregue').length],['Solicitações Água',agua.length],['Água Pendentes',agua.filter(a=>a.status==='pendente').length]] }); const itensCount={}; pedidos.forEach(p=>{ const desc=p.descricao||'Item'; itensCount[desc]=(itensCount[desc]||0)+(parseInt(p.quantidade)||1); }); const top=Object.entries(itensCount).sort((a,b)=>b[1]-a[1]).slice(0,10); doc.autoTable({ startY:doc.lastAutoTable.finalY+10, head:[['Item mais solicitado','Quantidade']], body:top.map(([desc,qtd])=>[desc,qtd]) }); doc.save(`relatorio_almox_${new Date().toISOString().slice(0,10)}.pdf`); showToast('📄 PDF gerado com sucesso!'); };
     window.enviarOuvidoria = async function(){ const desc=document.getElementById('ouvDesc')?.value.trim(); if(!desc){ showToast('Descrição obrigatória'); return; } const nome=document.getElementById('ouvNome')?.value.trim()||'Anônimo'; const setor=document.getElementById('ouvSetor')?.value.trim()||''; const logEntry={ acao:'ouvidoria', data_hora:new Date().toISOString(), usuario:nome, detalhes:`Setor: ${setor} | Rating: ${currentRating} | ${desc}` }; const resp=await apiPost('log',logEntry); if(resp?.created){ showToast('📨 Manifestação enviada com sucesso!'); document.getElementById('ouvDesc').value=''; } else showToast('Erro ao enviar.'); };
     
-    // CARROSSEL EDUCATIVO
+    // Carrossel educativo (código original mantido)
     function initEduCarousel() {
       const slidesData = [
         { img: "https://www.letswork.com.br/wp-content/uploads/2022/09/logistica.png", title: "Como os materiais chegam até você?", short: "Existe todo um processo até o material chegar no seu setor.", full: "Antes de um material chegar até você, ele passa por várias etapas importantes. Tudo começa com a compra feita pela instituição. Depois disso, o material é entregue ao almoxarifado, onde passa por uma conferência cuidadosa.\n\nNessa etapa, a equipe verifica se a quantidade está correta, se os itens estão em bom estado e se tudo está de acordo com o que foi solicitado. Só depois dessa verificação o material é registrado no sistema e armazenado.\n\nEsse processo garante que a instituição receba exatamente o que foi comprado e evita problemas futuros." },
@@ -714,7 +1017,7 @@
       function resetAutoPlay() { pauseAutoPlay(); startAutoPlay(); }
       buildSlides(); startAutoPlay(); goToSlide(0);
     }
-
+    
     function openHelpModal() {
       const helpHtml = `
         <div class="help-modal">
@@ -727,29 +1030,24 @@
               <h4><i class="fas fa-compass"></i> Para que serve cada tela?</h4>
               <p><strong>Início:</strong> Acesso rápido às principais funções (solicitar materiais, água, relatórios) e carrossel educativo.</p>
               <p><strong>Água:</strong> Veja o saldo de galões, faça uma solicitação de água e consulte a fila de pedidos.</p>
-              <p><strong>Materiais:</strong> Escolha a categoria (Aula, Expediente, Limpeza) e adicione itens ao carrinho (cada clique adiciona 1 unidade, mas você pode ajustar a quantidade no carrinho).</p>
+              <p><strong>Materiais:</strong> Escolha a categoria (Aula, Expediente, Limpeza) e adicione itens ao carrinho.</p>
               <p><strong>Publicidade:</strong> Acompanhe estatísticas de pedidos, gere relatórios em PDF e veja os itens mais solicitados.</p>
+              <p><strong>Rastrear Material Permanente:</strong> Consulte a planilha oficial com todos os bens permanentes do CT (apenas linhas preenchidas). Clique em qualquer linha para ver detalhes como Destinatário, Empenho e Data de Entrada.</p>
               <p><strong>Ouvidoria:</strong> Envie sua opinião, sugestão ou reclamação de forma anônima ou identificada.</p>
             </div>
             <div class="help-section">
               <h4><i class="fas fa-box-open"></i> Como solicitar materiais?</h4>
               <div class="help-step">1. Na tela inicial, toque em <strong>"Solicitar Materiais"</strong>.</div>
               <div class="help-step">2. Escolha uma categoria: Aula, Expediente ou Limpeza.</div>
-              <div class="help-step">3. Clique no botão <strong>"+"</strong> ao lado do item desejado (cada clique adiciona 1 unidade).</div>
-              <div class="help-step">4. Toque no ícone do carrinho (🛒) no topo da tela e ajuste as quantidades usando os botões "+" e "-".</div>
-              <div class="help-step">5. Preencha seus dados (setor, nome, telefone, e-mail, vínculo).</div>
-              <div class="help-step">6. Clique em <strong>"Finalizar Pedido"</strong> – você receberá uma confirmação.</div>
+              <div class="help-step">3. Clique no botão <strong>"+"</strong> ao lado do item desejado.</div>
+              <div class="help-step">4. Toque no ícone do carrinho e ajuste as quantidades.</div>
+              <div class="help-step">5. Preencha seus dados e clique em <strong>"Finalizar Pedido"</strong>.</div>
             </div>
             <div class="help-section">
               <h4><i class="fas fa-tint"></i> Como solicitar água?</h4>
               <div class="help-step">1. Na tela inicial, toque em <strong>"Solicitar Água"</strong>.</div>
-              <div class="help-step">2. Preencha o formulário com seus dados e o setor de destino.</div>
-              <div class="help-step">3. Toque em <strong>"Enviar"</strong>. O almoxarifado receberá a solicitação.</div>
-              <div class="help-step">4. Para ver a fila de pedidos pendentes, use o botão <strong>"Consultar fila"</strong>.</div>
-            </div>
-            <div class="help-section">
-              <h4><i class="fas fa-chalkboard"></i> Carrossel educativo</h4>
-              <p>Deslize para o lado ou toque nas bolinhas para navegar pelos conteúdos. Clique em <strong>"Saiba mais"</strong> para ler a explicação completa sobre o funcionamento do almoxarifado.</p>
+              <div class="help-step">2. Preencha o formulário e envie.</div>
+              <div class="help-step">3. Para ver a fila, use <strong>"Consultar fila"</strong>.</div>
             </div>
           </div>
           <button class="close-help-btn close-modal-btn">Entendi, fechar</button>
@@ -758,12 +1056,27 @@
       openModal(helpHtml);
       document.querySelector('.close-modal-btn')?.addEventListener('click', closeModal);
     }
-
-    function checkSessionAndClear(){ const last=localStorage.getItem('last_active'); const now=Date.now(); if(last && (now-parseInt(last))>60000){ localStorage.clear(); sessionStorage.clear(); carrinho=[]; updateCartUI(); document.getElementById('splash').style.display='flex'; document.getElementById('splash').classList.remove('fade-out'); setTimeout(()=>{ document.getElementById('splash').classList.add('fade-out'); setTimeout(()=>document.getElementById('splash').style.display='none',600); },2000); } localStorage.setItem('last_active',now); }
+    
+    // Sessão: apenas limpa cache após 1 hora sem interação, sem reset agressivo
+    function checkSessionAndClear(){ 
+      const last = localStorage.getItem('last_active'); 
+      const now = Date.now(); 
+      if(last && (now - parseInt(last)) > 3600000) { 
+        localStorage.clear(); 
+        sessionStorage.clear(); 
+        carrinho = []; 
+        updateCartUI(); 
+        showToast('Sessão expirada por inatividade prolongada. Seu carrinho foi limpo.');
+      } 
+      localStorage.setItem('last_active', now); 
+    }
     
     function init(){ 
       checkSessionAndClear(); 
-      setTimeout(()=>{ document.getElementById('splash').classList.add('fade-out'); setTimeout(()=>document.getElementById('splash').style.display='none',600); },2000); 
+      setTimeout(()=>{ 
+        document.getElementById('splash').classList.add('fade-out'); 
+        setTimeout(()=>document.getElementById('splash').style.display='none',600); 
+      },2000); 
       initEduCarousel(); 
       document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view))); 
       document.getElementById('cartToggleBtn').addEventListener('click',()=>document.getElementById('cartDrawer').classList.add('open')); 
@@ -773,9 +1086,16 @@
       setupAutocomplete(document.getElementById('ouvSetor'), document.getElementById('setorAutocompleteList')); 
       setupAutocomplete(document.getElementById('carrinhoSetor'), document.getElementById('carrinhoSetorAutocomplete')); 
       document.querySelectorAll('.star').forEach(s=>s.addEventListener('click',function(){ const val=this.dataset.value; currentRating=val; document.querySelectorAll('.star').forEach((st,i)=>{ st.textContent=i<val?'★':'☆'; st.classList.toggle('selected',i<val); }); })); 
-      window.addEventListener('focus',()=>checkSessionAndClear()); 
+      window.addEventListener('focus', () => { checkSessionAndClear(); }); 
       carregarEstoqueAgua(); 
       document.getElementById('helpBtn').addEventListener('click', openHelpModal);
+      
+      const filtroInput = document.getElementById('filtroPlanilha');
+      if(filtroInput) {
+        filtroInput.addEventListener('input', () => {
+          if(planilhaCarregada) renderizarTabelaPlanilha();
+        });
+      }
     }
     window.onload=init;
   })();
