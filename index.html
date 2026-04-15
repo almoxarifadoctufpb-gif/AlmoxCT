@@ -137,28 +137,24 @@
       top: 0;
       z-index: 100;
       padding: 18px 20px 12px;
-      background: linear-gradient(145deg, #0A2F4D 0%, #1E5A8D 100%);
+      background: linear-gradient(135deg, #0A2F4D, #1E5A8D);
       display: flex;
       align-items: center;
-      gap: 14px;
+      justify-content: space-between;
       border-radius: 0 0 28px 28px;
       box-shadow: 0 6px 14px rgba(0,0,0,0.08);
       flex-shrink: 0;
     }
-    .header-logo {
-      width: 48px; height: 48px; background: white;
-      border-radius: 18px; padding: 6px;
-      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
-      display: flex; align-items: center; justify-content: center;
+    .greeting-text {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
-    .header-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
-    .header-title h1 { font-size: 1.6rem; font-weight: 700; color: white; letter-spacing: -0.02em; }
-    .header-title span { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
-
     .header-actions {
       display: flex;
       gap: 8px;
-      margin-left: auto;
     }
     .icon-btn {
       background: rgba(255,255,255,0.15);
@@ -263,6 +259,90 @@
       color: var(--orange-dark);
     }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 20px -8px rgba(0,0,0,0.2); }
+
+    /* DESTAQUE DO LOGO NA HOME - SEM FUNDO BRANCO */
+    .logo-highlight {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 8px 0 24px 0;
+      padding: 16px 8px;
+      background: transparent; /* fundo totalmente transparente */
+    }
+    .logo-highlight::before {
+      content: "";
+      position: absolute;
+      width: 320px; /* maior área de brilho para acompanhar logo maior */
+      height: 320px;
+      background: radial-gradient(circle, rgba(255,122,0,0.3), transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(50px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .logo-destaque-img {
+      position: relative;
+      z-index: 1;
+      width: 220px; /* tamanho bem maior */
+      height: 220px;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,0.35));
+      transition: transform 0.3s ease;
+    }
+    .logo-destaque-img:hover {
+      transform: scale(1.02);
+    }
+    .logo-welcome-title {
+      position: relative;
+      z-index: 1;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: white;
+      text-align: center;
+      letter-spacing: -0.02em;
+      margin-top: 16px;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.5); /* sombra escura e forte */
+    }
+    .logo-welcome-sub {
+      position: relative;
+      z-index: 1;
+      font-size: 1rem;
+      color: #1E5A8D; /* azul */
+      text-align: center;
+      font-weight: 600;
+      margin-top: 8px;
+      background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 60px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* Responsividade mobile */
+    @media (max-width: 480px) {
+      .logo-destaque-img {
+        width: 160px;
+        height: 160px;
+      }
+      .logo-welcome-title {
+        font-size: 1.5rem;
+        text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+      }
+      .logo-welcome-sub {
+        font-size: 0.85rem;
+        padding: 4px 14px;
+      }
+      .logo-highlight::before {
+        width: 260px;
+        height: 260px;
+        filter: blur(40px);
+      }
+    }
 
     /* CARROSSEL EDUCATIVO */
     .edu-carousel-container {
@@ -549,7 +629,7 @@
     .cart-item-qty button:active { transform: scale(0.9); }
     .cart-item-qty button:hover { background: var(--orange-primary); color: white; }
 
-    /* ===== ESTILOS PARA TABELA DE RASTREAMENTO ===== */
+    /* TABELA RASTREAMENTO */
     .rastreio-filtro {
       width: 100%;
       padding: 14px 18px;
@@ -661,15 +741,14 @@
 </head>
 <body>
 <div id="splash">
-  <div class="splash-logo"><img src="https://static.vecteezy.com/ti/vetor-gratis/p1/9845152-inventario-controle-linha-circulo-gratis-vetor.jpg" alt="Logo"></div>
+  <div class="splash-logo"><img src="https://i.ibb.co/WN2005PY/logo.png" alt="Logo Almox CT" onerror="this.src='https://static.vecteezy.com/ti/vetor-gratis/p1/9845152-inventario-controle-linha-circulo-gratis-vetor.jpg'"></div>
   <div class="splash-message">Olá, sejam bem vindos ao APP do Almoxarifado do CT</div>
   <div class="loader-modern"></div>
 </div>
 
 <div id="app">
   <header class="app-header">
-    <div class="header-logo"><img src="https://static.vecteezy.com/ti/vetor-gratis/p1/9845152-inventario-controle-linha-circulo-gratis-vetor.jpg" alt="logo"></div>
-    <div class="header-title"><h1>CT Almox</h1><span>Universidade Federal da Paraíba</span></div>
+    <div class="greeting-text" id="dynamicGreeting">Olá, Carregando...</div>
     <div class="header-actions">
       <button id="helpBtn" class="icon-btn"><i class="fas fa-question"></i></button>
       <button id="cartToggleBtn" class="icon-btn" style="position: relative;">
@@ -681,6 +760,13 @@
 
   <main>
     <div id="view-home" class="view active">
+      <!-- DESTAQUE PRINCIPAL COM LOGO CENTRALIZADO - SEM FUNDO BRANCO -->
+      <div class="logo-highlight">
+        <img class="logo-destaque-img" src="https://i.ibb.co/WN2005PY/logo.png" alt="Almox CT Logo" onerror="this.src='https://static.vecteezy.com/ti/vetor-gratis/p1/9845152-inventario-controle-linha-circulo-gratis-vetor.jpg'">
+        <div class="logo-welcome-title">Bem-vindo ao AlmoxCT</div>
+        <div class="logo-welcome-sub">Solicite materiais, água, acompanhe pedidos e muito mais</div>
+      </div>
+
       <div class="card" style="display: flex; flex-direction: column; gap: 14px;">
         <button class="btn" onclick="switchView('materiais')"><i class="fas fa-box"></i> Solicitar Materiais</button>
         <button class="btn btn-outline" onclick="switchView('agua')"><i class="fas fa-water"></i> Solicitar Água</button>
@@ -698,7 +784,6 @@
     <div id="view-publicidade" class="view"><div class="card"><h2><i class="fas fa-chart-line"></i> Publicidade e Relatórios</h2><p style="margin-bottom:16px;">Acompanhe os indicadores e baixe relatórios gerenciais em PDF.</p><div class="dashboard-grid" id="dashboardStats"><div class="stat-card"><div class="stat-value" id="totalPedidos">0</div><div class="stat-label">Total Pedidos</div></div><div class="stat-card"><div class="stat-value" id="pedidosPendentes">0</div><div class="stat-label">Pendentes</div></div><div class="stat-card"><div class="stat-value" id="pedidosEntregues">0</div><div class="stat-label">Entregues</div></div><div class="stat-card"><div class="stat-value" id="consumoMedio">0</div><div class="stat-label">Consumo médio/dia</div></div></div><canvas id="consumoChart" width="400" height="200" style="max-height:200px; width:100%;"></canvas><h4 style="margin-top:20px;">Itens mais solicitados</h4><ul id="topItensList" style="list-style:none; padding:0;"></ul><button class="btn" style="margin-top:20px; width:100%;" onclick="gerarRelatorioPDF()"><i class="fas fa-file-pdf"></i> Baixar Relatório PDF</button><button class="btn btn-outline" style="margin-top:12px; width:100%;" onclick="atualizarDashboard()"><i class="fas fa-sync-alt"></i> Atualizar Dados</button></div></div>
     <div id="view-ouvidoria" class="view"><div class="card"><h2><i class="fas fa-bullhorn"></i> Ouvidoria</h2><p>Envie sua manifestação</p><form onsubmit="return false;"><input type="text" id="ouvNome" placeholder="Nome (opcional)" style="width:100%; padding:14px; border-radius:40px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"><div class="autocomplete-wrapper"><input type="text" id="ouvSetor" placeholder="Setor / Local" autocomplete="off" style="width:100%; padding:14px; border-radius:40px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"><div id="setorAutocompleteList" class="autocomplete-items" style="display:none;"></div></div><input type="date" id="ouvData" style="width:100%; padding:14px; border-radius:40px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"><textarea id="ouvDesc" placeholder="Descrição (obrigatório)" rows="3" style="width:100%; padding:14px; border-radius:28px; border:1px solid #ddd; margin:8px 0; background:rgba(255,255,255,0.6);"></textarea><div class="star-rating" id="starRatingWidget"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div><label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="ouvInfoTrue"> Declaro que as informações são verdadeiras</label><label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="ouvAnonimo"> Aceito envio anônimo</label><button type="button" class="btn" style="margin-top:20px; width:100%;" onclick="enviarOuvidoria()"><i class="fas fa-paper-plane"></i> Enviar</button></form></div></div>
 
-    <!-- VIEW: RASTREAR MATERIAL PERMANENTE -->
     <div id="view-rastrear" class="view">
       <div class="card">
         <h2><i class="fas fa-truck"></i> Rastrear Material Permanente</h2>
@@ -732,11 +817,21 @@
     let carrinho = [];
     let currentRating = 0, chartInstance = null;
     
-    // ========== VARIÁVEIS PLANILHA ==========
-    let dadosPlanilhaBrutos = [];      // apenas linhas com conteúdo (já sem linhas vazias)
+    let dadosPlanilhaBrutos = [];
     let cabecalhosPlanilha = [];
     let planilhaCarregada = false;
     let carregandoPlanilha = false;
+    
+    // Função para saudação dinâmica
+    function atualizarSaudacao() {
+      const hora = new Date().getHours();
+      let saudacao = "";
+      if (hora >= 5 && hora < 12) saudacao = "Bom dia! 🌤️";
+      else if (hora >= 12 && hora < 18) saudacao = "Boa tarde! ☀️";
+      else saudacao = "Boa noite! 🌙";
+      const elemento = document.getElementById("dynamicGreeting");
+      if (elemento) elemento.textContent = `Olá, ${saudacao}`;
+    }
     
     async function apiGet(sheet) { const res = await fetch(`${API_BASE}?sheet=${sheet}`); return res.json(); }
     async function apiPost(sheet, data) { const payload = Array.isArray(data) ? data : [data]; return await fetch(`${API_BASE}?sheet=${sheet}`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) }).then(r=>r.json()); }
@@ -760,7 +855,6 @@
       }
     };
     
-    // Parse CSV simples
     function parseCSV(csvTexto) {
       const linhas = csvTexto.split(/\r?\n/);
       if(linhas.length < 2) return { cabecalho: [], dados: [] };
@@ -795,7 +889,6 @@
       return { cabecalho, dados };
     }
     
-    // Função que verifica se uma linha é "vazia" (todos os campos vazios ou só espaços)
     function isLinhaVazia(obj) {
       return Object.values(obj).every(valor => !valor || valor.trim() === '');
     }
@@ -813,10 +906,8 @@
         const { cabecalho, dados } = parseCSV(csvTexto);
         if(dados.length === 0) throw new Error('Planilha vazia ou formato inválido');
         cabecalhosPlanilha = cabecalho;
-        // Remove linhas completamente vazias
         const dadosFiltrados = dados.filter(linha => !isLinhaVazia(linha));
         if(dadosFiltrados.length === 0) throw new Error('Nenhuma linha com conteúdo relevante');
-        // Inverte a ordem: do mais recente (último adicionado) para o mais antigo
         dadosPlanilhaBrutos = dadosFiltrados.reverse();
         planilhaCarregada = true;
         renderizarTabelaPlanilha();
@@ -830,7 +921,6 @@
     }
     
     function exibirDetalhesMaterial(linha) {
-      // Tenta encontrar colunas relevantes para Destinatário, Empenho e Data de Entrada
       const colDestinatario = cabecalhosPlanilha.find(c => c.toLowerCase().includes('destinat') || c.toLowerCase().includes('responsavel') || c === 'Destinatário' || c === 'Localização') || cabecalhosPlanilha[2];
       const colEmpenho = cabecalhosPlanilha.find(c => c.toLowerCase().includes('empenho') || c === 'Empenho' || c === 'Nota Fiscal') || cabecalhosPlanilha[3];
       const colDataEntrada = cabecalhosPlanilha.find(c => c.toLowerCase().includes('data') || c === 'Data de Entrada' || c === 'Data') || cabecalhosPlanilha[4];
@@ -894,7 +984,7 @@
       cabecalhosPlanilha.forEach(cab => {
         html += `<th>${cab}</th>`;
       });
-      html += `<tr></thead><tbody>`;
+      html += `</tr></thead><tbody>`;
       dadosFiltrados.forEach((linha, idx) => {
         html += `<tr data-row-idx="${idx}">`;
         cabecalhosPlanilha.forEach(cab => {
@@ -906,7 +996,6 @@
       html += `</tbody></table></div>`;
       container.innerHTML = html;
       
-      // Evento de clique nas linhas
       document.querySelectorAll('#tabelaPlanilhaContainer tbody tr').forEach(tr => {
         tr.addEventListener('click', (e) => {
           const rowIdx = tr.getAttribute('data-row-idx');
@@ -917,7 +1006,6 @@
       });
     }
     
-    // --- Funções existentes do sistema (sem alterações) ---
     window.addToCart = function(p) {
       const existing = carrinho.find(item => item.cod === p.cod);
       if(existing) { existing.quantidade += 1; } 
@@ -982,7 +1070,6 @@
     window.gerarRelatorioPDF = async function(){ const {jsPDF}=window.jspdf; const doc=new jsPDF(); const pedidos=await apiGet('pedidos'); const agua=await apiGet('agua_solicitacoes'); doc.setFontSize(16); doc.text('Relatório Gerencial - Almoxarifado CT/UFPB',14,20); doc.setFontSize(10); doc.text(`Gerado em: ${new Date().toLocaleString()}`,14,30); doc.autoTable({ startY:40, head:[['Indicador','Valor']], body:[['Total Pedidos',pedidos.length],['Pendentes',pedidos.filter(p=>p.status==='pendente').length],['Entregues',pedidos.filter(p=>p.status==='entregue').length],['Solicitações Água',agua.length],['Água Pendentes',agua.filter(a=>a.status==='pendente').length]] }); const itensCount={}; pedidos.forEach(p=>{ const desc=p.descricao||'Item'; itensCount[desc]=(itensCount[desc]||0)+(parseInt(p.quantidade)||1); }); const top=Object.entries(itensCount).sort((a,b)=>b[1]-a[1]).slice(0,10); doc.autoTable({ startY:doc.lastAutoTable.finalY+10, head:[['Item mais solicitado','Quantidade']], body:top.map(([desc,qtd])=>[desc,qtd]) }); doc.save(`relatorio_almox_${new Date().toISOString().slice(0,10)}.pdf`); showToast('📄 PDF gerado com sucesso!'); };
     window.enviarOuvidoria = async function(){ const desc=document.getElementById('ouvDesc')?.value.trim(); if(!desc){ showToast('Descrição obrigatória'); return; } const nome=document.getElementById('ouvNome')?.value.trim()||'Anônimo'; const setor=document.getElementById('ouvSetor')?.value.trim()||''; const logEntry={ acao:'ouvidoria', data_hora:new Date().toISOString(), usuario:nome, detalhes:`Setor: ${setor} | Rating: ${currentRating} | ${desc}` }; const resp=await apiPost('log',logEntry); if(resp?.created){ showToast('📨 Manifestação enviada com sucesso!'); document.getElementById('ouvDesc').value=''; } else showToast('Erro ao enviar.'); };
     
-    // Carrossel educativo (código original mantido)
     function initEduCarousel() {
       const slidesData = [
         { img: "https://www.letswork.com.br/wp-content/uploads/2022/09/logistica.png", title: "Como os materiais chegam até você?", short: "Existe todo um processo até o material chegar no seu setor.", full: "Antes de um material chegar até você, ele passa por várias etapas importantes. Tudo começa com a compra feita pela instituição. Depois disso, o material é entregue ao almoxarifado, onde passa por uma conferência cuidadosa.\n\nNessa etapa, a equipe verifica se a quantidade está correta, se os itens estão em bom estado e se tudo está de acordo com o que foi solicitado. Só depois dessa verificação o material é registrado no sistema e armazenado.\n\nEsse processo garante que a instituição receba exatamente o que foi comprado e evita problemas futuros." },
@@ -1057,7 +1144,6 @@
       document.querySelector('.close-modal-btn')?.addEventListener('click', closeModal);
     }
     
-    // Sessão: apenas limpa cache após 1 hora sem interação, sem reset agressivo
     function checkSessionAndClear(){ 
       const last = localStorage.getItem('last_active'); 
       const now = Date.now(); 
@@ -1072,11 +1158,13 @@
     }
     
     function init(){ 
+      atualizarSaudacao();
       checkSessionAndClear(); 
+      // Splash screen com duração de 4 segundos
       setTimeout(()=>{ 
         document.getElementById('splash').classList.add('fade-out'); 
         setTimeout(()=>document.getElementById('splash').style.display='none',600); 
-      },2000); 
+      },4000);
       initEduCarousel(); 
       document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view))); 
       document.getElementById('cartToggleBtn').addEventListener('click',()=>document.getElementById('cartDrawer').classList.add('open')); 
