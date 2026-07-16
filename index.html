@@ -1,1 +1,2313 @@
-d
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Simulado UFPB · Assistente em Administração</title>
+    <meta name="description" content="Simulado com 50 questões oficiais do concurso UFPB para Assistente em Administração." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        /* ===== VARIÁVEIS ===== */
+        :root {
+            --bg: #0f0f1a;
+            --surface: #1a1a2e;
+            --surface-hover: #22223a;
+            --text: #e8e8f0;
+            --text-secondary: #b0b0c8;
+            --text-muted: #7a7a96;
+            --primary: #818cf8;
+            --primary-dark: #6d6ff0;
+            --primary-bg: #1e1e3a;
+            --accent: #34d399;
+            --accent-dark: #10b981;
+            --accent-bg: #0a2e1f;
+            --danger: #f87171;
+            --danger-bg: #2e0f0f;
+            --warning: #fbbf24;
+            --warning-bg: #2e2000;
+            --border: #2a2a40;
+            --border-light: #24243a;
+            --shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+            --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 8px 26px rgba(0, 0, 0, 0.24);
+            --radius-sm: 8px;
+            --radius: 10px;
+            --radius-md: 15px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            --font: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --navbar-height: 60px;
+            --max-width: 1100px;
+        }
+        html[data-theme="light"] {
+            --bg: #f7f8fb;
+            --surface: #ffffff;
+            --surface-hover: #f8f9fc;
+            --text: #1a1a2e;
+            --text-secondary: #5a5a7a;
+            --text-muted: #8a8aa0;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-bg: #eef2ff;
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --accent-bg: #ecfdf5;
+            --danger: #ef4444;
+            --danger-bg: #fef2f2;
+            --warning: #f59e0b;
+            --warning-bg: #fffbeb;
+            --border: #e6e8f0;
+            --border-light: #f0f2f7;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 26px rgba(0, 0, 0, 0.08);
+        }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background var(--transition-slow), color var(--transition-slow);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            letter-spacing: -0.01em;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            transition: all var(--transition);
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            letter-spacing: -0.01em;
+        }
+        button:focus-visible {
+            outline: 2.5px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: var(--radius-sm);
+        }
+        input,
+        select {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: inherit;
+            font-size: inherit;
+            letter-spacing: -0.01em;
+        }
+        input:focus-visible,
+        select:focus-visible {
+            outline: 2.5px solid var(--primary);
+            border-radius: var(--radius-sm);
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: var(--radius-full);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+        .app-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 16px 32px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* topbar */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border-light);
+            padding: 0 20px;
+            height: var(--navbar-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            transition: background var(--transition-slow), border var(--transition-slow);
+            margin: 0 -16px 24px;
+            padding: 0 20px;
+        }
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+        }
+        .topbar-brand i {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        .topbar-brand span {
+            color: var(--text);
+            font-weight: 700;
+        }
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .topbar-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all var(--transition);
+            font-size: 1rem;
+        }
+        .topbar-btn:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        /* pages */
+        .page {
+            display: none;
+            animation: fadeSlide 0.3s ease-out;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* home */
+        .home-header {
+            margin-bottom: 28px;
+        }
+        .home-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .home-header h1 i {
+            color: var(--accent);
+        }
+        .home-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+        .simulado-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 24px 22px 22px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
+            transition: all var(--transition-slow);
+            max-width: 600px;
+        }
+        .simulado-card .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .simulado-card .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .simulado-card .card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .simulado-card .card-meta i {
+            color: var(--primary);
+            width: 16px;
+            text-align: center;
+        }
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all var(--transition);
+            box-shadow: var(--shadow);
+            width: 100%;
+            margin-top: 4px;
+        }
+        .card-btn:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3);
+            transform: translateY(-1px);
+        }
+        .card-btn:active {
+            transform: scale(0.98);
+        }
+        .card-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            box-shadow: none;
+        }
+        .card-btn.secondary:hover {
+            border-color: var(--primary);
+            color: var(--text);
+            background: var(--primary-bg);
+        }
+        .card-btn.accent {
+            background: var(--accent);
+            color: #0f0f1a;
+        }
+        .card-btn.accent:hover {
+            background: var(--accent-dark);
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
+        }
+        /* simulado */
+        .simulado-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 20px;
+        }
+        .simulado-header .left h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .simulado-header .left .sub {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .simulado-header .right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .simulado-header .right .timer {
+            color: var(--accent);
+            font-family: 'Inter', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: var(--accent-bg);
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--accent);
+        }
+        .simulado-header .right .timer.warning {
+            color: var(--danger);
+            border-color: var(--danger);
+            background: var(--danger-bg);
+        }
+        .simulado-progress {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .simulado-progress .track {
+            flex: 1;
+            height: 6px;
+            background: var(--border-light);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            min-width: 100px;
+        }
+        .simulado-progress .track .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: var(--radius-full);
+            transition: width 0.4s ease;
+        }
+        .simulado-progress .info {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .questao-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .q-nav-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .q-nav-btn:hover {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+        .q-nav-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .q-nav-btn.respondida {
+            background: var(--accent-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .q-nav-btn.revisao {
+            border-color: var(--warning);
+            color: var(--warning);
+            background: var(--warning-bg);
+        }
+        .q-nav-btn.respondida.revisao {
+            border-color: var(--warning);
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+        .questao-wrapper {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 24px 22px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .questao-texto-base {
+            background: var(--bg);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
+            border-left: 3px solid var(--primary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+        .questao-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .questao-enunciado {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            color: var(--text);
+        }
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .alt-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--bg);
+            border: 1.5px solid var(--border-light);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .alt-wrapper:hover {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+        .alt-wrapper.selected {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+        .alt-wrapper.correta {
+            border-color: var(--accent);
+            background: var(--accent-bg);
+        }
+        .alt-wrapper.errada {
+            border-color: var(--danger);
+            background: var(--danger-bg);
+        }
+        .alt-wrapper.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .alt-radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all var(--transition);
+        }
+        .alt-wrapper.selected .alt-radio {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+        .alt-wrapper.selected .alt-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+        }
+        .alt-wrapper.correta .alt-radio {
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+        .alt-wrapper.correta .alt-radio::after {
+            content: '✓';
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .alt-wrapper.errada .alt-radio {
+            border-color: var(--danger);
+            background: var(--danger);
+        }
+        .alt-wrapper.errada .alt-radio::after {
+            content: '✕';
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .alt-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        .questao-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+            align-items: center;
+        }
+        .btn-revisao {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+        .btn-revisao:hover {
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+        .btn-revisao.ativo {
+            border-color: var(--warning);
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+        .btn-nav-questao {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: var(--bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+        .btn-nav-questao:hover {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+        .btn-nav-questao.primary {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .btn-nav-questao.primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+        .btn-nav-questao.danger {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+        .btn-nav-questao.danger:hover {
+            background: #dc2626;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        /* confirm */
+        .confirm-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.25s ease;
+        }
+        .confirm-overlay.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .confirm-modal {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            max-width: 440px;
+            width: 100%;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .confirm-modal h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .confirm-modal p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .confirm-modal .stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+        .confirm-modal .stats div {
+            text-align: center;
+        }
+        .confirm-modal .stats .num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .confirm-modal .stats .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .confirm-modal .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        /* resultado */
+        .resultado-header {
+            text-align: center;
+            padding: 24px 0 16px;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 24px;
+        }
+        .resultado-header .nota {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+        .resultado-header .nota span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .resultado-header .sub {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 4px;
+        }
+        .resultado-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .resultado-kpi {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 16px 14px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+        .resultado-kpi .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .resultado-kpi .value.accent {
+            color: var(--accent);
+        }
+        .resultado-kpi .value.danger {
+            color: var(--danger);
+        }
+        .resultado-kpi .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+        .resultado-diagnostico {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 20px 18px;
+            border: 1px solid var(--border-light);
+            margin-bottom: 24px;
+        }
+        .resultado-diagnostico h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resultado-diagnostico .diag-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .resultado-diagnostico .diag-item:last-child {
+            border-bottom: none;
+        }
+        .resultado-diagnostico .diag-item .label {
+            color: var(--text-secondary);
+        }
+        .resultado-diagnostico .diag-item .value {
+            font-weight: 600;
+        }
+        .resultado-por-disciplina {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 20px 18px;
+            border: 1px solid var(--border-light);
+            margin-bottom: 24px;
+        }
+        .resultado-por-disciplina h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .disc-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .disc-item:last-child {
+            border-bottom: none;
+        }
+        .disc-item .name {
+            flex: 1;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .disc-item .bar {
+            flex: 2;
+            height: 6px;
+            background: var(--border-light);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        .disc-item .bar .fill {
+            height: 100%;
+            border-radius: var(--radius-full);
+            transition: width 0.6s ease;
+        }
+        .disc-item .pct {
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
+        }
+        .resultado-questoes {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 20px 18px;
+            border: 1px solid var(--border-light);
+            margin-bottom: 24px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .resultado-questoes h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rq-item {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .rq-item:last-child {
+            border-bottom: none;
+        }
+        .rq-item .status {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+            margin-top: 2px;
+        }
+        .rq-item .status.acerto {
+            color: var(--accent);
+        }
+        .rq-item .status.erro {
+            color: var(--danger);
+        }
+        .rq-item .body {
+            flex: 1;
+            font-size: 0.85rem;
+        }
+        .rq-item .body .enunciado {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+        .rq-item .body .gabarito {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .rq-item .body .gabarito strong {
+            color: var(--text);
+        }
+        .resultado-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        /* toast */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .toast {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 12px 20px;
+            font-weight: 500;
+            font-size: 0.88rem;
+            box-shadow: var(--shadow-lg);
+            animation: toastIn 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+        }
+        .toast.success {
+            border-left: 4px solid var(--accent);
+        }
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+        .toast.info {
+            border-left: 4px solid var(--primary);
+        }
+        .toast.removing {
+            animation: toastOut 0.3s ease forwards;
+        }
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+        }
+        @media (max-width: 640px) {
+            .topbar {
+                padding: 0 12px;
+                margin: 0 -8px 16px;
+            }
+            .topbar-brand {
+                font-size: 1rem;
+            }
+            .topbar-brand i {
+                font-size: 1.1rem;
+            }
+            .simulado-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .simulado-header .right {
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            .questao-nav {
+                gap: 4px;
+            }
+            .q-nav-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 0.7rem;
+            }
+            .questao-wrapper {
+                padding: 16px 14px;
+            }
+            .questao-enunciado {
+                font-size: 0.95rem;
+            }
+            .alt-wrapper {
+                padding: 10px 12px;
+            }
+            .resultado-header .nota {
+                font-size: 2.6rem;
+            }
+            .resultado-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .confirm-modal {
+                padding: 24px 18px;
+            }
+        }
+        @media (max-width: 400px) {
+            .resultado-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Simula</span>Concurso
+        </div>
+        <div class="topbar-actions">
+            <button class="topbar-btn" id="btnTheme" title="Alternar tema" aria-label="Alternar tema">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+            <button class="topbar-btn" id="btnHome" title="Início" aria-label="Início">
+                <i class="fas fa-house"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- APP -->
+    <div class="app-container" id="app">
+
+        <!-- HOME -->
+        <div class="page active" id="pageHome">
+            <div class="home-header">
+                <h1><i class="fas fa-pencil"></i> Simulado UFPB</h1>
+                <p>Concurso para Assistente em Administração · 50 questões oficiais</p>
+            </div>
+            <div class="simulado-card">
+                <div class="card-title">Prova completa – IBFC_01</div>
+                <div class="card-meta">
+                    <span><i class="fas fa-list"></i> 50 questões</span>
+                    <span><i class="fas fa-clock"></i> 4h</span>
+                    <span><i class="fas fa-signal"></i> Médio</span>
+                </div>
+                <button class="card-btn" id="btnIniciar"><i class="fas fa-play"></i> Iniciar Simulado</button>
+            </div>
+        </div>
+
+        <!-- SIMULADO -->
+        <div class="page" id="pageSimulado">
+            <div class="simulado-header">
+                <div class="left">
+                    <h2 id="simuladoTitulo">Assistente em Administração - UFPB</h2>
+                    <div class="sub" id="simuladoSub">50 questões · 4h</div>
+                </div>
+                <div class="right">
+                    <span class="timer" id="timerDisplay">04:00:00</span>
+                    <span style="font-size:0.8rem;color:var(--text-muted);" id="questaoIndice">1 / 50</span>
+                </div>
+            </div>
+            <div class="simulado-progress">
+                <div class="track"><div class="fill" id="progressFill" style="width:0%;"></div></div>
+                <div class="info" id="progressInfo">0%</div>
+            </div>
+            <div class="questao-nav" id="questaoNav"></div>
+            <div class="questao-wrapper" id="questaoWrapper">
+                <div id="questaoTextoBase" class="questao-texto-base" style="display:none;"></div>
+                <div class="questao-number" id="qNumero">Questão 1</div>
+                <div class="questao-enunciado" id="qEnunciado">Carregando...</div>
+                <div class="alternativas" id="qAlternativas"></div>
+                <div class="questao-actions">
+                    <button class="btn-revisao" id="btnRevisao"><i class="far fa-flag"></i> Marcar para revisão</button>
+                    <div style="flex:1;"></div>
+                    <button class="btn-nav-questao" id="btnAnterior"><i class="fas fa-chevron-left"></i> Anterior</button>
+                    <button class="btn-nav-questao primary" id="btnProximo">Próximo <i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; justify-content:flex-end; border-top:1px solid var(--border-light); padding-top:14px;">
+                    <button class="btn-nav-questao danger" id="btnFinalizar"><i class="fas fa-check-circle"></i> Finalizar prova</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTADO -->
+        <div class="page" id="pageResultado">
+            <div class="resultado-header">
+                <div class="nota" id="resultNota">0.0 <span>/ 100</span></div>
+                <div class="sub" id="resultSub">0% de acertos · 0 questões</div>
+            </div>
+            <div class="resultado-grid" id="resultadoGrid"></div>
+
+            <div class="resultado-diagnostico" id="resultadoDiagnostico">
+                <h3><i class="fas fa-stethoscope"></i> Diagnóstico do Aluno</h3>
+                <div id="diagList"></div>
+            </div>
+
+            <div class="resultado-por-disciplina" id="resultadoDisciplinas">
+                <h3><i class="fas fa-layer-group"></i> Desempenho por disciplina</h3>
+                <div id="discList"></div>
+            </div>
+
+            <div class="resultado-questoes" id="resultadoQuestoes">
+                <h3><i class="fas fa-list-check"></i> Correção comentada</h3>
+                <div id="rqList"></div>
+            </div>
+
+            <div class="resultado-actions">
+                <button class="card-btn accent" id="btnRefazer"><i class="fas fa-rotate-right"></i> Refazer simulado</button>
+                <button class="card-btn" id="btnDownloadDiagnostico"><i class="fas fa-download"></i> Baixar diagnóstico (PDF)</button>
+                <button class="card-btn secondary" id="btnVoltarHome"><i class="fas fa-house"></i> Voltar ao início</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONFIRMAÇÃO -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-modal">
+            <h3>Finalizar prova?</h3>
+            <p>Você tem certeza que deseja encerrar o simulado?</p>
+            <div class="stats">
+                <div><div class="num" id="confirmRespondidas">0</div><div class="label">Respondidas</div></div>
+                <div><div class="num" id="confirmTotal">0</div><div class="label">Total</div></div>
+                <div><div class="num" id="confirmRevisao">0</div><div class="label">Para revisão</div></div>
+            </div>
+            <div class="actions">
+                <button class="card-btn secondary" id="btnCancelarConfirm">Continuar prova</button>
+                <button class="card-btn" id="btnConfirmarFinalizar"><i class="fas fa-check-circle"></i> Finalizar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOASTS -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ============================================================
+        //  DADOS: 50 QUESTÕES OFICIAIS + GABARITO
+        // ============================================================
+        const questoes = [{
+            id: 1,
+            disciplina: 'Língua Portuguesa',
+            texto: `Texto I – O que é o “caxangá”, que os escravos de Jó jogavam? (Artur Louback)\n\nCaxangá tem vários significados, mas nada de jogo. Pode ser um crustáceo (parecido com um siri), um chapéu usado por marinheiros, e há até uma definição indígena: segundo o Dicionário Tupi-Guarani-Português, de Francisco da Silveira Bueno, caxangá vem de caácangá, que significa “mata extensa”. Mas nada disso tem a ver com o jogo e menos ainda com Jó, o personagem bíblico que perdeu tudo o que tinha (inclusive os escravos), menos a fé. Isso deixa os especialistas intrigados. “Já procurei caxangá, caxengá e caxingá, com “x” e “ch”, e não encontrei nada que fizesse sentido como um jogo”, diz o etimologista Claudio Moreno. “Se esse jogo existisse, seria quase impossível explicar como ele passou despercebido por todos os antropólogos e etnólogos que estudam nossas tradições populares”. O que pode ter ocorrido é uma espécie de “telefone sem fio”: se originalmente o verso fosse “juntavam caxangá” ao invés de “jogavam”, poderiam pensar em escravos pegando siris em vez de em um jogo. Outra hipótese é que caxangá seja uma expressão sem sentido, como “a Tonga da mironga do kabuletê”, da canção de Toquinho e Vinicius – as palavras separadas até têm sentido (são vocábulos africanos), mas não com o significado que elas têm na música.`,
+            enunciado: 'Ao considerar a pergunta proposta no título e o conteúdo do texto, pode-se afirmar que:',
+            alternativas: [
+                'a) fontes como o Dicionário Tupi-Guarani-Português indicam a resposta a ser aceita.',
+                'b) ela é a metáfora que propõe uma reflexão sobre as relações de trabalho no texto.',
+                'c) uma vez que são apontados vários significados possíveis, a resposta é parcial.',
+                'd) as referências a especialistas reforçam a importância de só uma explicação.',
+                'e) é possível concluir que não se tratava de um jogo, mas de um trabalho.'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 2,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'Ao observar a estrutura e o propósito do texto, assinale a alternativa que apresenta sua tipologia predominante.',
+            alternativas: [
+                'a) Injuntiva.',
+                'b) Argumentativa.',
+                'c) Narrativa.',
+                'd) Expositiva.',
+                'e) Descritiva.'
+            ],
+            gabarito: 3 // D
+        }, {
+            id: 3,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'O vocábulo “Isso”, destacado na passagem, é um pronome demonstrativo empregado para retomar a seguinte ideia no texto:',
+            alternativas: [
+                'a) o personagem bíblico ter perdido tudo o que tinha.',
+                'b) o fato de a palavra “caxangá” ter vários significados distintos.',
+                'c) o sentido da palavra não ter a ver com jogo, nem com Jó.',
+                'd) o personagem bíblico não ter perdido a fé.',
+                'e) a informação de que Jó possuía escravos também.'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 4,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'A função sintática do termo “intrigados” está corretamente indicada em:',
+            alternativas: [
+                'a) predicativo do sujeito.',
+                'b) complemento nominal.',
+                'c) adjunto adverbial.',
+                'd) adjunto adnominal.',
+                'e) predicativo do objeto.'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 5,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'Na passagem “Se esse jogo existisse”, o valor semântico da oração é reforçado pela presença de uma forma verbal que indica:',
+            alternativas: [
+                'a) possibilidade em relação ao passado.',
+                'b) incerteza sobre um fato do presente.',
+                'c) uma ação pontual ocorrida no passado.',
+                'd) uma ação futura oriunda do passado.',
+                'e) dúvida acerca de uma ação futura.'
+            ],
+            gabarito: 0 // A
+        }, {
+            id: 6,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'O emprego das aspas em “telefone sem fio”, no texto, revela um emprego conotativo construído por meio da seguinte figura de linguagem:',
+            alternativas: [
+                'a) ironia.',
+                'b) metáfora.',
+                'c) hipérbole.',
+                'd) metonímia.',
+                'e) eufemismo.'
+            ],
+            gabarito: 1 // B
+        }, {
+            id: 7,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'Em “Já procurei caxangá, caxengá e caxingá, com ‘x’ e ‘ch’”, caso os vocábulos fossem reescritos com “ch”, quanto à natureza fonética/fonológica, é correto afirmar que:',
+            alternativas: [
+                'a) não haveria alteração no número de fonemas.',
+                'b) diminuiria o número de letras das palavras.',
+                'c) se faria a inclusão de um encontro consonantal.',
+                'd) haveria mudança na pronúncia dos vocábulos.',
+                'e) aumentaria o número de letras.'
+            ],
+            gabarito: 0 // A (pois "x" e "ch" representam o mesmo fonema /ʃ/)
+        }, {
+            id: 8,
+            disciplina: 'Língua Portuguesa',
+            texto: `Texto II – Os homens gloriosos (adaptado) – Cecilia Meireles\n\nSentei-me sem perguntas à beira da terra, e ouvi narrarem-se casualmente os que passavam. Tenho a garganta amarga e os olhos doloridos: deixai-me esquecer o tempo, inclinar nas mãos a testa desencantada, e de mim mesma desaparecer, - que o clamor dos homens gloriosos cortou-me o coração de lado a lado.\n\nPois era um clamor de espadas bravias, de espadas enlouquecidas e sem relâmpagos, ah, sem relâmpagos... pegajosas de lodo e sangue denso.\n\nComo ficaram meus dias, e as flores claras que pensava! Nuvens brandas, construindo mundos, como se apagaram de repente! [...]`,
+            enunciado: 'A última estrofe revela uma mudança de estado do sujeito que enuncia no poema. A partir do entendimento do texto, é correto afirmar que isso ocorre devido:',
+            alternativas: [
+                'a) à atitude de sentar-se sem perguntas à beira da terra.',
+                'b) às narrativas casuais daqueles que passavam.',
+                'c) à situação da garganta amarga e os olhos doloridos.',
+                'd) ao desejo de desaparecer de si própria.',
+                'e) ao fato de ter se esquecido do tempo.'
+            ],
+            gabarito: 1 // B
+        }, {
+            id: 9,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'Ao longo do texto, em relação à colocação pronominal, houve privilégio da ênclise. No entanto, no último verso, a próclise pode ser justificada:',
+            alternativas: [
+                'a) pela flexão da forma verbal “apagaram”.',
+                'b) por constituir uma oração coordenada.',
+                'c) pela presença de uma construção adjetiva.',
+                'd) por ser um verso de conotação negativa.',
+                'e) pelo tom da oração explicitado pelo ponto.'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 10,
+            disciplina: 'Língua Portuguesa',
+            texto: '',
+            enunciado: 'O vocábulo destacado no verso “- que o clamor dos homens gloriosos” (v.7) introduz o valor semântico de:',
+            alternativas: [
+                'a) comparação.',
+                'b) concessão.',
+                'c) oposição.',
+                'd) explicação.',
+                'e) conclusão.'
+            ],
+            gabarito: 3 // D
+        }, {
+            id: 11,
+            disciplina: 'Raciocínio Lógico',
+            texto: '',
+            enunciado: 'Um armário contém 10 pares de meias, sendo 5 pares brancos e 5 pares pretos. Assinale a alternativa que apresenta a quantidade de maneiras diferentes que é possível escolher um par de meias brancas e um par de meias pretas.',
+            alternativas: [
+                'a) 10',
+                'b) 25',
+                'c) 20',
+                'd) 250',
+                'e) 50'
+            ],
+            gabarito: 1 // B
+        }, {
+            id: 12,
+            disciplina: 'Raciocínio Lógico',
+            texto: '',
+            enunciado: 'Quanto aos conceitos básicos sobre Conectivos Lógicos, analise as afirmativas abaixo e dê valores Verdadeiro (V) ou Falso (F).\n( ) A tabela verdade mostra todos os resultados possíveis.\n( ) A disjunção "OU" exige que ambas as proposições sejam verdadeiras.\n( ) Negação inverte o valor lógico de uma proposição.\nAssinale a alternativa que apresenta a sequência correta de cima para baixo.',
+            alternativas: [
+                'a) V - V - V',
+                'b) V - V - F',
+                'c) V - F - V',
+                'd) F - F - V',
+                'e) F - F - F'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 13,
+            disciplina: 'Raciocínio Lógico',
+            texto: '',
+            enunciado: '"Um carro que faz 12 km/l consumirá ____ litros ao percorrer 54 km. Caso percorra apenas 18 km, gastará ____ litros." Assinale a alternativa que preencha, correta e respectivamente, as lacunas.',
+            alternativas: [
+                'a) 4.5 / 1.5',
+                'b) 3.5 / 1.5',
+                'c) 4.5 / 2.5',
+                'd) 3.5 / 2.5',
+                'e) 2.5 / 1.5'
+            ],
+            gabarito: 0 // A
+        }, {
+            id: 14,
+            disciplina: 'Raciocínio Lógico',
+            texto: '',
+            enunciado: 'Dado os conjuntos A={1,2,3} e B={2,3,4} assinale a alternativa que apresenta respectivamente a união e a intersecção desses conjuntos.',
+            alternativas: [
+                'a) União: {1,2,2,3,3,4} e a Intersecção: {1,4}',
+                'b) União: {1,2,3} e a Intersecção: {2,3,4}',
+                'c) União: {1,3,4} e a Intersecção: {2,3}',
+                'd) União: {1,2,3,4} e a Intersecção: {2,3,4}',
+                'e) União: {1,2,3,4} e a Intersecção: {2,3}'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 15,
+            disciplina: 'Raciocínio Lógico',
+            texto: '',
+            enunciado: 'Numa oferta de Black Friday, uma loja oferece um desconto de 15% em uma TV que custa R$ 1.200,00. José, ao pagar com PIX, teve mais um desconto de 10%. Assinale a alternativa que apresenta quanto José pagou.',
+            alternativas: [
+                'a) R$ 916,00',
+                'b) R$ 900,00',
+                'c) R$ 816,00',
+                'd) R$ 818,00',
+                'e) R$ 918,00'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 16,
+            disciplina: 'Noções de Informática',
+            texto: '',
+            enunciado: 'Em relação ao Windows 7 e ao Windows 10, assinale a alternativa que apresenta o objetivo principal da "Central de Ações".',
+            alternativas: [
+                'a) Gerenciar atualizações automáticas de aplicativos de terceiros',
+                'b) Monitorar o desempenho do sistema em tempo real',
+                'c) Oferecer notificações e opções para gerenciar segurança e manutenção do sistema',
+                'd) Substituir o Painel de Controle como o principal hub de configurações',
+                'e) Configurar temas e personalização da área de trabalho'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 17,
+            disciplina: 'Noções de Informática',
+            texto: '',
+            enunciado: 'No Microsoft Excel, assinale a alternativa que apresenta o papel de uma célula.',
+            alternativas: [
+                'a) Um arquivo que contém várias planilhas',
+                'b) O local onde as fórmulas são armazenadas automaticamente',
+                'c) Uma função especial que calcula valores automaticamente',
+                'd) Um grupo de linhas que formam uma tabela',
+                'e) A interseção entre uma linha e uma coluna em uma planilha'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 18,
+            disciplina: 'Noções de Informática',
+            texto: '',
+            enunciado: 'Assinale a alternativa que apresenta as medidas que devem ser tomadas para proteger um sistema contra ataques combinados de phishing e malware.',
+            alternativas: [
+                'a) Evitar o uso de antivírus, pois esses softwares podem ser comprometidos durante ataques de phishing',
+                'b) Desabilitar permanentemente o acesso a e-mails e redes sociais para evitar phishing',
+                'c) Configurar firewalls e utilizar programas antivírus atualizados, além de educar os usuários sobre como identificar mensagens de phishing e evitar clicar em links ou baixar anexos suspeitos',
+                'd) Permitir o uso de redes públicas somente para baixar anexos suspeitos com ferramentas de proteção',
+                'e) Evitar abrir qualquer tipo de e-mail corporativo ou pessoal'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 19,
+            disciplina: 'Noções de Informática',
+            texto: '',
+            enunciado: 'A memória RAM (Random Access Memory) é um tipo de armazenamento temporário e volátil que armazena dados e programas em uso pelo computador, permitindo acesso rápido pelo processador. Sua capacidade influencia diretamente o desempenho em tarefas multitarefa e uso de aplicativos exigentes. Assinale a alternativa que apresenta o que acontece quando um computador fica sem memória RAM suficiente para executar programas e processos.',
+            alternativas: [
+                'a) O computador entra automaticamente em modo de economia de energia',
+                'b) O sistema operacional começa a usar o armazenamento secundário (HD ou SSD) como memória virtual, o que pode reduzir significativamente o desempenho',
+                'c) O computador desliga para evitar superaquecimento da memória',
+                'd) O processador aumenta sua frequência para compensar a falta de RAM',
+                'e) Os arquivos em execução são automaticamente salvos e encerrados'
+            ],
+            gabarito: 1 // B
+        }, {
+            id: 20,
+            disciplina: 'Noções de Informática',
+            texto: '',
+            enunciado: 'Assinale a alternativa que apresenta a principal função de um motor de busca, como o Google.',
+            alternativas: [
+                'a) Armazenar documentos e arquivos pessoais',
+                'b) Proteger os computadores contra vírus e malwares',
+                'c) Permitir que os usuários localizem informações disponíveis na internet, como sites, imagens e vídeos',
+                'd) Criar sites e publicá-los automaticamente',
+                'e) Exibir as páginas mais acessadas na internet sem critério de pesquisa'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 21,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Luiz, brasileiro, com 16 anos completo, em pleno gozo dos direitos políticos, quite com obrigações militares e eleitorais e apto física e mentalmente, pretende realizar concurso público. Assinale a alternativa que apresenta qual requisito básico para investidura em cargo público não está observado, nos termos da Lei nº 8.112/90.',
+            alternativas: [
+                'a) Nacionalidade brasileira',
+                'b) Idade mínima de 18 anos',
+                'c) Estar em gozo dos direitos políticos',
+                'd) Aptidão física e mental',
+                'e) Quitação com as obrigações militares e eleitorais'
+            ],
+            gabarito: 1 // B
+        }, {
+            id: 22,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Maria Luiza prestou concurso público em janeiro de 2022. No que tange às disposições contidas na Lei nº 8.112/90 a validade do concurso por ela prestado pode ocorrer até ____. Assinale a alternativa que preencha corretamente a lacuna.',
+            alternativas: [
+                'a) junho de 2022',
+                'b) janeiro de 2026',
+                'c) janeiro de 2027',
+                'd) janeiro de 2024',
+                'e) janeiro de 2023'
+            ],
+            gabarito: 3 // D (4 anos: 2022+4=2026? Na verdade janeiro/2022 + 4 anos = janeiro/2026, mas a opção é janeiro de 2026, que é a correta. Porém o gabarito diz D, que é janeiro de 2024? Vou conferir: o gabarito para 22 é D. Mas vamos ver: a validade máxima é 4 anos, então 2022+4=2026. A opção B é janeiro de 2026. Mas o gabarito oficial é D (janeiro de 2024)? Isso parece errado. Vou confiar no gabarito fornecido: para questão 22 o gabarito é D. Então mantenho D.
+        }, {
+            id: 23,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Assinale a alternativa que estabelece um dos objetivos fundamentais da República Federativa do Brasil.',
+            alternativas: [
+                'a) Os valores sociais do trabalho e da livre iniciativa',
+                'b) A soberania',
+                'c) Erradicar a pobreza e a marginalização e reduzir as desigualdades sociais e regionais',
+                'd) A dignidade da pessoa humana',
+                'e) O pluralismo político'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 24,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Sobre a motivação dos atos administrativos, assinale a alternativa incorreta, nos termos da Lei nº 9.784/1999.',
+            alternativas: [
+                'a) A motivação das decisões de órgãos colegiados e comissões ou de decisões orais constará da respectiva ata ou de termo escrito',
+                'b) Na solução de vários assuntos da mesma natureza, pode ser utilizado meio mecânico que reproduza os fundamentos das decisões, desde que não prejudique direito ou garantia dos interessados',
+                'c) A motivação não pode consistir em declaração de concordância com fundamentos de pareceres, informações, decisões ou propostas anteriores',
+                'd) A motivação das decisões de órgãos colegiados e comissões ou de decisões orais constará da respectiva ata ou de termo escrito (repetida)',
+                'e) Os atos administrativos deverão ser motivados, com indicação dos fatos e dos fundamentos jurídicos, quando negarem, limitarem ou afetarem direitos ou interesses dos administrados'
+            ],
+            gabarito: 2 // C (a incorreta é a que afirma que a motivação não pode consistir em declaração de concordância, pois a lei permite).
+        }, {
+            id: 25,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Nos termos da Lei de Improbidade Administrativa (Lei nº 8.429/92), assinale a alternativa que apresenta ato de improbidade que importa em enriquecimento ilícito.',
+            alternativas: [
+                'a) Permitir ou facilitar a aquisição, permuta ou locação de bem ou serviço por preço superior ao de mercado',
+                'b) Conceder benefício administrativo ou fiscal sem a observância das formalidades legais ou regulamentares aplicáveis à espécie',
+                'c) Frustrar a licitude de processo licitatório ou de processo seletivo para celebração de parcerias com entidades sem fins lucrativos, ou dispensá-los indevidamente, acarretando perda patrimonial efetiva',
+                'd) Celebrar contrato de rateio de consórcio público sem suficiente e prévia dotação orçamentária, ou sem observar as formalidades previstas na lei',
+                'e) Receber vantagem econômica de qualquer natureza, direta ou indireta, para tolerar a exploração ou a prática de jogos de azar, de lenocínio, de narcotráfico, de contrabando, de usura ou de qualquer outra atividade ilícita, ou aceitar promessa de tal vantagem'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 26,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Sobre a prescrição, assinale a alternativa incorreta com base na Lei nº 8.429/92.',
+            alternativas: [
+                'a) A ação para a aplicação das sanções previstas nesta Lei prescreve em 8 (oito) anos, contados a partir da ciência da autoria do fato',
+                'b) A publicação da sentença condenatória é causa de interrupção do prazo prescricional',
+                'c) Nos atos de improbidade conexos que sejam objeto do mesmo processo, a suspensão e a interrupção relativas a qualquer deles estendem-se aos demais',
+                'd) O inquérito civil para apuração do ato de improbidade será concluído no prazo de 365 (trezentos e sessenta e cinco) dias corridos, prorrogável uma única vez por igual período',
+                'e) A suspensão e a interrupção da prescrição produzem efeitos relativamente a todos os que concorreram para a prática do ato de improbidade'
+            ],
+            gabarito: 0 // A (a incorreta é a que fala em 8 anos, pois o prazo é de 5 anos para atos de improbidade, mas a lei mudou? Na verdade a Lei 8.429/92 foi alterada, mas o gabarito indica A como incorreta.)
+        }, {
+            id: 27,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Marcelo é servidor público civil da União. Nesta condição, assinale a alternativa que revela circunstância fática que não pode ser considerada um dever, nos termos da legislação aplicável.',
+            alternativas: [
+                'a) Atender com presteza ao público em geral, prestando as informações requeridas, ressalvadas as protegidas pelo sigilo',
+                'b) Ser assíduo e pontual ao serviço',
+                'c) Representar contra ilegalidade, omissão ou abuso de poder',
+                'd) Atuar como procurador ou intermediário junto a repartições públicas',
+                'e) Ser leal às instituições a que servir'
+            ],
+            gabarito: 3 // D
+        }, {
+            id: 28,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Sobre os direitos e deveres individuais e coletivos previstos na Constituição Cidadã, assinale a alternativa correta.',
+            alternativas: [
+                'a) É livre a manifestação do pensamento, inclusive o anonimato',
+                'b) É assegurado o direito de resposta, proporcional ao agravo, não cumulativo com indenização de qualquer ordem',
+                'c) É livre a expressão da atividade intelectual, artística, científica e de comunicação, desde que haja licença do órgão competente',
+                'd) Ninguém será privado de direitos por motivo de crença religiosa ou de convicção filosófica ou política, salvo se as invocar para eximir-se de obrigação legal a todos imposta e recusar-se a cumprir prestação alternativa, fixada em lei',
+                'e) É livre a locomoção no território nacional em tempo de guerra ou de paz'
+            ],
+            gabarito: 3 // D
+        }, {
+            id: 29,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Com base na Lei nº 11.091/2005, assinale alternativa que apresenta o conceito correto de “plano de carreira”.',
+            alternativas: [
+                'a) Conjunto de cargos de mesma hierarquia, classificados a partir do requisito de escolaridade, nível de responsabilidade, conhecimentos, habilidades específicas, formação especializada, experiência, risco e esforço físico para o desempenho de suas atribuições',
+                'b) Conjunto de princípios, diretrizes e normas que regulam o desenvolvimento profissional dos servidores titulares de cargos que integram determinada carreira, constituindo-se em instrumento de gestão do órgão ou entidade',
+                'c) Conjunto de atribuições e responsabilidades previstas na estrutura organizacional que são cometidas a um servidor',
+                'd) Área específica de atuação do servidor, integrada por atividades afins ou complementares, organizada a partir das necessidades institucionais e que orienta a política de desenvolvimento de pessoal',
+                'e) Posição do servidor na Matriz Hierárquica dos Padrões de Vencimento em decorrência da capacitação profissional para o exercício das atividades do cargo ocupado, realizada após o ingresso'
+            ],
+            gabarito: 1 // B
+        }, {
+            id: 30,
+            disciplina: 'Legislação',
+            texto: '',
+            enunciado: 'Com fundamento na Lei nº 11.091/2005, assinale a alternativa correta.',
+            alternativas: [
+                'a) A remuneração dos integrantes do Plano de Carreira será composta do vencimento básico tão somente, sem qualquer outra vantagem pecuniária',
+                'b) O desenvolvimento do servidor na carreira dar-se-á, exclusivamente, pela mudança de nível de capacitação e de padrão de vencimento mediante decreto do Governador de Estado',
+                'c) Caberá à Instituição Federal de Ensino avaliar bimestralmente a adequação do quadro de pessoal às suas necessidades, propondo ao Ministério da Educação, se for o caso, o seu redimensionamento',
+                'd) São consideradas Instituições Federais de Ensino os órgãos e entidades privados vinculados ao Ministério da Educação que tenham por atividade-fim o desenvolvimento e aperfeiçoamento do ensino, da pesquisa e extensão e que integram o Sistema Federal de Ensino',
+                'e) É vedada a aplicação do instituto da redistribuição aos cargos vagos ou ocupados, dos Quadros de Pessoal das Instituições Federais de Ensino para outros órgãos e entidades da administração pública e dos Quadros de Pessoal destes órgãos e entidades para aquelas instituições'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 31,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Sobre o conceito de Administração, analise as afirmativas abaixo.\nI. A palavra administração vem do latim ad (junto de) e ministratio (prestação de serviço), e significa “ação de prestar serviço ou ajuda”.\nII. A administração é o processo de planejar, organizar, dirigir e controlar o uso dos recursos e de competências organizacionais para alcançar determinados objetivos de maneira eficiente e por meio através de um arranjo integrado e convergente.\nIII. Tarefa dispersadora e sinérgica da administração: juntar e integrar interesses das partes interessadas em um negócio.\nEstão corretas as afirmativas:',
+            alternativas: [
+                'a) I e II apenas',
+                'b) III apenas',
+                'c) I, II e III',
+                'd) II e III apenas',
+                'e) I apenas'
+            ],
+            gabarito: 0 // A
+        }, {
+            id: 32,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Sobre os objetivos da Administração, assinale a alternativa incorreta.',
+            alternativas: [
+                'a) Um dos objetivos da Administração é o resultado que a administração oferece a todos os seus stakeholders',
+                'b) Um dos objetivos da Administração é o apoio à comunidade onde reside, responsabilidade social e ecológica',
+                'c) Um dos objetivos da Administração é oferecer resultados ou fazer acontecer',
+                'd) Um dos objetivos da Administração é dar retorno do investimento aos investidores',
+                'e) Um dos objetivos da Administração é satisfazer toda expectativa do consumidor incondicionalmente'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 33,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Em Administração, os fatores de produção são denominados recursos organizacionais. Esses recursos são os meios pelos quais toda organização busca realizar suas atividades para atingir seus objetivos e entregar valor à sociedade. Abaixo estão apresentados alguns recursos organizacionais. Diante do exposto, assinale a alternativa incorreta.',
+            alternativas: [
+                'a) Recursos Materiais',
+                'b) Recursos Financeiros',
+                'c) Recursos Mercadológicos',
+                'd) Recursos Jurídicos',
+                'e) Recursos Administrativos'
+            ],
+            gabarito: 3 // D
+        }, {
+            id: 34,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Quando se fala em orçamento como controle das atividades financeiras do governo, busca-se fazer referência aos limites de tributar, de auferir receitas, na realização de despesas, notadamente na expansão ou retração do endividamento público. Para o orçamento há alguns princípios. Assinale a alternativa que apresenta o nome do princípio que preconiza que o orçamento deve ser uno, ou seja, cada ente governamental deve elaborar apenas um único orçamento.',
+            alternativas: [
+                'a) Princípio da Anualidade',
+                'b) Princípio da Unidade',
+                'c) Princípio do Orçamento Bruto',
+                'd) Princípio da Universalidade',
+                'e) Princípio da Exclusividade'
+            ],
+            gabarito: 1 // B
+        }, {
+            id: 35,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'O planejamento constitui a primeira função do processo administrativo de planejar, organizar, dirigir e controlar. Vem antes da execução de qualquer atividade empresarial. Planejamento é a função administrativa que determina antecipadamente quais são ____ e o que deve ser feito para atingi-los de maneira eficiente e eficaz, isto é, com o mínimo de recursos e com o máximo de rendimento. Assinale a alternativa que preencha corretamente a lacuna.',
+            alternativas: [
+                'a) os objetivos almejados',
+                'b) os resultados obtidos',
+                'c) os lucros resultantes',
+                'd) os funcionários desejados',
+                'e) os materiais alcançados'
+            ],
+            gabarito: 0 // A
+        }, {
+            id: 36,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Ata é um documento oficial que registra os acontecimentos de uma reunião, assembléia, congresso, conferência ou outro evento. É um relato resumido do que foi discutido e decidido, e pode ser manuscrita ou digitada. Ela é importante pelos motivos relacionados abaixo. Diante do exposto, assinale a alternativa incorreta.',
+            alternativas: [
+                'a) Serve como prova documental do que foi discutido e decidido',
+                'b) É um arquivo de referência para futuras reuniões',
+                'c) Serve como modelo para criação de e-mails corporativos',
+                'd) Pode ser utilizada como documento comprobatório em litígios ou disputas',
+                'e) Pode ser divulgada em jornais para conhecimento dos interessados'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 37,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'O objetivo de quem escreve um texto corporativo é sempre transmitir seu pensamento a alguém, por meio de ideias e informações. Dessa forma, a clareza é, portanto, o atributo fundamental de um texto, ao qual todas as normas e regras devem se subordinar. Para que um texto formal seja bem escrito ele deve ter as qualidades relacionadas abaixo. Assinale a alternativa incorreta quanto a essas qualidades.',
+            alternativas: [
+                'a) Unidade e concisão',
+                'b) Coerência',
+                'c) Objetividade',
+                'd) Clareza',
+                'e) Necedade'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 38,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Frederick Herzberg, na década de 60 do século passado, focalizou a questão da satisfação para formular sua teoria motivacional. Segundo ele, existem dois fatores que explicam o comportamento das pessoas no trabalho: os higiênicos e os motivacionais. Diante do exposto, analise as afirmativas abaixo.\nI. Fatores higiênicos localizam-se no ambiente de trabalho. São extrínsecos às pessoas.\nII. Fatores motivacionais são intrínsecos. Dizem respeito aos sentimentos de autorrealização e reconhecimento.\nIII. A satisfação dos fatores intrínsecos só acontecem, se, e somente se, os fatores higiênicos forem satisfeitos anteriormente.\nEstão corretas as afirmativas:',
+            alternativas: [
+                'a) I apenas',
+                'b) II apenas',
+                'c) I e II apenas',
+                'd) I e III apenas',
+                'e) III apenas'
+            ],
+            gabarito: 2 // C (I e II corretas, III incorreta pois a satisfação dos fatores motivacionais independe da satisfação dos higiênicos)
+        }, {
+            id: 39,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'A Política Nacional de Desenvolvimento de Pessoas – PNDP tem o objetivo de promover o desenvolvimento dos servidores públicos nas competências necessárias à consecução da excelência na atuação dos órgãos e das entidades da administração pública federal direta, autárquica e fundacional. Os instrumentos da PNDP estão listados abaixo. Assinale a alternativa incorreta quanto a estes instrumentos.',
+            alternativas: [
+                'a) O Plano Consolidado de Ações de Desenvolvimento',
+                'b) O relatório anual de execução do Plano de Desenvolvimento de Pessoas',
+                'c) O relatório consolidado de execução do Plano de Desenvolvimento de Pessoas',
+                'd) Os modelos, as metodologias, as ferramentas informatizadas e as trilhas de desenvolvimento',
+                'e) O Plano de Direcionamento de Pessoas'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 40,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'A administração pública direta e indireta de qualquer dos Poderes da União, dos Estados, do Distrito Federal e dos Municípios obedecerá aos princípios expressos relacionados abaixo. Assinale a alternativa incorreta quanto a estes princípios.',
+            alternativas: [
+                'a) Efetividade',
+                'b) Legalidade',
+                'c) Impessoalidade',
+                'd) Moralidade',
+                'e) Publicidade'
+            ],
+            gabarito: 0 // A (o princípio constitucional é "Eficiência", não "Efetividade")
+        }, {
+            id: 41,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Segundo a Lei 14.133/2021, é a modalidade de licitação obrigatória para aquisição de bens e serviços comuns, cujo critério de julgamento poderá ser o de menor preço ou o de maior desconto. Assinale a alternativa que preencha corretamente a lacuna.',
+            alternativas: [
+                'a) leilão',
+                'b) diálogo Competitivo',
+                'c) pregão',
+                'd) concurso',
+                'e) credenciamento'
+            ],
+            gabarito: 2 // C
+        }, {
+            id: 42,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'O manuseio de materiais em um sistema de estocagem e manuseio é representado por atividades principais, listadas abaixo. Assinale a alternativa incorreta em relação a essas atividades.',
+            alternativas: [
+                'a) Carga e descarga',
+                'b) Movimento para a estocagem',
+                'c) Movimento da estocagem',
+                'd) Atendimento dos pedidos',
+                'e) Faturamento dos pedidos'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 43,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Há etapas para manter a distribuição otimizada. Sobre este assunto, analise as afirmativas abaixo.\nI. Estruturar e otimizar a rede. Determinar quantas localizações, onde e quanto espaço é necessário para entregar aos clientes: assumir uma previsão, parâmetros-chave sobre cada produto e sobre a distribuição demográfica.\nII. Projetar e automatizar os processos. Projetar e simplificar os processos e implementar tecnologias de informação e de manuseio de materiais para automatizar as atividades do armazém: presumir a definição de necessidades para automação.\nIII. Operar os processos e a rede. Desenvolver e gerenciar os processos de negócio e as operações físicas dos centros de distribuição e da logística.\nEstão corretas as afirmativas:',
+            alternativas: [
+                'a) I, II e III',
+                'b) I e II apenas',
+                'c) II e III apenas',
+                'd) I apenas',
+                'e) II apenas'
+            ],
+            gabarito: 0 // A
+        }, {
+            id: 44,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: '____ é um documento escrito que serve para comunicar informações, solicitar providências ou encaminhar decisões dentro de uma organização. Assinale a alternativa que preencha corretamente a lacuna.',
+            alternativas: [
+                'a) Certidão',
+                'b) Convocação',
+                'c) Portaria',
+                'd) Edital',
+                'e) Memorando'
+            ],
+            gabarito: 4 // E
+        }, {
+            id: 45,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Ato administrativo é espécie de ato jurídico. Pode-se conceituá-lo como manifestação unilateral de vontade da Administração Pública, apta a gerar efeitos jurídicos, que tem finalidade pública. Abaixo estão algumas de suas características. Diante destas características, assinale a alternativa incorreta.',
+            alternativas: [
+                'a) Manifestação de vontade. Exterioriza a vontade do agente mediante uma ação ou omissão',
+                'b) Competência. Poder atribuído ao agente para o desempenho específico de suas funções',
+                'c) Parte da Administração Pública. Diferentemente do ato jurídico comum, o ato administrativo, para ser válido e eficaz como tal, deve nascer do exercício da função administrativa',
+                'd) Gera efeitos jurídicos. Os efeitos são disciplinados pelo Direito',
+                'e) Finalidade pública. É o objetivo de interesse público a ser atingido'
+            ],
+            gabarito: 1 // B (a competência não é uma característica, mas um requisito; todas estão corretas, mas a incorreta seria a que não se aplica? Na verdade todas são características, mas o gabarito aponta B como incorreta.)
+        }, {
+            id: 46,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Sobre o Sistema de Controle Interno da Administração Pública, analise as afirmativas abaixo.\nI. O Sistema de Controle Interno representa, em cada unidade administrativa, a verdadeira concatenação de esforços dos entes federativos da República para atingir os ditames constitucionais de legalidade, legitimidade, economicidade e de bem servir o administrado, sob o prisma de controle horizontal da sua atividade.\nII. O Sistema de Controle Interno diverge do controle vertical, feito por entes externos, pois abre a possibilidade da conformação legal de seus atos em momento anterior ao controle negativo do ato, oportunizando ajustes, em alguns casos, anteriores aos efeitos negativos que porventura vierem a causar.\nIII. O Sistema de Controle Interno, conforme o prisma horizontal, são atos que podem ser entendidos como não mais convenientes e oportunos e podem ser revogados por quem é competente para tanto.\nEstão corretas as afirmativas:',
+            alternativas: [
+                'a) I apenas',
+                'b) II apenas',
+                'c) III apenas',
+                'd) I, II e III',
+                'e) I e II apenas'
+            ],
+            gabarito: 3 // D
+        }, {
+            id: 47,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Os documentos podem ser classificados de várias maneiras. A classificação quanto ao gênero é uma delas. Assinale a alternativa que não tenha uma forma de classificação quanto ao gênero.',
+            alternativas: [
+                'a) Cartográfico',
+                'b) Textuais',
+                'c) Iconográficos',
+                'd) Requerimentos',
+                'e) Informáticos'
+            ],
+            gabarito: 3 // D (Requerimentos é uma espécie, não um gênero documental)
+        }, {
+            id: 48,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'Um edital é um documento que divulga uma ordem oficial, aviso, citação ou postura, de interesse público, por meio de sua publicação na imprensa ou afixação em local visível. É uma obrigação legal de publicização das atividades de uma instituição. Abaixo estão algumas características de um edital. Diante destas características, assinale a alternativa incorreta.',
+            alternativas: [
+                'a) Em regra, ser confidencial e com acesso restrito a um grupo de pessoas',
+                'b) Ser um ato administrativo que leva ao conhecimento público a realização de uma licitação',
+                'c) Ser dividido por tópicos que abordam temas segundo as respectivas categorias',
+                'd) Ter anexos, como minuta do contrato e modelos de declarações',
+                'e) Ser publicado na imprensa ou afixado em local visível ao público'
+            ],
+            gabarito: 0 // A
+        }, {
+            id: 49,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: 'O orçamento público é o instrumento de planejamento que detalha a previsão dos recursos a serem arrecadados (impostos e outras receitas estimadas) e a destinação desses recursos (ou seja, em quais despesas esses recursos serão utilizados) a cada ano. Ao englobar receitas e despesas, o orçamento é peça fundamental para o equilíbrio das contas públicas e indica as prioridades do Governo para a sociedade. Assinale a alternativa correta sobre a legislação que apresenta a programação dos gastos governamentais, bem como a previsão das receitas para custear esses gastos. Trata-se de um único documento, constituído por três partes: o Orçamento Fiscal, o Orçamento da Seguridade Social e o Orçamento de Investimento das Empresas Estatais.',
+            alternativas: [
+                'a) Lei Orçamentária Anual – LOA',
+                'b) Lei de Diretrizes Orçamentárias – LDO',
+                'c) Plano Plurianual – PPA',
+                'd) Orçamento Global – OG',
+                'e) Orçamento Distributivo Anual - ODA'
+            ],
+            gabarito: 0 // A
+        }, {
+            id: 50,
+            disciplina: 'Conhecimentos Gerais',
+            texto: '',
+            enunciado: '____ é o documento que traz as diretrizes, objetivos e metas de médio prazo da administração pública. Assinale a alternativa que preencha corretamente a lacuna.',
+            alternativas: [
+                'a) Plano Diretor',
+                'b) Lei Orçamentária',
+                'c) Gasto Público',
+                'd) Plano Plurianual',
+                'e) Plano Bimestral'
+            ],
+            gabarito: 3 // D
+        }];
+
+        // ============================================================
+        //  ESTADO DO APP
+        // ============================================================
+        const App = {
+            questoes: questoes,
+            respostas: new Array(questoes.length).fill(-1),
+            revisao: new Array(questoes.length).fill(false),
+            currentIndex: 0,
+            finalizado: false,
+            tempoRestante: 4 * 3600, // 4h
+            timerInterval: null,
+            resultado: null, // guarda o resultado após finalizar
+        };
+
+        // ============================================================
+        //  HELPERS
+        // ============================================================
+        function $(id) { return document.getElementById(id); }
+
+        function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+
+        function qsa(sel, ctx) { return (ctx || document).querySelectorAll(sel); }
+
+        function formatTime(seg) {
+            const h = Math.floor(seg / 3600);
+            const m = Math.floor((seg % 3600) / 60);
+            const s = seg % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function toast(msg, type = 'info') {
+            const c = $('toastContainer');
+            const el = document.createElement('div');
+            el.className = `toast ${type}`;
+            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-circle-exclamation' :
+                'fa-circle-info';
+            el.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
+            c.appendChild(el);
+            setTimeout(() => {
+                el.classList.add('removing');
+                setTimeout(() => { if (el.parentNode) el.remove(); }, 350);
+            }, 2800);
+        }
+
+        function letraIndex(i) { return String.fromCharCode(65 + i); }
+
+        // ============================================================
+        //  NAVEGAÇÃO DE PÁGINAS
+        // ============================================================
+        function showPage(pageId) {
+            qsa('.page').forEach(p => p.classList.remove('active'));
+            const el = $(pageId);
+            if (el) el.classList.add('active');
+            $('confirmOverlay').classList.remove('active');
+        }
+
+        // ============================================================
+        //  INICIAR SIMULADO
+        // ============================================================
+        function iniciarSimulado() {
+            // Reinicia estado
+            App.respostas.fill(-1);
+            App.revisao.fill(false);
+            App.currentIndex = 0;
+            App.finalizado = false;
+            App.tempoRestante = 4 * 3600;
+            if (App.timerInterval) { clearInterval(App.timerInterval);
+                App.timerInterval = null; }
+
+            showPage('pageSimulado');
+            $('simuladoTitulo').textContent = 'Assistente em Administração - UFPB';
+            $('simuladoSub').textContent = '50 questões · 4h';
+
+            renderQuestaoNav();
+            renderQuestaoAtual();
+            iniciarTimer();
+            toast('Simulado iniciado! Boa sorte! 🦊', 'success');
+        }
+
+        // ============================================================
+        //  TIMER
+        // ============================================================
+        function iniciarTimer() {
+            if (App.timerInterval) clearInterval(App.timerInterval);
+            App.timerInterval = setInterval(() => {
+                App.tempoRestante--;
+                if (App.tempoRestante <= 0) {
+                    App.tempoRestante = 0;
+                    clearInterval(App.timerInterval);
+                    toast('⏰ Tempo esgotado! Finalizando automaticamente.', 'error');
+                    finalizarSimulado(true);
+                }
+                atualizarTimerUI();
+            }, 1000);
+            atualizarTimerUI();
+        }
+
+        function atualizarTimerUI() {
+            const el = $('timerDisplay');
+            if (!el) return;
+            const seg = App.tempoRestante;
+            el.textContent = formatTime(seg);
+            el.classList.toggle('warning', seg < 600);
+        }
+
+        // ============================================================
+        //  RENDER QUESTÃO
+        // ============================================================
+        function renderQuestaoNav() {
+            const container = $('questaoNav');
+            const total = App.questoes.length;
+            let html = '';
+            for (let i = 0; i < total; i++) {
+                const resp = App.respostas[i] !== -1;
+                const rev = App.revisao[i];
+                let cls = 'q-nav-btn';
+                if (i === App.currentIndex) cls += ' active';
+                if (resp) cls += ' respondida';
+                if (rev) cls += ' revisao';
+                html += `<button class="${cls}" data-idx="${i}" onclick="irParaQuestao(${i})">${i+1}</button>`;
+            }
+            container.innerHTML = html;
+            $('questaoIndice').textContent = `${App.currentIndex+1} / ${total}`;
+        }
+
+        function renderQuestaoAtual() {
+            const q = App.questoes[App.currentIndex];
+            if (!q) return;
+            const idx = App.currentIndex;
+            const total = App.questoes.length;
+
+            // Texto base
+            const textoEl = $('questaoTextoBase');
+            if (q.texto && q.texto.trim() !== '') {
+                textoEl.style.display = 'block';
+                textoEl.textContent = q.texto;
+            } else {
+                textoEl.style.display = 'none';
+            }
+
+            $('qNumero').textContent = `Questão ${idx+1} de ${total}`;
+            $('qEnunciado').textContent = q.enunciado;
+
+            // Alternativas
+            const altContainer = $('qAlternativas');
+            const respAtual = App.respostas[idx];
+            let altHtml = '';
+            q.alternativas.forEach((alt, i) => {
+                const sel = respAtual === i ? 'selected' : '';
+                altHtml += `
+                    <div class="alt-wrapper ${sel}" data-alt="${i}" onclick="selecionarAlternativa(${idx}, ${i})">
+                        <div class="alt-radio"></div>
+                        <span class="alt-text">${alt}</span>
+                    </div>
+                `;
+            });
+            altContainer.innerHTML = altHtml;
+
+            // Botão revisão
+            const btnRev = $('btnRevisao');
+            if (App.revisao[idx]) {
+                btnRev.classList.add('ativo');
+                btnRev.innerHTML = '<i class="fas fa-flag"></i> Desmarcar revisão';
+            } else {
+                btnRev.classList.remove('ativo');
+                btnRev.innerHTML = '<i class="far fa-flag"></i> Marcar para revisão';
+            }
+
+            renderQuestaoNav();
+            atualizarProgresso();
+        }
+
+        function irParaQuestao(idx) {
+            if (idx < 0 || idx >= App.questoes.length || App.finalizado) return;
+            App.currentIndex = idx;
+            renderQuestaoAtual();
+        }
+
+        function selecionarAlternativa(idx, altIdx) {
+            if (App.finalizado) return;
+            App.respostas[idx] = altIdx;
+            renderQuestaoAtual();
+        }
+
+        function toggleRevisao() {
+            if (App.finalizado) return;
+            const idx = App.currentIndex;
+            App.revisao[idx] = !App.revisao[idx];
+            renderQuestaoAtual();
+        }
+
+        function navegarQuestao(dir) {
+            const novo = App.currentIndex + dir;
+            if (novo < 0 || novo >= App.questoes.length) return;
+            irParaQuestao(novo);
+        }
+
+        function atualizarProgresso() {
+            const total = App.questoes.length;
+            const respondidas = App.respostas.filter(r => r !== -1).length;
+            const pct = total > 0 ? Math.round((respondidas / total) * 100) : 0;
+            $('progressFill').style.width = pct + '%';
+            $('progressInfo').textContent = `${pct}% (${respondidas}/${total})`;
+        }
+
+        // ============================================================
+        //  FINALIZAR
+        // ============================================================
+        function abrirConfirmacao() {
+            if (App.finalizado) return;
+            const total = App.questoes.length;
+            const respondidas = App.respostas.filter(r => r !== -1).length;
+            const revisao = App.revisao.filter(r => r).length;
+            $('confirmRespondidas').textContent = respondidas;
+            $('confirmTotal').textContent = total;
+            $('confirmRevisao').textContent = revisao;
+            $('confirmOverlay').classList.add('active');
+        }
+
+        function finalizarSimulado(auto = false) {
+            if (App.finalizado) return;
+            App.finalizado = true;
+            if (App.timerInterval) { clearInterval(App.timerInterval);
+                App.timerInterval = null; }
+
+            const total = App.questoes.length;
+            let acertos = 0;
+            const detalhes = [];
+            App.questoes.forEach((q, i) => {
+                const resp = App.respostas[i];
+                const certa = resp === q.gabarito;
+                if (certa) acertos++;
+                detalhes.push({
+                    questao: q,
+                    resposta: resp,
+                    certa: certa,
+                    gabarito: q.gabarito,
+                });
+            });
+
+            const nota = total > 0 ? Math.round((acertos / total) * 100) : 0;
+            const tempoGasto = App.tempoTotalSegundos || (4 * 3600 - App.tempoRestante);
+            const tempoStr = formatTime(tempoGasto);
+
+            // Resultado
+            const resultado = {
+                total,
+                acertos,
+                nota,
+                tempo: tempoStr,
+                detalhes,
+                disciplina: 'Assistente em Administração - UFPB'
+            };
+            App.resultado = resultado;
+
+            // Mostrar resultado
+            mostrarResultado(resultado);
+            if (!auto) toast('✅ Prova finalizada!', 'success');
+        }
+
+        // ============================================================
+        //  RESULTADO
+        // ============================================================
+        function mostrarResultado(hist) {
+            showPage('pageResultado');
+
+            const { total, acertos, nota, tempo, detalhes } = hist;
+            const erros = total - acertos;
+
+            $('resultNota').innerHTML = `${nota} <span>/ 100</span>`;
+            $('resultSub').textContent = `${acertos} acertos · ${erros} erros · ${tempo} de prova`;
+
+            // KPIs
+            const grid = $('resultadoGrid');
+            grid.innerHTML = `
+                <div class="resultado-kpi"><div class="value accent">${acertos}</div><div class="label">Acertos</div></div>
+                <div class="resultado-kpi"><div class="value danger">${erros}</div><div class="label">Erros</div></div>
+                <div class="resultado-kpi"><div class="value">${nota}%</div><div class="label">Aproveitamento</div></div>
+                <div class="resultado-kpi"><div class="value">${tempo}</div><div class="label">Tempo usado</div></div>
+            `;
+
+            // Diagnóstico
+            const diagList = $('diagList');
+            const corte = 60; // nota de corte 60%
+            const status = nota >= corte ? '✅ APROVADO' : '❌ REPROVADO';
+            const faltam = corte - nota > 0 ? (corte - nota).toFixed(1) : 0;
+            diagList.innerHTML = `
+                <div class="diag-item"><span class="label">Nota de corte (sugerida)</span><span class="value">${corte}%</span></div>
+                <div class="diag-item"><span class="label">Sua nota</span><span class="value">${nota}%</span></div>
+                <div class="diag-item"><span class="label">Situação</span><span class="value" style="color:${nota >= corte ? 'var(--accent)' : 'var(--danger)'};">${status}</span></div>
+                ${nota < corte ? `<div class="diag-item"><span class="label">Faltam para a nota de corte</span><span class="value" style="color:var(--danger);">${faltam}%</span></div>` : ''}
+                <div class="diag-item"><span class="label">Acertos</span><span class="value">${acertos}/${total}</span></div>
+                <div class="diag-item"><span class="label">Erros</span><span class="value">${erros}</span></div>
+                <div class="diag-item"><span class="label">Tempo gasto</span><span class="value">${tempo}</span></div>
+            `;
+
+            // Desempenho por disciplina
+            const discMap = {};
+            detalhes.forEach(d => {
+                const disc = d.questao.disciplina || 'Outras';
+                if (!discMap[disc]) discMap[disc] = { total: 0, acertos: 0 };
+                discMap[disc].total++;
+                if (d.certa) discMap[disc].acertos++;
+            });
+            const discList = $('discList');
+            let discHtml = '';
+            for (const [nome, dados] of Object.entries(discMap)) {
+                const pct = dados.total > 0 ? Math.round((dados.acertos / dados.total) * 100) : 0;
+                const cor = pct >= 70 ? 'var(--accent)' : pct >= 40 ? 'var(--warning)' : 'var(--danger)';
+                discHtml += `
+                    <div class="disc-item">
+                        <span class="name">${nome}</span>
+                        <div class="bar"><div class="fill" style="width:${pct}%;background:${cor};"></div></div>
+                        <span class="pct" style="color:${cor};">${pct}%</span>
+                    </div>
+                `;
+            }
+            discList.innerHTML = discHtml || '<p style="color:var(--text-muted);">Nenhuma disciplina identificada.</p>';
+
+            // Correção comentada
+            const rqList = $('rqList');
+            let rqHtml = '';
+            detalhes.forEach((d, i) => {
+                const status = d.certa ? 'acerto' : 'erro';
+                const icon = d.certa ? '✅' : '❌';
+                const gabLetra = letraIndex(d.gabarito);
+                const respLetra = d.resposta !== -1 ? letraIndex(d.resposta) : '—';
+                rqHtml += `
+                    <div class="rq-item">
+                        <div class="status ${status}">${icon}</div>
+                        <div class="body">
+                            <strong>Q${i+1}</strong> ${d.questao.enunciado.substring(0, 80)}${d.questao.enunciado.length > 80 ? '...' : ''}
+                            <div class="gabarito">Gabarito: <strong>${gabLetra}</strong> · Sua resposta: <strong>${respLetra}</strong></div>
+                        </div>
+                    </div>
+                `;
+            });
+            rqList.innerHTML = rqHtml;
+
+            // Botões
+            $('btnRefazer').onclick = () => { iniciarSimulado(); };
+            $('btnVoltarHome').onclick = () => { showPage('pageHome'); };
+            $('btnDownloadDiagnostico').onclick = () => { baixarDiagnostico(hist); };
+        }
+
+        // ============================================================
+        //  DOWNLOAD DIAGNÓSTICO (PDF)
+        // ============================================================
+        function baixarDiagnostico(hist) {
+            const { total, acertos, nota, tempo, detalhes } = hist;
+            const erros = total - acertos;
+            const corte = 60;
+            const status = nota >= corte ? 'APROVADO' : 'REPROVADO';
+
+            // Construir HTML do relatório
+            const discMap = {};
+            detalhes.forEach(d => {
+                const disc = d.questao.disciplina || 'Outras';
+                if (!discMap[disc]) discMap[disc] = { total: 0, acertos: 0 };
+                discMap[disc].total++;
+                if (d.certa) discMap[disc].acertos++;
+            });
+
+            let discHtml = '';
+            for (const [nome, dados] of Object.entries(discMap)) {
+                const pct = dados.total > 0 ? Math.round((dados.acertos / dados.total) * 100) : 0;
+                discHtml += `<tr><td>${nome}</td><td>${dados.acertos}/${dados.total}</td><td>${pct}%</td></tr>`;
+            }
+
+            let questoesHtml = '';
+            detalhes.forEach((d, i) => {
+                const gabLetra = letraIndex(d.gabarito);
+                const respLetra = d.resposta !== -1 ? letraIndex(d.resposta) : '—';
+                const statusIcon = d.certa ? '✅' : '❌';
+                questoesHtml += `
+                    <tr>
+                        <td>${i+1}</td>
+                        <td>${statusIcon}</td>
+                        <td>${d.questao.enunciado.substring(0, 100)}${d.questao.enunciado.length > 100 ? '...' : ''}</td>
+                        <td>${gabLetra}</td>
+                        <td>${respLetra}</td>
+                    </tr>
+                `;
+            });
+
+            const htmlContent = `
+            <!DOCTYPE html>
+            <html>
+            <head><meta charset="UTF-8"><title>Diagnóstico - Simulado UFPB</title>
+            <style>
+                body { font-family: 'Inter', sans-serif; background: #fff; color: #1a1a2e; padding: 30px; max-width: 900px; margin: 0 auto; }
+                h1 { color: #4f46e5; border-bottom: 2px solid #4f46e5; padding-bottom: 10px; }
+                .header { text-align: center; margin-bottom: 30px; }
+                .header .nota { font-size: 2.5rem; font-weight: 800; color: #10b981; }
+                .stats { display: flex; gap: 20px; justify-content: center; margin: 20px 0; }
+                .stats div { text-align: center; background: #f7f8fb; padding: 10px 20px; border-radius: 10px; }
+                .stats .num { font-size: 1.8rem; font-weight: 700; }
+                .stats .label { font-size: 0.7rem; text-transform: uppercase; color: #8a8aa0; }
+                table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                th { background: #eef2ff; padding: 8px; text-align: left; }
+                td { padding: 6px 8px; border-bottom: 1px solid #e6e8f0; }
+                .status-aprovado { color: #10b981; font-weight: 700; }
+                .status-reprovado { color: #ef4444; font-weight: 700; }
+                .footer { margin-top: 30px; text-align: center; color: #8a8aa0; font-size: 0.8rem; border-top: 1px solid #e6e8f0; padding-top: 15px; }
+            </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>📊 Diagnóstico do Simulado</h1>
+                    <p>Assistente em Administração - UFPB</p>
+                    <div class="nota">${nota}%</div>
+                    <p>${acertos} acertos · ${erros} erros · ${tempo} de prova</p>
+                </div>
+                <div class="stats">
+                    <div><div class="num">${acertos}</div><div class="label">Acertos</div></div>
+                    <div><div class="num">${erros}</div><div class="label">Erros</div></div>
+                    <div><div class="num">${nota}%</div><div class="label">Nota</div></div>
+                    <div><div class="num">${tempo}</div><div class="label">Tempo</div></div>
+                </div>
+                <div style="background:#f7f8fb;padding:12px 16px;border-radius:8px;margin:16px 0;">
+                    <p><strong>Nota de corte sugerida:</strong> ${corte}%</p>
+                    <p><strong>Situação:</strong> <span class="${status === 'APROVADO' ? 'status-aprovado' : 'status-reprovado'}">${status}</span></p>
+                    ${nota < corte ? `<p><strong>Faltam:</strong> ${(corte - nota).toFixed(1)}% para a nota de corte</p>` : ''}
+                </div>
+                <h3>📚 Desempenho por disciplina</h3>
+                <table><thead><tr><th>Disciplina</th><th>Acertos</th><th>%</th></tr></thead><tbody>${discHtml}</tbody></table>
+                <h3>📝 Correção comentada</h3>
+                <table><thead><tr><th>#</th><th>Status</th><th>Enunciado</th><th>Gabarito</th><th>Sua resposta</th></tr></thead><tbody>${questoesHtml}</tbody></table>
+                <div class="footer">Relatório gerado automaticamente pelo SimulaConcurso • ${new Date().toLocaleString('pt-BR')}</div>
+            </body>
+            </html>
+            `;
+
+            // Usar html2pdf para gerar PDF
+            const element = document.createElement('div');
+            element.innerHTML = htmlContent;
+            element.style.position = 'fixed';
+            element.style.left = '-9999px';
+            element.style.top = '0';
+            document.body.appendChild(element);
+
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: `diagnostico_simulado_ufpb_${new Date().toISOString().slice(0,10)}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.body.removeChild(element);
+                toast('Diagnóstico baixado com sucesso!', 'success');
+            }).catch(() => {
+                document.body.removeChild(element);
+                toast('Erro ao gerar PDF. Tente novamente.', 'error');
+            });
+        }
+
+        // ============================================================
+        //  TEMA
+        // ============================================================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const atual = html.getAttribute('data-theme');
+            const novo = atual === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', novo);
+            localStorage.setItem('simulaconcurso_theme', novo);
+            const icon = $('themeIcon');
+            icon.className = novo === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        function aplicarTemaSalvo() {
+            const tema = localStorage.getItem('simulaconcurso_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', tema);
+            const icon = $('themeIcon');
+            icon.className = tema === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // ============================================================
+        //  EVENTOS
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            aplicarTemaSalvo();
+            showPage('pageHome');
+
+            $('btnIniciar').addEventListener('click', iniciarSimulado);
+            $('btnHome').addEventListener('click', () => { showPage('pageHome'); });
+            $('btnTheme').addEventListener('click', toggleTheme);
+            $('btnVoltarHome').addEventListener('click', () => { showPage('pageHome'); });
+
+            // Navegação
+            $('btnAnterior').addEventListener('click', () => navegarQuestao(-1));
+            $('btnProximo').addEventListener('click', () => navegarQuestao(1));
+            $('btnRevisao').addEventListener('click', toggleRevisao);
+
+            // Finalizar
+            $('btnFinalizar').addEventListener('click', abrirConfirmacao);
+            $('btnCancelarConfirm').addEventListener('click', () => { $('confirmOverlay').classList.remove('active'); });
+            $('btnConfirmarFinalizar').addEventListener('click', () => {
+                $('confirmOverlay').classList.remove('active');
+                finalizarSimulado(false);
+            });
+
+            // Teclado
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') navegarQuestao(-1);
+                if (e.key === 'ArrowRight') navegarQuestao(1);
+                if (e.key === 'r' || e.key === 'R') toggleRevisao();
+                if (e.key === 'Escape') $('confirmOverlay').classList.remove('active');
+            });
+        });
+
+        // Expor funções globais
+        window.iniciarSimulado = iniciarSimulado;
+        window.irParaQuestao = irParaQuestao;
+        window.selecionarAlternativa = selecionarAlternativa;
+        window.toggleRevisao = toggleRevisao;
+        window.navegarQuestao = navegarQuestao;
+        window.abrirConfirmacao = abrirConfirmacao;
+        window.finalizarSimulado = finalizarSimulado;
+        window.mostrarResultado = mostrarResultado;
+        window.baixarDiagnostico = baixarDiagnostico;
+        window.showPage = showPage;
+        window.toggleTheme = toggleTheme;
+    </script>
+</body>
+</html>
