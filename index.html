@@ -42,7 +42,7 @@
             --font: 'Inter', system-ui, -apple-system, sans-serif;
             --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --navbar-height: 60px;
+            --navbar-height: 70px;
             --max-width: 1100px;
         }
         html[data-theme="light"] {
@@ -171,19 +171,39 @@
         .topbar-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             font-weight: 800;
             font-size: 1.2rem;
             color: var(--primary);
             letter-spacing: -0.02em;
+            flex: 1;
         }
-        .topbar-brand i {
-            color: var(--accent);
-            font-size: 1.3rem;
+        .topbar-brand img {
+            height: 50px;
+            width: auto;
+            border-radius: 6px;
+            filter: drop-shadow(0 0 6px rgba(129, 140, 248, 0.3));
+            transition: filter var(--transition);
+            background: rgba(255,255,255,0.05);
+            padding: 4px;
+        }
+        .topbar-brand img:hover {
+            filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.6));
         }
         .topbar-brand span {
             color: var(--text);
             font-weight: 700;
+            font-size: 1rem;
+        }
+        .topbar-brand .badge {
+            background: var(--primary);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
         .topbar-actions {
             display: flex;
@@ -319,6 +339,21 @@
         .card-btn.accent:hover {
             background: var(--accent-dark);
             box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
         }
         /* simulado */
         .simulado-header {
@@ -612,6 +647,15 @@
         .btn-nav-questao.danger:hover {
             background: #dc2626;
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .btn-nav-questao.success {
+            background: var(--accent);
+            color: #0f0f1a;
+            border-color: var(--accent);
+        }
+        .btn-nav-questao.success:hover {
+            background: var(--accent-dark);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
         /* confirm */
         .confirm-overlay {
@@ -954,12 +998,17 @@
             .topbar {
                 padding: 0 12px;
                 margin: 0 -8px 16px;
+                height: 60px;
             }
-            .topbar-brand {
-                font-size: 1rem;
+            .topbar-brand img {
+                height: 36px;
             }
-            .topbar-brand i {
-                font-size: 1.1rem;
+            .topbar-brand span {
+                font-size: 0.85rem;
+            }
+            .topbar-brand .badge {
+                font-size: 0.55rem;
+                padding: 1px 8px;
             }
             .simulado-header {
                 flex-direction: column;
@@ -1009,8 +1058,9 @@
     <!-- TOPBAR -->
     <header class="topbar">
         <div class="topbar-brand">
-            <i class="fas fa-graduation-cap"></i>
-            <span>Simulado#01</span>Vulp+ Concursos
+            <img src="https://res.cloudinary.com/dk8ta3dfy/image/upload/v1784024825/ChatGPT_Image_14_de_jul._de_2026_07_12_29_yrwytg.png" alt="Logo Vulp+ Concursos" />
+            <span>Simulado#01</span>
+            <span class="badge">UFPB</span>
         </div>
         <div class="topbar-actions">
             <button class="topbar-btn" id="btnTheme" title="Alternar tema" aria-label="Alternar tema">
@@ -1039,6 +1089,14 @@
                     <span><i class="fas fa-signal"></i> Médio</span>
                 </div>
                 <button class="card-btn" id="btnIniciar"><i class="fas fa-play"></i> Iniciar Simulado</button>
+                <button class="card-btn secondary" id="btnCarregarProgresso" style="margin-top:8px; display:none;"><i class="fas fa-upload"></i> Continuar de onde parou</button>
+                <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+                    <div class="file-input-wrapper" style="flex:1;">
+                        <button class="card-btn secondary" style="width:100%;"><i class="fas fa-folder-open"></i> Carregar backup (.json)</button>
+                        <input type="file" id="fileBackupInput" accept=".json" />
+                    </div>
+                    <button class="card-btn secondary" id="btnBaixarBackup" style="flex:1;"><i class="fas fa-download"></i> Baixar backup</button>
+                </div>
             </div>
         </div>
 
@@ -1071,6 +1129,7 @@
                     <button class="btn-nav-questao primary" id="btnProximo">Próximo <i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; justify-content:flex-end; border-top:1px solid var(--border-light); padding-top:14px;">
+                    <button class="btn-nav-questao success" id="btnSalvarProgresso"><i class="fas fa-save"></i> Salvar progresso</button>
                     <button class="btn-nav-questao danger" id="btnFinalizar"><i class="fas fa-check-circle"></i> Finalizar prova</button>
                 </div>
             </div>
@@ -1108,7 +1167,7 @@
 
     </div>
 
-    <!-- CONFIRMAÇÃO -->
+    <!-- CONFIRMAÇÃO FINALIZAR -->
     <div class="confirm-overlay" id="confirmOverlay">
         <div class="confirm-modal">
             <h3>Finalizar prova?</h3>
@@ -1125,12 +1184,29 @@
         </div>
     </div>
 
+    <!-- CONFIRMAÇÃO CARREGAR PROGRESSO -->
+    <div class="confirm-overlay" id="confirmLoadOverlay">
+        <div class="confirm-modal">
+            <h3>Progresso salvo encontrado</h3>
+            <p>Deseja continuar de onde parou?</p>
+            <div class="stats" id="loadStats">
+                <div><div class="num" id="loadRespondidas">0</div><div class="label">Respondidas</div></div>
+                <div><div class="num" id="loadTotal">0</div><div class="label">Total</div></div>
+                <div><div class="num" id="loadTempo">00:00</div><div class="label">Tempo restante</div></div>
+            </div>
+            <div class="actions">
+                <button class="card-btn secondary" id="btnLoadCancelar">Descartar e começar novo</button>
+                <button class="card-btn" id="btnLoadConfirmar"><i class="fas fa-play"></i> Continuar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- TOASTS -->
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
         // ============================================================
-        //  DADOS: 50 QUESTÕES OFICIAIS + GABARITO
+        //  DADOS: 50 QUESTÕES OFICIAIS + GABARITO (MANTIDOS)
         // ============================================================
         const questoes = [{
             id: 1,
@@ -1417,7 +1493,7 @@
                 'd) janeiro de 2024',
                 'e) janeiro de 2023'
             ],
-            gabarito: 3 // D (4 anos: 2022+4=2026? Na verdade janeiro/2022 + 4 anos = janeiro/2026, mas a opção é janeiro de 2026, que é a correta. Porém o gabarito diz D, que é janeiro de 2024? Vou conferir: o gabarito para 22 é D. Mas vamos ver: a validade máxima é 4 anos, então 2022+4=2026. A opção B é janeiro de 2026. Mas o gabarito oficial é D (janeiro de 2024)? Isso parece errado. Vou confiar no gabarito fornecido: para questão 22 o gabarito é D. Então mantenho D.
+            gabarito: 3 // D
         }, {
             id: 23,
             disciplina: 'Legislação',
@@ -1443,7 +1519,7 @@
                 'd) A motivação das decisões de órgãos colegiados e comissões ou de decisões orais constará da respectiva ata ou de termo escrito (repetida)',
                 'e) Os atos administrativos deverão ser motivados, com indicação dos fatos e dos fundamentos jurídicos, quando negarem, limitarem ou afetarem direitos ou interesses dos administrados'
             ],
-            gabarito: 2 // C (a incorreta é a que afirma que a motivação não pode consistir em declaração de concordância, pois a lei permite).
+            gabarito: 2 // C
         }, {
             id: 25,
             disciplina: 'Legislação',
@@ -1469,7 +1545,7 @@
                 'd) O inquérito civil para apuração do ato de improbidade será concluído no prazo de 365 (trezentos e sessenta e cinco) dias corridos, prorrogável uma única vez por igual período',
                 'e) A suspensão e a interrupção da prescrição produzem efeitos relativamente a todos os que concorreram para a prática do ato de improbidade'
             ],
-            gabarito: 0 // A (a incorreta é a que fala em 8 anos, pois o prazo é de 5 anos para atos de improbidade, mas a lei mudou? Na verdade a Lei 8.429/92 foi alterada, mas o gabarito indica A como incorreta.)
+            gabarito: 0 // A
         }, {
             id: 27,
             disciplina: 'Legislação',
@@ -1625,7 +1701,7 @@
                 'd) I e III apenas',
                 'e) III apenas'
             ],
-            gabarito: 2 // C (I e II corretas, III incorreta pois a satisfação dos fatores motivacionais independe da satisfação dos higiênicos)
+            gabarito: 2 // C
         }, {
             id: 39,
             disciplina: 'Conhecimentos Gerais',
@@ -1651,7 +1727,7 @@
                 'd) Moralidade',
                 'e) Publicidade'
             ],
-            gabarito: 0 // A (o princípio constitucional é "Eficiência", não "Efetividade")
+            gabarito: 0 // A
         }, {
             id: 41,
             disciplina: 'Conhecimentos Gerais',
@@ -1716,7 +1792,7 @@
                 'd) Gera efeitos jurídicos. Os efeitos são disciplinados pelo Direito',
                 'e) Finalidade pública. É o objetivo de interesse público a ser atingido'
             ],
-            gabarito: 1 // B (a competência não é uma característica, mas um requisito; todas estão corretas, mas a incorreta seria a que não se aplica? Na verdade todas são características, mas o gabarito aponta B como incorreta.)
+            gabarito: 1 // B
         }, {
             id: 46,
             disciplina: 'Conhecimentos Gerais',
@@ -1742,7 +1818,7 @@
                 'd) Requerimentos',
                 'e) Informáticos'
             ],
-            gabarito: 3 // D (Requerimentos é uma espécie, não um gênero documental)
+            gabarito: 3 // D
         }, {
             id: 48,
             disciplina: 'Conhecimentos Gerais',
@@ -1795,7 +1871,8 @@
             finalizado: false,
             tempoRestante: 4 * 3600, // 4h
             timerInterval: null,
-            resultado: null, // guarda o resultado após finalizar
+            resultado: null,
+            tempoTotalSegundos: 0,
         };
 
         // ============================================================
@@ -1831,6 +1908,98 @@
         function letraIndex(i) { return String.fromCharCode(65 + i); }
 
         // ============================================================
+        //  PERSISTÊNCIA (SALVAR/CARREGAR)
+        // ============================================================
+        function getEstado() {
+            return {
+                respostas: App.respostas.slice(),
+                revisao: App.revisao.slice(),
+                currentIndex: App.currentIndex,
+                tempoRestante: App.tempoRestante,
+                finalizado: App.finalizado,
+                timestamp: Date.now()
+            };
+        }
+
+        function salvarProgresso() {
+            const estado = getEstado();
+            try {
+                localStorage.setItem('simulado_progresso', JSON.stringify(estado));
+                // Baixar arquivo backup
+                const blob = new Blob([JSON.stringify(estado, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `simulado_backup_${new Date().toISOString().slice(0,10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                toast('Progresso salvo e backup baixado! 💾', 'success');
+            } catch (e) {
+                toast('Erro ao salvar progresso.', 'error');
+                console.error(e);
+            }
+        }
+
+        function carregarProgresso() {
+            try {
+                const raw = localStorage.getItem('simulado_progresso');
+                if (!raw) return null;
+                const estado = JSON.parse(raw);
+                if (!estado.respostas || estado.respostas.length !== App.questoes.length) return null;
+                if (estado.finalizado) return null;
+                return estado;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function aplicarProgresso(estado) {
+            App.respostas = estado.respostas.slice();
+            App.revisao = estado.revisao.slice();
+            App.currentIndex = estado.currentIndex;
+            App.tempoRestante = estado.tempoRestante;
+            App.finalizado = estado.finalizado;
+            if (App.timerInterval) { clearInterval(App.timerInterval);
+                App.timerInterval = null; }
+            iniciarTimer();
+            renderQuestaoNav();
+            renderQuestaoAtual();
+            toast('Progresso restaurado! Continuando de onde parou.', 'info');
+        }
+
+        function limparProgresso() {
+            localStorage.removeItem('simulado_progresso');
+        }
+
+        // Carregar de arquivo .json
+        function carregarBackupArquivo(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const estado = JSON.parse(e.target.result);
+                    if (!estado.respostas || estado.respostas.length !== App.questoes.length) {
+                        toast('Arquivo inválido.', 'error');
+                        return;
+                    }
+                    if (estado.finalizado) {
+                        toast('Este backup já foi finalizado.', 'error');
+                        return;
+                    }
+                    // Pergunta se quer aplicar
+                    if (confirm('Deseja restaurar este backup? O progresso atual será perdido.')) {
+                        aplicarProgresso(estado);
+                        showPage('pageSimulado');
+                    }
+                } catch (err) {
+                    toast('Erro ao ler o arquivo.', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // ============================================================
         //  NAVEGAÇÃO DE PÁGINAS
         // ============================================================
         function showPage(pageId) {
@@ -1838,13 +2007,26 @@
             const el = $(pageId);
             if (el) el.classList.add('active');
             $('confirmOverlay').classList.remove('active');
+            $('confirmLoadOverlay').classList.remove('active');
         }
 
         // ============================================================
         //  INICIAR SIMULADO
         // ============================================================
-        function iniciarSimulado() {
-            // Reinicia estado
+        function iniciarSimulado(force = false) {
+            if (!force) {
+                const progresso = carregarProgresso();
+                if (progresso) {
+                    $('loadRespondidas').textContent = progresso.respostas.filter(r => r !== -1).length;
+                    $('loadTotal').textContent = App.questoes.length;
+                    $('loadTempo').textContent = formatTime(progresso.tempoRestante);
+                    $('confirmLoadOverlay').dataset.progresso = JSON.stringify(progresso);
+                    $('confirmLoadOverlay').classList.add('active');
+                    return;
+                }
+            }
+
+            limparProgresso();
             App.respostas.fill(-1);
             App.revisao.fill(false);
             App.currentIndex = 0;
@@ -1915,7 +2097,6 @@
             const idx = App.currentIndex;
             const total = App.questoes.length;
 
-            // Texto base
             const textoEl = $('questaoTextoBase');
             if (q.texto && q.texto.trim() !== '') {
                 textoEl.style.display = 'block';
@@ -1927,7 +2108,6 @@
             $('qNumero').textContent = `Questão ${idx+1} de ${total}`;
             $('qEnunciado').textContent = q.enunciado;
 
-            // Alternativas
             const altContainer = $('qAlternativas');
             const respAtual = App.respostas[idx];
             let altHtml = '';
@@ -1942,7 +2122,6 @@
             });
             altContainer.innerHTML = altHtml;
 
-            // Botão revisão
             const btnRev = $('btnRevisao');
             if (App.revisao[idx]) {
                 btnRev.classList.add('ativo');
@@ -2028,7 +2207,6 @@
             const tempoGasto = App.tempoTotalSegundos || (4 * 3600 - App.tempoRestante);
             const tempoStr = formatTime(tempoGasto);
 
-            // Resultado
             const resultado = {
                 total,
                 acertos,
@@ -2039,9 +2217,9 @@
             };
             App.resultado = resultado;
 
-            // Mostrar resultado
             mostrarResultado(resultado);
             if (!auto) toast('✅ Prova finalizada!', 'success');
+            limparProgresso();
         }
 
         // ============================================================
@@ -2056,7 +2234,6 @@
             $('resultNota').innerHTML = `${nota} <span>/ 100</span>`;
             $('resultSub').textContent = `${acertos} acertos · ${erros} erros · ${tempo} de prova`;
 
-            // KPIs
             const grid = $('resultadoGrid');
             grid.innerHTML = `
                 <div class="resultado-kpi"><div class="value accent">${acertos}</div><div class="label">Acertos</div></div>
@@ -2065,9 +2242,8 @@
                 <div class="resultado-kpi"><div class="value">${tempo}</div><div class="label">Tempo usado</div></div>
             `;
 
-            // Diagnóstico
             const diagList = $('diagList');
-            const corte = 60; // nota de corte 60%
+            const corte = 60;
             const status = nota >= corte ? '✅ APROVADO' : '❌ REPROVADO';
             const faltam = corte - nota > 0 ? (corte - nota).toFixed(1) : 0;
             diagList.innerHTML = `
@@ -2080,7 +2256,6 @@
                 <div class="diag-item"><span class="label">Tempo gasto</span><span class="value">${tempo}</span></div>
             `;
 
-            // Desempenho por disciplina
             const discMap = {};
             detalhes.forEach(d => {
                 const disc = d.questao.disciplina || 'Outras';
@@ -2103,7 +2278,6 @@
             }
             discList.innerHTML = discHtml || '<p style="color:var(--text-muted);">Nenhuma disciplina identificada.</p>';
 
-            // Correção comentada
             const rqList = $('rqList');
             let rqHtml = '';
             detalhes.forEach((d, i) => {
@@ -2123,14 +2297,13 @@
             });
             rqList.innerHTML = rqHtml;
 
-            // Botões
-            $('btnRefazer').onclick = () => { iniciarSimulado(); };
+            $('btnRefazer').onclick = () => { iniciarSimulado(true); };
             $('btnVoltarHome').onclick = () => { showPage('pageHome'); };
             $('btnDownloadDiagnostico').onclick = () => { baixarDiagnostico(hist); };
         }
 
         // ============================================================
-        //  DOWNLOAD DIAGNÓSTICO (PDF)
+        //  DOWNLOAD DIAGNÓSTICO (PDF) – VERSÃO COMPLETA
         // ============================================================
         function baixarDiagnostico(hist) {
             const { total, acertos, nota, tempo, detalhes } = hist;
@@ -2138,7 +2311,6 @@
             const corte = 60;
             const status = nota >= corte ? 'APROVADO' : 'REPROVADO';
 
-            // Construir HTML do relatório
             const discMap = {};
             detalhes.forEach(d => {
                 const disc = d.questao.disciplina || 'Outras';
@@ -2146,56 +2318,81 @@
                 discMap[disc].total++;
                 if (d.certa) discMap[disc].acertos++;
             });
-
-            let discHtml = '';
+            let discRows = '';
+            let melhorDisc = '', piorDisc = '';
+            let melhorPct = -1, piorPct = 101;
             for (const [nome, dados] of Object.entries(discMap)) {
                 const pct = dados.total > 0 ? Math.round((dados.acertos / dados.total) * 100) : 0;
-                discHtml += `<tr><td>${nome}</td><td>${dados.acertos}/${dados.total}</td><td>${pct}%</td></tr>`;
+                discRows += `<tr><td>${nome}</td><td>${dados.acertos}/${dados.total}</td><td>${pct}%</td></tr>`;
+                if (pct > melhorPct) { melhorPct = pct;
+                    melhorDisc = nome; }
+                if (pct < piorPct) { piorPct = pct;
+                    piorDisc = nome; }
             }
+            const tempoSegundos = (() => {
+                const partes = tempo.split(':');
+                return parseInt(partes[0]) * 3600 + parseInt(partes[1]) * 60 + parseInt(partes[2]);
+            })();
+            const tempoMedio = total > 0 ? (tempoSegundos / total) : 0;
+            const tempoMedioStr = `${Math.floor(tempoMedio / 60)}m ${Math.round(tempoMedio % 60)}s`;
 
-            let questoesHtml = '';
-            detalhes.forEach((d, i) => {
+            const erradas = detalhes.filter(d => !d.certa);
+            const erradasHtml = erradas.map((d, i) => `
+                <tr>
+                    <td>${i+1}</td>
+                    <td>${d.questao.enunciado.substring(0, 120)}${d.questao.enunciado.length > 120 ? '...' : ''}</td>
+                    <td>${letraIndex(d.gabarito)}</td>
+                    <td>${d.resposta !== -1 ? letraIndex(d.resposta) : '—'}</td>
+                    <td>${d.questao.disciplina || '—'}</td>
+                </tr>
+            `).join('');
+
+            const questoesHtml = detalhes.map((d, i) => {
                 const gabLetra = letraIndex(d.gabarito);
                 const respLetra = d.resposta !== -1 ? letraIndex(d.resposta) : '—';
                 const statusIcon = d.certa ? '✅' : '❌';
-                questoesHtml += `
+                return `
                     <tr>
                         <td>${i+1}</td>
                         <td>${statusIcon}</td>
                         <td>${d.questao.enunciado.substring(0, 100)}${d.questao.enunciado.length > 100 ? '...' : ''}</td>
                         <td>${gabLetra}</td>
                         <td>${respLetra}</td>
+                        <td>${d.questao.disciplina || '—'}</td>
                     </tr>
                 `;
-            });
+            }).join('');
 
             const htmlContent = `
             <!DOCTYPE html>
             <html>
-            <head><meta charset="UTF-8"><title>Diagnóstico - Simulado UFPB</title>
+            <head><meta charset="UTF-8"><title>Diagnóstico Completo - Simulado UFPB</title>
             <style>
-                body { font-family: 'Inter', sans-serif; background: #fff; color: #1a1a2e; padding: 30px; max-width: 900px; margin: 0 auto; }
-                h1 { color: #4f46e5; border-bottom: 2px solid #4f46e5; padding-bottom: 10px; }
+                body { font-family: 'Inter', sans-serif; background: #fff; color: #1a1a2e; padding: 30px; max-width: 1000px; margin: 0 auto; }
+                h1 { color: #4f46e5; border-bottom: 3px solid #4f46e5; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+                h1 small { font-size: 0.6rem; font-weight: 400; color: #8a8aa0; margin-left: auto; }
                 .header { text-align: center; margin-bottom: 30px; }
-                .header .nota { font-size: 2.5rem; font-weight: 800; color: #10b981; }
-                .stats { display: flex; gap: 20px; justify-content: center; margin: 20px 0; }
-                .stats div { text-align: center; background: #f7f8fb; padding: 10px 20px; border-radius: 10px; }
-                .stats .num { font-size: 1.8rem; font-weight: 700; }
+                .header .nota { font-size: 3rem; font-weight: 800; color: #10b981; }
+                .stats { display: flex; gap: 20px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+                .stats div { text-align: center; background: #f7f8fb; padding: 12px 24px; border-radius: 12px; min-width: 100px; }
+                .stats .num { font-size: 2rem; font-weight: 700; }
                 .stats .label { font-size: 0.7rem; text-transform: uppercase; color: #8a8aa0; }
-                table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.85rem; }
                 th { background: #eef2ff; padding: 8px; text-align: left; }
                 td { padding: 6px 8px; border-bottom: 1px solid #e6e8f0; }
                 .status-aprovado { color: #10b981; font-weight: 700; }
                 .status-reprovado { color: #ef4444; font-weight: 700; }
                 .footer { margin-top: 30px; text-align: center; color: #8a8aa0; font-size: 0.8rem; border-top: 1px solid #e6e8f0; padding-top: 15px; }
+                .sugestoes { background: #f0f7ff; padding: 12px 16px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #4f46e5; }
+                .section { margin: 25px 0; }
+                .section h2 { font-size: 1.2rem; margin-bottom: 10px; color: #4f46e5; }
             </style>
             </head>
             <body>
+                <h1>📊 Diagnóstico Completo <small>Simulado UFPB - Assistente em Administração</small></h1>
                 <div class="header">
-                    <h1>📊 Diagnóstico do Simulado</h1>
-                    <p>Assistente em Administração - UFPB</p>
                     <div class="nota">${nota}%</div>
-                    <p>${acertos} acertos · ${erros} erros · ${tempo} de prova</p>
+                    <p style="font-size:1.1rem;">${acertos} acertos · ${erros} erros · ${tempo} de prova</p>
                 </div>
                 <div class="stats">
                     <div><div class="num">${acertos}</div><div class="label">Acertos</div></div>
@@ -2203,21 +2400,56 @@
                     <div><div class="num">${nota}%</div><div class="label">Nota</div></div>
                     <div><div class="num">${tempo}</div><div class="label">Tempo</div></div>
                 </div>
+
                 <div style="background:#f7f8fb;padding:12px 16px;border-radius:8px;margin:16px 0;">
                     <p><strong>Nota de corte sugerida:</strong> ${corte}%</p>
                     <p><strong>Situação:</strong> <span class="${status === 'APROVADO' ? 'status-aprovado' : 'status-reprovado'}">${status}</span></p>
                     ${nota < corte ? `<p><strong>Faltam:</strong> ${(corte - nota).toFixed(1)}% para a nota de corte</p>` : ''}
+                    <p><strong>Tempo médio por questão:</strong> ${tempoMedioStr}</p>
                 </div>
-                <h3>📚 Desempenho por disciplina</h3>
-                <table><thead><tr><th>Disciplina</th><th>Acertos</th><th>%</th></tr></thead><tbody>${discHtml}</tbody></table>
-                <h3>📝 Correção comentada</h3>
-                <table><thead><tr><th>#</th><th>Status</th><th>Enunciado</th><th>Gabarito</th><th>Sua resposta</th></tr></thead><tbody>${questoesHtml}</tbody></table>
-                <div class="footer">Relatório gerado automaticamente pelo SimulaConcurso • ${new Date().toLocaleString('pt-BR')}</div>
+
+                <div class="sugestoes">
+                    <strong>💡 Sugestões de estudo</strong><br>
+                    ${nota >= 80 ? 'Parabéns! Seu desempenho foi excelente. Continue revisando os tópicos de menor rendimento para manter a consistência.' :
+                      nota >= 60 ? 'Bom desempenho! Foque nas disciplinas com menor percentual de acertos e pratique mais questões.' :
+                      'Seu desempenho precisa de atenção. Dedique-se aos conteúdos com mais dificuldade, refaça as questões erradas e estude a teoria.'}
+                    ${melhorDisc ? `<br><strong>Melhor disciplina:</strong> ${melhorDisc} (${melhorPct}%)` : ''}
+                    ${piorDisc ? `<br><strong>Disciplina a melhorar:</strong> ${piorDisc} (${piorPct}%)` : ''}
+                </div>
+
+                <div class="section">
+                    <h2>📚 Desempenho por disciplina</h2>
+                    <table>
+                        <thead><tr><th>Disciplina</th><th>Acertos</th><th>%</th></tr></thead>
+                        <tbody>${discRows}</tbody>
+                    </table>
+                </div>
+
+                <div class="section">
+                    <h2>❌ Questões erradas (${erradas.length})</h2>
+                    ${erradas.length === 0 ? '<p style="color:#10b981;">Nenhuma questão errada! 🎉</p>' : `
+                    <table>
+                        <thead><tr><th>#</th><th>Enunciado</th><th>Gabarito</th><th>Sua resposta</th><th>Disciplina</th></tr></thead>
+                        <tbody>${erradasHtml}</tbody>
+                    </table>
+                    `}
+                </div>
+
+                <div class="section">
+                    <h2>📝 Correção completa</h2>
+                    <table>
+                        <thead><tr><th>#</th><th>Status</th><th>Enunciado</th><th>Gabarito</th><th>Sua resposta</th><th>Disciplina</th></tr></thead>
+                        <tbody>${questoesHtml}</tbody>
+                    </table>
+                </div>
+
+                <div class="footer">
+                    Relatório gerado automaticamente pelo SimulaConcurso • ${new Date().toLocaleString('pt-BR')}
+                </div>
             </body>
             </html>
             `;
 
-            // Usar html2pdf para gerar PDF
             const element = document.createElement('div');
             element.innerHTML = htmlContent;
             element.style.position = 'fixed';
@@ -2227,7 +2459,7 @@
 
             const opt = {
                 margin: [10, 10, 10, 10],
-                filename: `diagnostico_simulado_ufpb_${new Date().toISOString().slice(0,10)}.pdf`,
+                filename: `diagnostico_completo_ufpb_${new Date().toISOString().slice(0,10)}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -2235,7 +2467,7 @@
 
             html2pdf().set(opt).from(element).save().then(() => {
                 document.body.removeChild(element);
-                toast('Diagnóstico baixado com sucesso!', 'success');
+                toast('Diagnóstico completo baixado com sucesso!', 'success');
             }).catch(() => {
                 document.body.removeChild(element);
                 toast('Erro ao gerar PDF. Tente novamente.', 'error');
@@ -2269,7 +2501,29 @@
             aplicarTemaSalvo();
             showPage('pageHome');
 
-            $('btnIniciar').addEventListener('click', iniciarSimulado);
+            // Verifica progresso para mostrar botão
+            const progresso = carregarProgresso();
+            if (progresso) {
+                $('btnCarregarProgresso').style.display = 'flex';
+                $('btnCarregarProgresso').innerHTML =
+                    `<i class="fas fa-upload"></i> Continuar de onde parou (${formatTime(progresso.tempoRestante)})`;
+            } else {
+                $('btnCarregarProgresso').style.display = 'none';
+            }
+
+            $('btnIniciar').addEventListener('click', () => iniciarSimulado(false));
+            $('btnCarregarProgresso').addEventListener('click', () => {
+                const prog = carregarProgresso();
+                if (prog) {
+                    $('loadRespondidas').textContent = prog.respostas.filter(r => r !== -1).length;
+                    $('loadTotal').textContent = App.questoes.length;
+                    $('loadTempo').textContent = formatTime(prog.tempoRestante);
+                    $('confirmLoadOverlay').dataset.progresso = JSON.stringify(prog);
+                    $('confirmLoadOverlay').classList.add('active');
+                } else {
+                    toast('Nenhum progresso salvo encontrado.', 'error');
+                }
+            });
             $('btnHome').addEventListener('click', () => { showPage('pageHome'); });
             $('btnTheme').addEventListener('click', toggleTheme);
             $('btnVoltarHome').addEventListener('click', () => { showPage('pageHome'); });
@@ -2279,6 +2533,33 @@
             $('btnProximo').addEventListener('click', () => navegarQuestao(1));
             $('btnRevisao').addEventListener('click', toggleRevisao);
 
+            // Salvar progresso
+            $('btnSalvarProgresso').addEventListener('click', salvarProgresso);
+
+            // Baixar backup manual (página inicial)
+            $('btnBaixarBackup').addEventListener('click', () => {
+                const estado = getEstado();
+                const blob = new Blob([JSON.stringify(estado, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `simulado_backup_${new Date().toISOString().slice(0,10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                toast('Backup baixado!', 'success');
+            });
+
+            // Carregar backup de arquivo
+            $('fileBackupInput').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    carregarBackupArquivo(file);
+                }
+                e.target.value = ''; // reset
+            });
+
             // Finalizar
             $('btnFinalizar').addEventListener('click', abrirConfirmacao);
             $('btnCancelarConfirm').addEventListener('click', () => { $('confirmOverlay').classList.remove('active'); });
@@ -2287,12 +2568,31 @@
                 finalizarSimulado(false);
             });
 
+            // Carregar progresso (modal)
+            $('btnLoadCancelar').addEventListener('click', () => {
+                $('confirmLoadOverlay').classList.remove('active');
+                limparProgresso();
+                iniciarSimulado(true);
+            });
+            $('btnLoadConfirmar').addEventListener('click', () => {
+                const raw = $('confirmLoadOverlay').dataset.progresso;
+                if (raw) {
+                    const estado = JSON.parse(raw);
+                    aplicarProgresso(estado);
+                    $('confirmLoadOverlay').classList.remove('active');
+                    showPage('pageSimulado');
+                }
+            });
+
             // Teclado
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') navegarQuestao(-1);
                 if (e.key === 'ArrowRight') navegarQuestao(1);
                 if (e.key === 'r' || e.key === 'R') toggleRevisao();
-                if (e.key === 'Escape') $('confirmOverlay').classList.remove('active');
+                if (e.key === 'Escape') {
+                    $('confirmOverlay').classList.remove('active');
+                    $('confirmLoadOverlay').classList.remove('active');
+                }
             });
         });
 
@@ -2308,6 +2608,8 @@
         window.baixarDiagnostico = baixarDiagnostico;
         window.showPage = showPage;
         window.toggleTheme = toggleTheme;
+        window.salvarProgresso = salvarProgresso;
+        window.carregarProgresso = carregarProgresso;
     </script>
 </body>
 </html>
